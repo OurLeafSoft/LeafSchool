@@ -1,6 +1,8 @@
 package com.leafsoft.school.dao;
 
-public class CoursesDao {
+import com.leafsoft.school.model.Course;
 
-	
+public interface CoursesDao {
+
+	public Course loadCourseByCourse(String courseName);
 }
