@@ -25,8 +25,8 @@ private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getN
 	
 	private DataSource dataSource;
 	JdbcTemplate jdbcTemplate;
-	public OrgUsersDaoImpl() {
-		this.dataSource = new JdbcUtil().getOrgDBDataSource();
+	public void setDataSource(DataSource datasource) {
+		this.dataSource = datasource;
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	

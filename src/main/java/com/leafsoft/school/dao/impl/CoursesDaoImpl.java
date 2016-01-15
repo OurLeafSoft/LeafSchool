@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.leafsoft.school.dao.CoursesDao;
 import com.leafsoft.school.dao.OrganizationDao;
 import com.leafsoft.school.model.Course;
-import com.leafsoft.util.JdbcUtil;
 
 public class CoursesDaoImpl implements CoursesDao {
 	
@@ -21,8 +20,8 @@ public class CoursesDaoImpl implements CoursesDao {
 		
 		private JdbcTemplate jdbcTemplate;
 		
-		public CoursesDaoImpl() {
-			this.dataSource = JdbcUtil.getUserDataSource();
+		public void setDataSource(DataSource datasource) {
+			this.dataSource = datasource;
 			jdbcTemplate = new JdbcTemplate(dataSource);
 		}
 		
@@ -36,4 +35,5 @@ public class CoursesDaoImpl implements CoursesDao {
 			}
 			return course;
 		}
+
 }

@@ -1,10 +1,14 @@
 package com.leafsoft.school.dao;
 
 
+import javax.sql.DataSource;
+
 import com.leafsoft.school.model.OrgUser;
 
 
 public interface OrgUsersDao {
+	
+	public void setDataSource(DataSource datasource);
 
 	public int insert(OrgUser user);
 	

@@ -15,10 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.leafsoft.mail.SendMail;
 import com.leafsoft.org.OrgUtil;
+import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgUsersDao;
 import com.leafsoft.school.dao.OrganizationDao;
-import com.leafsoft.school.dao.impl.OrgUsersDaoImpl;
-import com.leafsoft.school.dao.impl.OrganizationDaoImpl;
 import com.leafsoft.school.model.Course;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
@@ -43,7 +42,7 @@ public class SchoolRegisterController {
     	ModelAndView modelview = new ModelAndView();
     	 int orguserid = -1;
     	 OrgUser orguser = null;
-         OrgUsersDao orgUserDao = new OrgUsersDaoImpl();
+         OrgUsersDao orgUserDao = DaoSelectorUtil.getOrgUserDao();
          LOGGER.log(Level.INFO,"userLid::::"+OrgUtil.getUserlid());
 	    	if(!orgUserDao.hasUser(OrgUtil.getUserlid())) {
 	    		orguser = new OrgUser();
@@ -57,7 +56,7 @@ public class SchoolRegisterController {
 	        }
 	    	OrgUtil.setOwnerid(orguserid);
 	    	OrgUtil.setOwner(orguser);
-	    	OrganizationDao orgDao = new OrganizationDaoImpl();
+	    	OrganizationDao orgDao = DaoSelectorUtil.getOrganizationDao();
 	    	if(!org.getOrgname().equals("")) { 
 	    	// Inject the datasource into the dao
 	        int orgId = orgDao.insert(org);

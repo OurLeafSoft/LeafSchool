@@ -2,12 +2,16 @@ package com.leafsoft.school.dao;
 
 
 
+import javax.sql.DataSource;
+
 import org.json.JSONArray;
 
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 
 public interface OrgUserRolesDao {
+	
+	public void setDataSource(DataSource datasource);
 
 	public int insert(OrgUser orgUser,String role);
 	

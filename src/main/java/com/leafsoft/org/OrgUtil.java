@@ -18,12 +18,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
 import com.leafsoft.http.HttpUtil;
+import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgUserRolesDao;
 import com.leafsoft.school.dao.OrgUsersDao;
 import com.leafsoft.school.dao.OrganizationDao;
-import com.leafsoft.school.dao.impl.OrgUserRolesDaoImpl;
-import com.leafsoft.school.dao.impl.OrgUsersDaoImpl;
-import com.leafsoft.school.dao.impl.OrganizationDaoImpl;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
@@ -274,7 +272,7 @@ public class OrgUtil {
 							OrgUtil.setUser(leafuser);
 							OrgUtil.setUserlid(leafuser.getLid());
 					        // Inject the datasource into the dao
-					    	OrgUsersDao userDAO = new OrgUsersDaoImpl();
+					    	OrgUsersDao userDAO = DaoSelectorUtil.getOrgUserDao();
 					    	orgUser = userDAO.loadOrgUserByLid(leafuser.getLid());
 					    	if(orgUser == null) {
 					    		orgUser = new OrgUser();
@@ -313,7 +311,7 @@ public class OrgUtil {
 				user = (User) a.getPrincipal();
 				System.out.print("user::::"+user);
 				if(user!=null) {
-					OrgUsersDao userDAO = new OrgUsersDaoImpl();
+					OrgUsersDao userDAO = DaoSelectorUtil.getOrgUserDao();
 					orguser = userDAO.loadUserByUsername(user.getUsername());
 					System.out.print("username::::"+user.getUsername());
 				}
@@ -327,8 +325,8 @@ public class OrgUtil {
 	}
 	
 	public static void initOrgDetails(HttpServletRequest request, OrgUser orgUser) throws Exception{
-		OrgUserRolesDao userRoleDao = new OrgUserRolesDaoImpl();
-		OrganizationDao orgDao = new OrganizationDaoImpl();
+		OrgUserRolesDao userRoleDao = DaoSelectorUtil.getOrgUserRolesDao();
+		OrganizationDao orgDao = DaoSelectorUtil.getOrganizationDao();
     	int totalOrg = userRoleDao.getTotalNumberOfOrgForUser(orgUser.getLuid());//Check number orgs assoicated with the current user
     	
     	if(totalOrg == 1) {//if customer has only one org than allow him to access that org details 

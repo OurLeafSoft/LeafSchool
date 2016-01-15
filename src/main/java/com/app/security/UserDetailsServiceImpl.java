@@ -12,10 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.leafsoft.org.OrgUtil;
+import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgUserRolesDao;
 import com.leafsoft.school.dao.OrgUsersDao;
-import com.leafsoft.school.dao.impl.OrgUserRolesDaoImpl;
-import com.leafsoft.school.dao.impl.OrgUsersDaoImpl;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.user.LeafUser;
@@ -32,10 +31,10 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		if (credentials != null && principal == true) {
 			int lid = credentials.getLid();
 			String name = credentials.getUsername();
-	    	OrgUsersDao orgUserDAO = new OrgUsersDaoImpl();
+			OrgUsersDao orgUserDao = DaoSelectorUtil.getOrgUserDao();
 	    	
-	    	OrgUser orguser = orgUserDAO.loadOrgUserByLid(lid);
-	    	OrgUserRolesDao orgroleDAO = new OrgUserRolesDaoImpl();
+	    	OrgUser orguser = orgUserDao.loadOrgUserByLid(lid);
+	    	OrgUserRolesDao orgroleDAO = DaoSelectorUtil.getOrgUserRolesDao();
 	    	if(OrgUtil.getOrgId() !=null && orguser.getLuid() == OrgUtil.getOwnerid()) {
 	    		OrgUserRole orgUserRole = orgroleDAO.loadOrgUserByLuid(orguser.getLuid(), OrgUtil.getOrgId());
 		    	if(orguser != null) {
