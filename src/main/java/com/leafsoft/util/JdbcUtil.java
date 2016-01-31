@@ -15,7 +15,7 @@ import com.leafsoft.org.OrgUtil;
 
 public class JdbcUtil {
 	private static Logger LOGGER = Logger.getLogger(JdbcUtil.class.getName());
-	public DriverManagerDataSource getOrgDBDataSource() {
+	public static DriverManagerDataSource getOrgDBDataSource() {
 		AppResources jdbc = new AppResources();
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(jdbc.getMysqlDriverClassName());

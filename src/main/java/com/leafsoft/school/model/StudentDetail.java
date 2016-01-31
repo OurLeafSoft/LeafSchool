@@ -145,4 +145,15 @@ public class StudentDetail implements Serializable {
 		this.studentContactDetail = studentContactDetail;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StudentDetail [studentid=" + studentid + ", dob=" + dob + ", gender=" + gender + ", regdate=" + regdate
+				+ ", status=" + status + ", studentname=" + studentname + ", studentAcadamicHistories="
+				+ studentAcadamicHistories + ", studentCourseHistories=" + studentCourseHistories
+				+ ", studentContactDetail=" + studentContactDetail + "]";
+	}
+
 }

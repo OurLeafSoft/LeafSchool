@@ -9,12 +9,11 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.leafsoft.school.dao.CoursesDao;
-import com.leafsoft.school.dao.OrganizationDao;
 import com.leafsoft.school.model.Course;
 
 public class CoursesDaoImpl implements CoursesDao {
 	
-		private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getName());
+		private static final Logger LOGGER = Logger.getLogger(CoursesDaoImpl.class.getName());
 		
 		private DataSource dataSource;
 		

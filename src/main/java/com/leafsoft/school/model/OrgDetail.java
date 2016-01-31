@@ -166,4 +166,15 @@ public class OrgDetail implements Serializable {
 		return orgUserRole;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "OrgDetail [orgid=" + orgid + ", address=" + address + ", city=" + city + ", country=" + country
+				+ ", createdtime=" + createdtime + ", currencycode=" + currencycode + ", dateformat=" + dateformat
+				+ ", orgname=" + orgname + ", state=" + state + ", status=" + status + ", timetype=" + timetype
+				+ ", zipcode=" + zipcode + ", orgUserRoles=" + orgUserRoles + "]";
+	}
+
 }
