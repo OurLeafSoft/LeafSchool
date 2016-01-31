@@ -1,5 +1,7 @@
 package com.leafsoft.org.rest.util;
 
+import javax.ws.rs.core.MediaType;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -13,11 +15,11 @@ public class JerseyClient {
 			Client client = Client.create();
 
 			WebResource webResource = client
-			   .resource("http://localhost:8080/RESTfulExample/rest/json/metallica/post");
+			   .resource(url);
 
 			//String inputString = "{\"singer\":\"Metallica\",\"title\":\"Fade To Black\"}";
 
-			ClientResponse response = webResource.type("application/json")
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
 			   .post(ClientResponse.class, inputString);
 
 			if (response.getStatus() != 201) {
@@ -48,7 +50,7 @@ public class JerseyClient {
 
 			//String input = "{\"singer\":\"Metallica\",\"title\":\"Fade To Black\"}";
 
-			ClientResponse response = webResource.type("application/json")
+			ClientResponse response = webResource.type(MediaType.APPLICATION_JSON)
 			   .post(ClientResponse.class, inputString);
 
 			if (response.getStatus() != 201) {
