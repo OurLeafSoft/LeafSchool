@@ -164,4 +164,15 @@ public class StudentContactDetail implements Serializable {
 		return studentDetail;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StudentContactDetail [familyid=" + familyid + ", address=" + address + ", caste=" + caste + ", city="
+				+ city + ", contactnumber=" + contactnumber + ", countrycode=" + countrycode + ", fathername="
+				+ fathername + ", guardianname=" + guardianname + ", guardiantype=" + guardiantype + ", mothername="
+				+ mothername + ", state=" + state + ", zipcode=" + zipcode + ", studentDetails=" + studentDetails + "]";
+	}
+
 }

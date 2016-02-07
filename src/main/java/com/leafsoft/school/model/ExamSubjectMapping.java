@@ -91,4 +91,14 @@ public class ExamSubjectMapping implements Serializable {
 		return studentAcadamicHistory;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ExamSubjectMapping [examsubjectid=" + examsubjectid + ", acadamicyear=" + acadamicyear + ", examDetail="
+				+ examDetail + ", staffSubjectCourseHistory=" + staffSubjectCourseHistory
+				+ ", studentAcadamicHistories=" + studentAcadamicHistories + "]";
+	}
+
 }

@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import org.json.JSONArray;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -18,6 +22,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import com.leafsoft.org.OrgUtil;
 import com.leafsoft.school.dao.OrganizationDao;
 import com.leafsoft.school.model.OrgDetail;
+import com.leafsoft.school.model.OrgUserRole;
+import com.leafsoft.school.rowmapper.RowMapper;
 import com.leafsoft.school.util.CommonUtil;
 import com.leafsoft.util.JdbcUtil;
 
@@ -84,15 +90,30 @@ public class OrganizationDaoImpl implements OrganizationDao{
 			
 	}
 	
-	public OrgDetail loadOrgDetailByOrgId(long orgId) {
+	public OrgDetail loadOrgDetailByOrgId(long orgId,long userId) {
 		OrgDetail org = null;
 		try {
-		String sql = "SELECT * FROM OrgDetails WHERE orgid = ?";
-		org = jdbcTemplate.queryForObject(sql,new Object[]{orgId},  new BeanPropertyRowMapper<OrgDetail>(OrgDetail.class));
+		String sql = "SELECT * FROM OrgDetails od inner join OrgUserRoles our on od.orgid = our.orgid inner join OrgUsers ou on ou.luid = our.luid WHERE our.luid = ? and our.orgId = ?";
+		org = jdbcTemplate.queryForObject(sql,new Object[]{userId,orgId},  new BeanPropertyRowMapper<OrgDetail>(OrgDetail.class));
 		}catch(Exception e) {
 			LOGGER.log(Level.INFO,"findByCustomerId():::"+orgId+e.getMessage(),e);
 		}
 		return org;
+	}
+	
+	public List<OrgDetail> loadOrgDetailByUserId(long userId) {
+		List<OrgDetail> orgArray = new ArrayList<>();
+		try {
+		String sql = "SELECT * FROM OrgDetails od inner join OrgUserRoles our on od.orgid = our.orgid inner join OrgUsers ou on ou.luid = our.luid WHERE our.luid = ?";
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql, new Object[]{userId});
+		for (Map<String, Object> row : rows) {
+			OrgDetail orgDetails = RowMapper.getOrgDetailRow(row);
+			orgArray.add(orgDetails);
+		}
+		}catch(Exception e) {
+			LOGGER.log(Level.INFO,"findByCustomerId():::"+userId+e.getMessage(),e);
+		}
+		return orgArray;
 	}
 	
 	public boolean hasOrg(String orgId) {
@@ -108,6 +129,20 @@ public class OrganizationDaoImpl implements OrganizationDao{
 		}
 		return false;
 	    
+	}
+	
+	public boolean update(long luid, long orgId, OrgDetail orgdetails) {
+		
+		String sql = "update OrgDetails od inner join OrgUserRoles our on our.orgid = od.orgid inner join OrgUsers ou on ou.luid = our.luid set orgname = ?, address=?, state=?,city=?,zipcode=?,timetype=? , dateformat=?,country=? WHERE od.orgid = ? and and ou.luid=?";  
+		try {
+			int updateRecords = jdbcTemplate.update(sql,new Object[]{orgdetails.getOrgname(),orgdetails.getAddress(),orgdetails.getState(),orgdetails.getCity(),orgdetails.getZipcode(),orgdetails.getTimetype(),orgdetails.getDateformat(),orgdetails.getCountry(),orgId,luid});
+			if(updateRecords >0) {
+				return true;
+			}
+		} catch(Exception e) {
+			LOGGER.log(Level.INFO,"hasOrg():::"+orgId+e.getMessage(),e);
+		}
+		return false;
 	}
 
 }

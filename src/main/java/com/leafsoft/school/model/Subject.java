@@ -73,4 +73,13 @@ public class Subject implements Serializable {
 		return staffSubjectCourseHistory;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Subject [subjectid=" + subjectid + ", subjectname=" + subjectname + ", subjecttype=" + subjecttype
+				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
+	}
+
 }

@@ -331,7 +331,7 @@ public class OrgUtil {
     	
     	if(totalOrg == 1) {//if customer has only one org than allow him to access that org details 
     		//OrgUserRole orgUserRole  = userRoleDao.getSingleOrg(orgUser.getLuid());
-    		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(orgUser.getDefaultorgid());
+    		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(orgUser.getDefaultorgid(),orgUser.getLuid());
 			OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgDetails.getOrgid()));
 			OrgUtil.setOrgDetails(orgDetails);
 			OrgUtil.setOrgId(orgDetails.getOrgid());
@@ -353,7 +353,7 @@ public class OrgUtil {
     				}
     			}
     		} else {
-    			OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(orgUser.getDefaultorgid());
+    			OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(orgUser.getDefaultorgid(),orgUser.getLuid());
     			OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgDetails.getOrgid()));
 				OrgUtil.setOrgDetails(orgDetails);
 				OrgUtil.setOrgId(orgDetails.getOrgid());

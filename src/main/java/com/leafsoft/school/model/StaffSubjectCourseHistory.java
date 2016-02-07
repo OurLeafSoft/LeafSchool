@@ -104,4 +104,14 @@ public class StaffSubjectCourseHistory implements Serializable {
 		this.cours = cours;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StaffSubjectCourseHistory [staffsubjectcourseid=" + staffsubjectcourseid + ", acadamicyear="
+				+ acadamicyear + ", examSubjectMappings=" + examSubjectMappings + ", staffDetail=" + staffDetail
+				+ ", subject=" + subject + ", cours=" + cours + "]";
+	}
+
 }

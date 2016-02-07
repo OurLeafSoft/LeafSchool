@@ -75,4 +75,14 @@ public class StudentAcadamicHistory implements Serializable {
 		this.studentDetail = studentDetail;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StudentAcadamicHistory [studenthistoryid=" + studenthistoryid + ", historytype=" + historytype
+				+ ", examSubjectMapping=" + examSubjectMapping + ", studentCourseHistory=" + studentCourseHistory
+				+ ", studentDetail=" + studentDetail + "]";
+	}
+
 }

@@ -76,4 +76,13 @@ public class Designation implements Serializable {
 		return staffDetail;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Designation [designationid=" + designationid + ", designationname=" + designationname
+				+ ", designationGroup=" + designationGroup + ", staffDetails=" + staffDetails + "]";
+	}
+
 }

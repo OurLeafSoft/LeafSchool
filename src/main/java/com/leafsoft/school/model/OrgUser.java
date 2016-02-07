@@ -106,4 +106,13 @@ public class OrgUser implements Serializable {
 		return orgUserRole;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "OrgUser [luid=" + luid + ", createtime=" + createtime + ", defaultorgid=" + defaultorgid + ", email="
+				+ email + ", lid=" + lid + ", username=" + username + ", orgUserRoles=" + orgUserRoles + "]";
+	}
+
 }

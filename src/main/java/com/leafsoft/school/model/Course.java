@@ -99,4 +99,16 @@ public class Course implements Serializable {
 		return studentCourseHistory;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Course [courseid=" + courseid + ", course=" + course + ", section=" + section
+				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + ", studentCourseHistories="
+				+ studentCourseHistories + "]";
+	}
+	
+	
+
 }

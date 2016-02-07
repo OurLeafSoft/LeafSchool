@@ -80,8 +80,8 @@ private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getN
 			OrgUserRole orgUserRole = new OrgUserRole();
 			orgUserRole.setUserRoleId((Integer)(row.get("user_role_id")));
 			orgUserRole.setRolename((String)row.get("rolename"));
-			orgUserRole.setOrgUser(RowMapper.setOrgUserRow(row));
-			orgUserRole.setOrgDetail(RowMapper.setOrgDetailRow(row));
+			orgUserRole.setOrgUser(RowMapper.getOrgUserRow(row));
+			orgUserRole.setOrgDetail(RowMapper.getOrgDetailRow(row));
 			OrgUserRolesArray.put(orgUserRole);
 		}
 			
@@ -98,8 +98,8 @@ private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getN
 			OrgUserRole orgUserRole = new OrgUserRole();
 			orgUserRole.setUserRoleId((Integer)(row.get("user_role_id")));
 			orgUserRole.setRolename((String)row.get("rolename"));
-			orgUserRole.setOrgUser(RowMapper.setOrgUserRow(row));
-			orgUserRole.setOrgDetail(RowMapper.setOrgDetailRow(row));
+			orgUserRole.setOrgUser(RowMapper.getOrgUserRow(row));
+			orgUserRole.setOrgDetail(RowMapper.getOrgDetailRow(row));
 			OrgUserRolesArray.put(orgUserRole);
 		}
 			

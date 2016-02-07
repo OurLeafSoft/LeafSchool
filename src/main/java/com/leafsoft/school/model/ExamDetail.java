@@ -76,4 +76,13 @@ public class ExamDetail implements Serializable {
 		return examSubjectMapping;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ExamDetail [examid=" + examid + ", examname=" + examname + ", examType=" + examType
+				+ ", examSubjectMappings=" + examSubjectMappings + "]";
+	}
+
 }

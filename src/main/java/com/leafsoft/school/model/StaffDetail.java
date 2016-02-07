@@ -130,4 +130,15 @@ public class StaffDetail implements Serializable {
 		return staffSubjectCourseHistory;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StaffDetail [staffid=" + staffid + ", contactnumber=" + contactnumber + ", email=" + email
+				+ ", joiningdate=" + joiningdate + ", prvExperience=" + prvExperience + ", qualification="
+				+ qualification + ", staffname=" + staffname + ", designation=" + designation
+				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
+	}
+
 }

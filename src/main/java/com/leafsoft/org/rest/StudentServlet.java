@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import com.leafsoft.school.model.StudentDetail;
 
 	@Path("/student")
-	public class Student {
+	public class StudentServlet {
 
 		@GET
 		@Path("/get")
