@@ -21,7 +21,7 @@ import com.leafsoft.http.HttpUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgUserRolesDao;
 import com.leafsoft.school.dao.OrgUsersDao;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
@@ -326,7 +326,7 @@ public class OrgUtil {
 	
 	public static void initOrgDetails(HttpServletRequest request, OrgUser orgUser) throws Exception{
 		OrgUserRolesDao userRoleDao = DaoSelectorUtil.getOrgUserRolesDao();
-		OrganizationDao orgDao = DaoSelectorUtil.getOrganizationDao();
+		OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
     	int totalOrg = userRoleDao.getTotalNumberOfOrgForUser(orgUser.getLuid());//Check number orgs assoicated with the current user
     	
     	if(totalOrg == 1) {//if customer has only one org than allow him to access that org details 

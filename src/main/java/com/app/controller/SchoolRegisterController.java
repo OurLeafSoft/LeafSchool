@@ -17,7 +17,7 @@ import com.leafsoft.mail.SendMail;
 import com.leafsoft.org.OrgUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgUsersDao;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.Course;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
@@ -56,7 +56,7 @@ public class SchoolRegisterController {
 	        }
 	    	OrgUtil.setOwnerid(orguserid);
 	    	OrgUtil.setOwner(orguser);
-	    	OrganizationDao orgDao = DaoSelectorUtil.getOrganizationDao();
+	    	OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
 	    	if(!org.getOrgname().equals("")) { 
 	    	// Inject the datasource into the dao
 	        int orgId = orgDao.insert(org);

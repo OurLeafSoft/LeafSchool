@@ -20,16 +20,16 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import com.leafsoft.org.OrgUtil;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.school.rowmapper.RowMapper;
 import com.leafsoft.school.util.CommonUtil;
 import com.leafsoft.util.JdbcUtil;
 
-public class OrganizationDaoImpl implements OrganizationDao{
+public class OrgDetailsDaoImpl implements OrgDetailsDao{
 	
-	private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(OrgDetailsDao.class.getName());
 	
 	private DataSource dataSource;
 	
@@ -136,6 +136,19 @@ public class OrganizationDaoImpl implements OrganizationDao{
 		String sql = "update OrgDetails od inner join OrgUserRoles our on our.orgid = od.orgid inner join OrgUsers ou on ou.luid = our.luid set orgname = ?, address=?, state=?,city=?,zipcode=?,timetype=? , dateformat=?,country=? WHERE od.orgid = ? and and ou.luid=?";  
 		try {
 			int updateRecords = jdbcTemplate.update(sql,new Object[]{orgdetails.getOrgname(),orgdetails.getAddress(),orgdetails.getState(),orgdetails.getCity(),orgdetails.getZipcode(),orgdetails.getTimetype(),orgdetails.getDateformat(),orgdetails.getCountry(),orgId,luid});
+			if(updateRecords >0) {
+				return true;
+			}
+		} catch(Exception e) {
+			LOGGER.log(Level.INFO,"hasOrg():::"+orgId+e.getMessage(),e);
+		}
+		return false;
+	}
+	
+	public boolean updateOrgStatus(long orgId,long userId,int status) {
+		String sql = "update OrgDetails od inner join OrgUserRoles our on our.orgid = od.orgid inner join OrgUsers ou on ou.luid = our.luid set status = ? WHERE od.orgid = ? and ou.luid = ?";
+		try {
+			int updateRecords = jdbcTemplate.update(sql,new Object[]{status,orgId,userId});
 			if(updateRecords >0) {
 				return true;
 			}

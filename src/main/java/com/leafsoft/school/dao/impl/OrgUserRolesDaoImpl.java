@@ -18,14 +18,14 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import com.leafsoft.school.dao.OrgUserRolesDao;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.school.rowmapper.RowMapper;
 import com.leafsoft.util.JdbcUtil;
 
 public class OrgUserRolesDaoImpl implements OrgUserRolesDao {
-private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getName());
+private static final Logger LOGGER = Logger.getLogger(OrgDetailsDao.class.getName());
 	
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;

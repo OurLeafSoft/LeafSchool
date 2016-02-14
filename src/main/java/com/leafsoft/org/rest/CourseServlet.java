@@ -1,16 +1,25 @@
 package com.leafsoft.org.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.leafsoft.org.OrgUtil;
+import org.codehaus.jettison.json.JSONObject;
+
+import com.leafsoft.org.rest.errorhandling.AppException;
+import com.leafsoft.school.dao.CoursesDao;
 import com.leafsoft.school.dao.DaoSelectorUtil;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
+import com.leafsoft.school.model.Course;
 import com.leafsoft.school.model.OrgDetail;
 
 @Path("/course")
@@ -19,24 +28,40 @@ public class CourseServlet {
 	@GET
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public OrgDetail getAllCourses() {
-
-		OrgDetail orgDetail = new OrgDetail();
-		OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
-		return orgDetail;
-
+	public Response getAllCourses() throws AppException{
+		List<Course> orgArray = new ArrayList<>();
+		CoursesDao courseDao = DaoSelectorUtil.getCourseDao();
+		orgArray = courseDao.getAllCourses();
+		return Response.ok().entity(orgArray).build();
 	}
-
-	@POST
+	
+	@GET
+    @Path("/{courseid}")
+    @Produces(MediaType.APPLICATION_JSON)
+	public Response getCoursesById(@PathParam("courseid") long courseid) throws AppException{
+		Course course = new Course();
+		CoursesDao courseDao = DaoSelectorUtil.getCourseDao();
+		course = courseDao.getCourseByCourseId(courseid);
+		if(course == null) {
+			throw new AppException(404, 5001, "Resource Not Available", "", "");
+		}
+		return Response.ok().entity(course).build();
+	}
+	
+	@PUT
 	@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createOrganizationInJSON(OrgDetail orgDetail) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response createCourse(Course course) throws AppException {
 
-		OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
-		orgdao.insert(orgDetail);
-		String result = "OrgDetail saved : " + orgDetail;
-
-		return Response.status(201).entity(result).build();
-		
+		CoursesDao courseDao = DaoSelectorUtil.getCourseDao();
+		if(!courseDao.hasCourseWithSection(course.getCourse(),course.getSection())) {
+			int courseid = courseDao.addCourse(course);
+			course.setCourseid(courseid);
+			return Response.status(201).entity(course).build();
+		} else {
+			throw new AppException(409, 5002, "Resource Already Available", "", "");
+		}
+		 
 	}
 }

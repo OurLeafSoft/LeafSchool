@@ -8,7 +8,7 @@ import org.json.JSONArray;
 
 import com.leafsoft.school.model.OrgDetail;
 
-public interface OrganizationDao {
+public interface OrgDetailsDao {
 	
 	public void setDataSource(DataSource datasource);
 	
@@ -21,6 +21,7 @@ public interface OrganizationDao {
 	public boolean hasOrg(String orgName);
 	
 	public List<OrgDetail> loadOrgDetailByUserId(long userId);
-	
+
+	public boolean updateOrgStatus(long orgId,long userId,int status);
 	
 }

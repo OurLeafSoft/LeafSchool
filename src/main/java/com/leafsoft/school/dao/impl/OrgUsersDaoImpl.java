@@ -16,12 +16,12 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import com.leafsoft.school.dao.OrgUsersDao;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.util.JdbcUtil;
 
 public class OrgUsersDaoImpl implements OrgUsersDao{
-private static final Logger LOGGER = Logger.getLogger(OrganizationDao.class.getName());
+private static final Logger LOGGER = Logger.getLogger(OrgDetailsDao.class.getName());
 	
 	private DataSource dataSource;
 	JdbcTemplate jdbcTemplate;

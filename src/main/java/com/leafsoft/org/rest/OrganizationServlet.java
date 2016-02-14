@@ -15,11 +15,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 import com.leafsoft.org.OrgUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
-import com.leafsoft.school.dao.OrganizationDao;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.org.rest.errorhandling.AppException;
 
@@ -32,7 +33,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response getOrganizaiontInJSON() throws AppException{
 			List<OrgDetail> orgArray = new ArrayList<>();
-			OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
+			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			orgArray = orgdao.loadOrgDetailByUserId(OrgUtil.getOwnerid());
 			return Response.ok().entity(orgArray).build();
 		}
@@ -42,13 +43,13 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 	    @Produces(MediaType.APPLICATION_JSON)
 		public Response getOrganizaiontInJSON(@PathParam("orgid") int orgid) throws AppException{
 			OrgDetail orgDetail = new OrgDetail();
-			OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
+			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			orgDetail = orgdao.loadOrgDetailByOrgId(orgid,OrgUtil.getOwnerid());
 			if(orgDetail == null) {
-				throw new AppException(500, 5001, "Resource Not Available", "", "");
+				throw new AppException(404, 5001, "Resource Not Available", "", "");
 			}
 			return Response.ok().entity(orgDetail).build();
-		   }
+		}
 
 		@PUT
 		@Path("/")
@@ -56,7 +57,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response createOrganization(OrgDetail orgDetail) throws AppException {
 
-			OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
+			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			int orgId = orgdao.insert(orgDetail);
 			orgDetail.setOrgid(orgId);
 			return Response.status(201).entity(orgDetail).build();
@@ -70,22 +71,22 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response updateOrganization(@PathParam("orgid") int orgid,OrgDetail orgDetail) throws AppException {
 
-			OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
+			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			boolean success = orgdao.update(OrgUtil.getOwnerid(),orgid, orgDetail);
 			orgDetail.setOrgid(orgid);
 			return Response.status(202).entity(orgDetail).build();
 			
 		}
 		
-		@DELETE
-		@Path("/{orgid}")
+		@POST
+		@Path("/{orgid}/{status}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public Response deleteOrganization(@PathParam("orgid") int orgid,OrgDetail orgDetail) throws AppException {
+		public Response disableOrganization(@PathParam("orgid") int orgid,@PathParam("status") int status) throws AppException, JSONException {
 			JSONObject resJson = new JSONObject();
-			OrganizationDao orgdao = DaoSelectorUtil.getOrganizationDao();
-			boolean success = orgdao.update(OrgUtil.getOwnerid(),orgid, orgDetail);
-			orgDetail.setOrgid(orgid);
-			return Response.status(202).entity(orgDetail).build();
+			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
+			boolean success = orgdao.updateOrgStatus(orgid,OrgUtil.getOwnerid(),status);
+			resJson.put("message","disabled");
+			return Response.status(202).entity(resJson).build();
 			
 		}
 	}
