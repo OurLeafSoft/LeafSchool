@@ -13,14 +13,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jettison.json.JSONObject;
-
 import com.leafsoft.org.rest.errorhandling.AppException;
 import com.leafsoft.school.dao.CoursesDao;
 import com.leafsoft.school.dao.DaoSelectorUtil;
-import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.Course;
-import com.leafsoft.school.model.OrgDetail;
 
 @Path("/course")
 public class CourseServlet {
@@ -63,5 +59,27 @@ public class CourseServlet {
 			throw new AppException(409, 5002, "Resource Already Available", "", "");
 		}
 		 
+	}
+	
+	@POST
+	@Path("/{courseid}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateCourse(@PathParam("courseid") int courseid,Course course) throws AppException {
+		CoursesDao courseDao = DaoSelectorUtil.getCourseDao();
+		if(courseDao.getCourseByCourseId(courseid)!=null) {
+			if(!courseDao.hasCourseWithSection(course.getCourse(),course.getSection())) {
+				boolean success = courseDao.updateCourseDetails(course,courseid);
+				if(success) {
+					return Response.status(202).entity(course).build();
+				} else {
+					throw new AppException(500, 5003, "Internal Error", "", "");
+				}
+			} else {
+				throw new AppException(409, 5002, "Resource Already Available", "", "");
+			}
+		} else {
+			throw new AppException(404, 5001, "Resource Not Available", "", "");
+		}
 	}
 }

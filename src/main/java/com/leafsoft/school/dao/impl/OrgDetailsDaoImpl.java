@@ -117,13 +117,12 @@ public class OrgDetailsDaoImpl implements OrgDetailsDao{
 	}
 	
 	public boolean hasOrg(String orgId) {
-		String sql = "SELECT * FROM OrgDetails WHERE orgid = ?";  
+		String sql = "SELECT count(*) FROM OrgDetails WHERE orgid = ?";  
 		try {
-		Connection conn = dataSource.getConnection();
-	    PreparedStatement ps = conn.prepareStatement(sql);
-	    ps.setString(1,orgId);
-	    ResultSet rs = ps.executeQuery();
-	    return rs.next();
+			int count = jdbcTemplate.queryForObject(sql,new Object[] { orgId }, Integer.class);
+			if(count > 0) {
+				return true;
+			}
 		} catch(Exception e) {
 			LOGGER.log(Level.INFO,"hasOrg():::"+orgId+e.getMessage(),e);
 		}

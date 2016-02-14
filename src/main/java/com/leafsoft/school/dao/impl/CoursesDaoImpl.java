@@ -94,19 +94,33 @@ public class CoursesDaoImpl implements CoursesDao {
 		}
 		
 		public boolean hasCourseWithSection(String coursename,String section) {
-			String sql = "SELECT * FROM Courses WHERE course = ? and section = ?";  
+			String sql = "SELECT count(*) FROM Courses WHERE course = ? and section = ?";  
 			try {
-			Connection conn = dataSource.getConnection();
-		    PreparedStatement ps = conn.prepareStatement(sql);
-		    ps.setString(1,coursename);
-		    ps.setString(2,section);
-		    ResultSet rs = ps.executeQuery();
-		    return rs.next();
+			int count = jdbcTemplate.queryForObject(sql,new Object[] { coursename, section }, Integer.class);
+			if(count > 0) {
+				return true;
+			}
 			} catch(Exception e) {
 				LOGGER.log(Level.INFO,"hasOrg():::"+coursename+e.getMessage(),e);
 			}
 			return false;
 		    
+		}
+		
+		public boolean updateCourseDetails(Course course,int courseid) {
+			String sql = "update Courses set course = ?,section = ? where courseid = ?";
+			try {
+				int updateRecords = jdbcTemplate.update(sql, new Object[]{course.getCourse(),course.getSection(),courseid});
+				if(updateRecords > 0) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch(Exception e) {
+				LOGGER.log(Level.INFO,"hasOrg():::"+course.getCourseid()+e.getMessage(),e);
+				return false;
+			}
+				
 		}
 
 }
