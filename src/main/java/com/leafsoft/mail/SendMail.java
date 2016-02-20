@@ -28,8 +28,9 @@ public class SendMail
 	       message.setContent(msg,"text/html");
 	
 	       /* Transport class is used to deliver the message to the recipients */
-	       
-	       Transport.send(message);
+	       if(Boolean.valueOf(AppResources.getInstance().sendMail())) {
+	    	   Transport.send(message);
+	       }
 	       
 	       LOGGER.log(Level.INFO,"sendMail:::::"+to);
 	 

@@ -71,4 +71,8 @@ public class AppResources {
 	public String getAccountsUrl() {
 		return APP_PROPERTIES.getProperty("accounts.url").trim();
 	}
+	
+	public String sendMail() {
+		return APP_PROPERTIES.getProperty("sendmail").trim();
+	}
 }

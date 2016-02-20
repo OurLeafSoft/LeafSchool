@@ -21,6 +21,7 @@ import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.Course;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
+import com.leafsoft.user.LeafUser;
  
 @Controller
 public class SchoolRegisterController {
@@ -74,7 +75,9 @@ public class SchoolRegisterController {
 	        }
 	        String msg = "<img src='images/leafsoft.png' alt='LeafSoft'><br><h3>Hi "+org.getOrgname()+"</h3>,<br>"+"<h4>Welcome to LeafSoft!<br>Now that you've successfully created an LeafSoft School Management Online account.";
 	        msg = msg + "<br><br>Thanks<br>The LeafSoft Team";
-	        SendMail.send(OrgUtil.getUser().getEmail(), "Welcome to LeafSoft SchoolManagement", msg);
+	        if(OrgUtil.getOwner()!=null) {
+	        	SendMail.send(OrgUtil.getOwner().getEmail(), "Welcome to LeafSoft SchoolManagement", msg);
+	        }
     	}
     	else {
     		modelview.setViewName("Registration");
