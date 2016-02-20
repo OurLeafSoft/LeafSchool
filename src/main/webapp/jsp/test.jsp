@@ -17,5 +17,5 @@
 
 %>
 <% 
-out.print(new CoursesDaoImpl().loadCourseByCourse("1").getSection());
+
 %>

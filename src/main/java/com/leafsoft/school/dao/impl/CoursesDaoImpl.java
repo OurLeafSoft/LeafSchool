@@ -122,5 +122,18 @@ public class CoursesDaoImpl implements CoursesDao {
 			}
 				
 		}
+		
+		public boolean updateCourseStatus(int status,long courseid) {
+			String sql = "update Courses set status = ? where courseid = ?";
+			try {
+				int updateRecords = jdbcTemplate.update(sql,new Object[]{status,courseid});
+				if(updateRecords >0) {
+					return true;
+				}
+			} catch(Exception e) {
+				LOGGER.log(Level.INFO,"updateCourseStatus()"+courseid+e.getMessage(),e);
+			}
+			return false;
+		}
 
 }

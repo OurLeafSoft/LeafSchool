@@ -85,7 +85,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 			JSONObject resJson = new JSONObject();
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			boolean success = orgdao.updateOrgStatus(orgid,OrgUtil.getOwnerid(),status);
-			resJson.put("message","disabled");
+			resJson.put("message","updated");
 			return Response.status(202).entity(resJson).build();
 			
 		}

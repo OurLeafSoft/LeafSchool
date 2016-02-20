@@ -22,4 +22,6 @@ public interface CoursesDao {
 	public boolean hasCourseWithSection(String coursename,String section);
 	
 	public boolean updateCourseDetails(Course course,int courseid);
+	
+	public boolean updateCourseStatus(int status,long courseid);
 }

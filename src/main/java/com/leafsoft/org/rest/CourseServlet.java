@@ -13,9 +13,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+
+import com.leafsoft.org.OrgUtil;
 import com.leafsoft.org.rest.errorhandling.AppException;
 import com.leafsoft.school.dao.CoursesDao;
 import com.leafsoft.school.dao.DaoSelectorUtil;
+import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.Course;
 
 @Path("/course")
@@ -81,5 +86,17 @@ public class CourseServlet {
 		} else {
 			throw new AppException(404, 5001, "Resource Not Available", "", "");
 		}
+	}
+	
+	@POST
+	@Path("/{courseid}/{status}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response disableOrganization(@PathParam("courseid") long courseid,@PathParam("status") int status) throws AppException, JSONException {
+		JSONObject resJson = new JSONObject();
+		CoursesDao courseDao = DaoSelectorUtil.getCourseDao();
+		boolean success = courseDao.updateCourseStatus(status, courseid);
+		resJson.put("message","updated");
+		return Response.status(202).entity(resJson).build();
+		
 	}
 }
