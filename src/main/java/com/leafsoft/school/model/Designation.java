@@ -9,6 +9,8 @@ import java.util.List;
  * The persistent class for the Designations database table.
  * 
  */
+@Entity
+@Table(name="Designations")
 @NamedQuery(name="Designation.findAll", query="SELECT d FROM Designation d")
 public class Designation implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,6 +19,8 @@ public class Designation implements Serializable {
 	private int designationid;
 
 	private String designationname;
+
+	private byte status;
 
 	//bi-directional many-to-one association to DesignationGroup
 	@ManyToOne
@@ -44,6 +48,14 @@ public class Designation implements Serializable {
 
 	public void setDesignationname(String designationname) {
 		this.designationname = designationname;
+	}
+
+	public byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
 	}
 
 	public DesignationGroup getDesignationGroup() {
@@ -81,8 +93,8 @@ public class Designation implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Designation [designationid=" + designationid + ", designationname=" + designationname
-				+ ", designationGroup=" + designationGroup + ", staffDetails=" + staffDetails + "]";
+		return "Designation [designationid=" + designationid + ", designationname=" + designationname + ", status="
+				+ status + ", designationGroup=" + designationGroup + ", staffDetails=" + staffDetails + "]";
 	}
 
 }

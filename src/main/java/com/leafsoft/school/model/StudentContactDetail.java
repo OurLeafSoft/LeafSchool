@@ -10,6 +10,8 @@ import java.util.List;
  * The persistent class for the StudentContactDetails database table.
  * 
  */
+@Entity
+@Table(name="StudentContactDetails")
 @NamedQuery(name="StudentContactDetail.findAll", query="SELECT s FROM StudentContactDetail s")
 public class StudentContactDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -36,6 +38,8 @@ public class StudentContactDetail implements Serializable {
 	private String mothername;
 
 	private String state;
+
+	private byte status;
 
 	private String zipcode;
 
@@ -134,6 +138,14 @@ public class StudentContactDetail implements Serializable {
 		this.state = state;
 	}
 
+	public byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
+	}
+
 	public String getZipcode() {
 		return this.zipcode;
 	}
@@ -172,7 +184,8 @@ public class StudentContactDetail implements Serializable {
 		return "StudentContactDetail [familyid=" + familyid + ", address=" + address + ", caste=" + caste + ", city="
 				+ city + ", contactnumber=" + contactnumber + ", countrycode=" + countrycode + ", fathername="
 				+ fathername + ", guardianname=" + guardianname + ", guardiantype=" + guardiantype + ", mothername="
-				+ mothername + ", state=" + state + ", zipcode=" + zipcode + ", studentDetails=" + studentDetails + "]";
+				+ mothername + ", state=" + state + ", status=" + status + ", zipcode=" + zipcode + ", studentDetails="
+				+ studentDetails + "]";
 	}
 
 }

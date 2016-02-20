@@ -11,6 +11,8 @@ import java.util.List;
  * The persistent class for the StudentDetails database table.
  * 
  */
+@Entity
+@Table(name="StudentDetails")
 @NamedQuery(name="StudentDetail.findAll", query="SELECT s FROM StudentDetail s")
 public class StudentDetail implements Serializable {
 	private static final long serialVersionUID = 1L;

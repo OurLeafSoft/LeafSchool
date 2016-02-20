@@ -9,12 +9,16 @@ import java.util.List;
  * The persistent class for the Subjects database table.
  * 
  */
+@Entity
+@Table(name="Subjects")
 @NamedQuery(name="Subject.findAll", query="SELECT s FROM Subject s")
 public class Subject implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private int subjectid;
+
+	private byte status;
 
 	private String subjectname;
 
@@ -33,6 +37,14 @@ public class Subject implements Serializable {
 
 	public void setSubjectid(int subjectid) {
 		this.subjectid = subjectid;
+	}
+
+	public byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
 	}
 
 	public String getSubjectname() {
@@ -78,8 +90,8 @@ public class Subject implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Subject [subjectid=" + subjectid + ", subjectname=" + subjectname + ", subjecttype=" + subjecttype
-				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
+		return "Subject [subjectid=" + subjectid + ", status=" + status + ", subjectname=" + subjectname
+				+ ", subjecttype=" + subjecttype + ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
 	}
 
 }

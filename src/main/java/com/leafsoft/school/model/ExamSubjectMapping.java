@@ -10,6 +10,7 @@ import java.util.List;
  * The persistent class for the ExamSubjectMapping database table.
  * 
  */
+@Entity
 @NamedQuery(name="ExamSubjectMapping.findAll", query="SELECT e FROM ExamSubjectMapping e")
 public class ExamSubjectMapping implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,15 +21,17 @@ public class ExamSubjectMapping implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date acadamicyear;
 
-	//bi-directional many-to-one association to ExamDetail
-	@ManyToOne
-	@JoinColumn(name="examid")
-	private ExamDetail examDetail;
+	private byte status;
 
 	//bi-directional many-to-one association to StaffSubjectCourseHistory
 	@ManyToOne
 	@JoinColumn(name="staffsubjectcourseid")
 	private StaffSubjectCourseHistory staffSubjectCourseHistory;
+
+	//bi-directional many-to-one association to ExamDetail
+	@ManyToOne
+	@JoinColumn(name="examid")
+	private ExamDetail examDetail;
 
 	//bi-directional many-to-one association to StudentAcadamicHistory
 	@OneToMany(mappedBy="examSubjectMapping")
@@ -53,12 +56,12 @@ public class ExamSubjectMapping implements Serializable {
 		this.acadamicyear = acadamicyear;
 	}
 
-	public ExamDetail getExamDetail() {
-		return this.examDetail;
+	public byte getStatus() {
+		return this.status;
 	}
 
-	public void setExamDetail(ExamDetail examDetail) {
-		this.examDetail = examDetail;
+	public void setStatus(byte status) {
+		this.status = status;
 	}
 
 	public StaffSubjectCourseHistory getStaffSubjectCourseHistory() {
@@ -67,6 +70,14 @@ public class ExamSubjectMapping implements Serializable {
 
 	public void setStaffSubjectCourseHistory(StaffSubjectCourseHistory staffSubjectCourseHistory) {
 		this.staffSubjectCourseHistory = staffSubjectCourseHistory;
+	}
+
+	public ExamDetail getExamDetail() {
+		return this.examDetail;
+	}
+
+	public void setExamDetail(ExamDetail examDetail) {
+		this.examDetail = examDetail;
 	}
 
 	public List<StudentAcadamicHistory> getStudentAcadamicHistories() {
@@ -96,8 +107,8 @@ public class ExamSubjectMapping implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "ExamSubjectMapping [examsubjectid=" + examsubjectid + ", acadamicyear=" + acadamicyear + ", examDetail="
-				+ examDetail + ", staffSubjectCourseHistory=" + staffSubjectCourseHistory
+		return "ExamSubjectMapping [examsubjectid=" + examsubjectid + ", acadamicyear=" + acadamicyear + ", status="
+				+ status + ", staffSubjectCourseHistory=" + staffSubjectCourseHistory + ", examDetail=" + examDetail
 				+ ", studentAcadamicHistories=" + studentAcadamicHistories + "]";
 	}
 

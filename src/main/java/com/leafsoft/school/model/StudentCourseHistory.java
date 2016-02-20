@@ -10,6 +10,7 @@ import java.util.List;
  * The persistent class for the StudentCourseHistory database table.
  * 
  */
+@Entity
 @NamedQuery(name="StudentCourseHistory.findAll", query="SELECT s FROM StudentCourseHistory s")
 public class StudentCourseHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,15 +25,15 @@ public class StudentCourseHistory implements Serializable {
 	@OneToMany(mappedBy="studentCourseHistory")
 	private List<StudentAcadamicHistory> studentAcadamicHistories;
 
+	//bi-directional many-to-one association to Cours
+	@ManyToOne
+	@JoinColumn(name="courseid")
+	private Course cours;
+
 	//bi-directional many-to-one association to StudentDetail
 	@ManyToOne
 	@JoinColumn(name="studentid")
 	private StudentDetail studentDetail;
-
-	//bi-directional many-to-one association to Course
-	@ManyToOne
-	@JoinColumn(name="courseid")
-	private Course cours;
 
 	public StudentCourseHistory() {
 	}
@@ -75,14 +76,6 @@ public class StudentCourseHistory implements Serializable {
 		return studentAcadamicHistory;
 	}
 
-	public StudentDetail getStudentDetail() {
-		return this.studentDetail;
-	}
-
-	public void setStudentDetail(StudentDetail studentDetail) {
-		this.studentDetail = studentDetail;
-	}
-
 	public Course getCours() {
 		return this.cours;
 	}
@@ -91,14 +84,22 @@ public class StudentCourseHistory implements Serializable {
 		this.cours = cours;
 	}
 
+	public StudentDetail getStudentDetail() {
+		return this.studentDetail;
+	}
+
+	public void setStudentDetail(StudentDetail studentDetail) {
+		this.studentDetail = studentDetail;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "StudentCourseHistory [studentcoursehistoryid=" + studentcoursehistoryid + ", acadamicyear="
-				+ acadamicyear + ", studentAcadamicHistories=" + studentAcadamicHistories + ", studentDetail="
-				+ studentDetail + ", cours=" + cours + "]";
+				+ acadamicyear + ", studentAcadamicHistories=" + studentAcadamicHistories + ", cours=" + cours
+				+ ", studentDetail=" + studentDetail + "]";
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.List;
  * The persistent class for the StaffSubjectCourseHistory database table.
  * 
  */
+@Entity
 @NamedQuery(name="StaffSubjectCourseHistory.findAll", query="SELECT s FROM StaffSubjectCourseHistory s")
 public class StaffSubjectCourseHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -34,7 +35,7 @@ public class StaffSubjectCourseHistory implements Serializable {
 	@JoinColumn(name="subjectid")
 	private Subject subject;
 
-	//bi-directional many-to-one association to Course
+	//bi-directional many-to-one association to Cours
 	@ManyToOne
 	@JoinColumn(name="courseid")
 	private Course cours;

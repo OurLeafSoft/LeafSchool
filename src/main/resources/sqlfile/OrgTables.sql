@@ -11,6 +11,7 @@ CREATE TABLE `StudentContactDetails` (
   `city` varchar(75) DEFAULT NULL,
   `zipcode` varchar(50) DEFAULT NULL,
   `contactnumber` bigint(20) DEFAULT '-1',
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`familyid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
@@ -19,7 +20,7 @@ CREATE TABLE `StudentDetails` (
   `studentname` varchar(100) NOT NULL,
   `dob` date DEFAULT NULL,
   `gender` tinyint(4) NOT NULL DEFAULT '-1',
-  `status` tinyint(4) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   `regdate` bigint(20) NOT NULL,
   `familyid` int(11) NOT NULL,
   PRIMARY KEY (`studentid`),
@@ -30,6 +31,7 @@ CREATE TABLE `StudentDetails` (
 CREATE TABLE `DesignationGroup` (
   `designationgroupid` int(11) NOT NULL AUTO_INCREMENT,
   `designationgroupname` varchar(100) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`designationgroupid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
@@ -37,6 +39,7 @@ CREATE TABLE `Designations` (
   `designationid` int(11) NOT NULL AUTO_INCREMENT,
   `designationname` varchar(100) NOT NULL,
   `designationgroupid` int(11) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`designationid`),
   KEY `fk_did` (`designationgroupid`),
   CONSTRAINT `Designations_fk_designationgroupid` FOREIGN KEY (`designationgroupid`) REFERENCES `DesignationGroup` (`designationgroupid`)
@@ -51,6 +54,7 @@ CREATE TABLE `StaffDetails` (
   `qualification` varchar(100) DEFAULT NULL,
   `prv_experience` varchar(200) DEFAULT NULL,
   `designationid` int(11) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`staffid`),
   CONSTRAINT `StaffDetails_fk_designationid` FOREIGN KEY (`designationid`) REFERENCES `Designations` (`designationid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
@@ -59,6 +63,7 @@ CREATE TABLE `Subjects` (
   `subjectid` int(11) NOT NULL AUTO_INCREMENT,
   `subjectname` varchar(100) NOT NULL,
   `subjecttype` tinyint(4) NOT NULL DEFAULT '-1',
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`subjectid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
@@ -66,6 +71,7 @@ CREATE TABLE `Courses` (
   `courseid` int(11) NOT NULL AUTO_INCREMENT,
   `course` varchar(50) NOT NULL,
   `section` varchar(20) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`courseid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
@@ -99,6 +105,7 @@ CREATE TABLE `StudentCourseHistory` (
 CREATE TABLE `ExamType` (
   `examtypeid` int(11) NOT NULL AUTO_INCREMENT,
   `examtypename` varchar(100) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`examtypeid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
@@ -106,6 +113,7 @@ CREATE TABLE `ExamDetails` (
   `examid` int(11) NOT NULL AUTO_INCREMENT,
   `examname` varchar(100) NOT NULL,
   `examtypeid` int(11) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`examid`),
   KEY `ExamDetails_examtypeid` (`examtypeid`),
   CONSTRAINT `ExamDetails_fk_examtypeid` FOREIGN KEY (`examtypeid`) REFERENCES `ExamType` (`examtypeid`)
@@ -116,6 +124,7 @@ CREATE TABLE `ExamDetails` (
   `staffsubjectcourseid` int(11) NOT NULL,
   `examid` int(11) NOT NULL,
   `acadamicyear` year(4) DEFAULT NULL,
+  `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`examsubjectid`),
   KEY `ExamSubjectMapping_courseid` (`staffsubjectcourseid`),
   KEY `ExamSubjectMapping_examid` (`examid`),

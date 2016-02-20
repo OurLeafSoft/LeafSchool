@@ -8,6 +8,7 @@ import javax.persistence.*;
  * The persistent class for the StudentAcadamicHistory database table.
  * 
  */
+@Entity
 @NamedQuery(name="StudentAcadamicHistory.findAll", query="SELECT s FROM StudentAcadamicHistory s")
 public class StudentAcadamicHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,15 +18,15 @@ public class StudentAcadamicHistory implements Serializable {
 
 	private byte historytype;
 
-	//bi-directional many-to-one association to ExamSubjectMapping
-	@ManyToOne
-	@JoinColumn(name="examsubjectid")
-	private ExamSubjectMapping examSubjectMapping;
-
 	//bi-directional many-to-one association to StudentCourseHistory
 	@ManyToOne
 	@JoinColumn(name="studentcoursehistoryid")
 	private StudentCourseHistory studentCourseHistory;
+
+	//bi-directional many-to-one association to ExamSubjectMapping
+	@ManyToOne
+	@JoinColumn(name="examsubjectid")
+	private ExamSubjectMapping examSubjectMapping;
 
 	//bi-directional many-to-one association to StudentDetail
 	@ManyToOne
@@ -51,20 +52,20 @@ public class StudentAcadamicHistory implements Serializable {
 		this.historytype = historytype;
 	}
 
-	public ExamSubjectMapping getExamSubjectMapping() {
-		return this.examSubjectMapping;
-	}
-
-	public void setExamSubjectMapping(ExamSubjectMapping examSubjectMapping) {
-		this.examSubjectMapping = examSubjectMapping;
-	}
-
 	public StudentCourseHistory getStudentCourseHistory() {
 		return this.studentCourseHistory;
 	}
 
 	public void setStudentCourseHistory(StudentCourseHistory studentCourseHistory) {
 		this.studentCourseHistory = studentCourseHistory;
+	}
+
+	public ExamSubjectMapping getExamSubjectMapping() {
+		return this.examSubjectMapping;
+	}
+
+	public void setExamSubjectMapping(ExamSubjectMapping examSubjectMapping) {
+		this.examSubjectMapping = examSubjectMapping;
 	}
 
 	public StudentDetail getStudentDetail() {
@@ -81,7 +82,7 @@ public class StudentAcadamicHistory implements Serializable {
 	@Override
 	public String toString() {
 		return "StudentAcadamicHistory [studenthistoryid=" + studenthistoryid + ", historytype=" + historytype
-				+ ", examSubjectMapping=" + examSubjectMapping + ", studentCourseHistory=" + studentCourseHistory
+				+ ", studentCourseHistory=" + studentCourseHistory + ", examSubjectMapping=" + examSubjectMapping
 				+ ", studentDetail=" + studentDetail + "]";
 	}
 

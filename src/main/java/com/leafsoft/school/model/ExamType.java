@@ -9,6 +9,7 @@ import java.util.List;
  * The persistent class for the ExamType database table.
  * 
  */
+@Entity
 @NamedQuery(name="ExamType.findAll", query="SELECT e FROM ExamType e")
 public class ExamType implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -17,6 +18,8 @@ public class ExamType implements Serializable {
 	private int examtypeid;
 
 	private String examtypename;
+
+	private byte status;
 
 	//bi-directional many-to-one association to ExamDetail
 	@OneToMany(mappedBy="examType")
@@ -39,6 +42,14 @@ public class ExamType implements Serializable {
 
 	public void setExamtypename(String examtypename) {
 		this.examtypename = examtypename;
+	}
+
+	public byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
 	}
 
 	public List<ExamDetail> getExamDetails() {
@@ -68,8 +79,8 @@ public class ExamType implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "ExamType [examtypeid=" + examtypeid + ", examtypename=" + examtypename + ", examDetails=" + examDetails
-				+ "]";
+		return "ExamType [examtypeid=" + examtypeid + ", examtypename=" + examtypename + ", status=" + status
+				+ ", examDetails=" + examDetails + "]";
 	}
 
 }

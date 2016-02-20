@@ -6,9 +6,11 @@ import java.util.List;
 
 
 /**
- * The persistent class for the courses database table.
+ * The persistent class for the Courses database table.
  * 
  */
+@Entity
+@Table(name="Courses")
 @NamedQuery(name="Course.findAll", query="SELECT c FROM Course c")
 public class Course implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,8 @@ public class Course implements Serializable {
 	private String course;
 
 	private String section;
+
+	private byte status;
 
 	//bi-directional many-to-one association to StaffSubjectCourseHistory
 	@OneToMany(mappedBy="cours")
@@ -53,6 +57,14 @@ public class Course implements Serializable {
 
 	public void setSection(String section) {
 		this.section = section;
+	}
+
+	public byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
 	}
 
 	public List<StaffSubjectCourseHistory> getStaffSubjectCourseHistories() {
@@ -104,11 +116,9 @@ public class Course implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Course [courseid=" + courseid + ", course=" + course + ", section=" + section
+		return "Course [courseid=" + courseid + ", course=" + course + ", section=" + section + ", status=" + status
 				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + ", studentCourseHistories="
 				+ studentCourseHistories + "]";
 	}
-	
-	
 
 }

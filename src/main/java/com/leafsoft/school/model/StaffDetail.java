@@ -11,6 +11,8 @@ import java.util.List;
  * The persistent class for the StaffDetails database table.
  * 
  */
+@Entity
+@Table(name="StaffDetails")
 @NamedQuery(name="StaffDetail.findAll", query="SELECT s FROM StaffDetail s")
 public class StaffDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +33,8 @@ public class StaffDetail implements Serializable {
 	private String qualification;
 
 	private String staffname;
+
+	private byte status;
 
 	//bi-directional many-to-one association to Designation
 	@ManyToOne
@@ -100,6 +104,14 @@ public class StaffDetail implements Serializable {
 		this.staffname = staffname;
 	}
 
+	public byte getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(byte status) {
+		this.status = status;
+	}
+
 	public Designation getDesignation() {
 		return this.designation;
 	}
@@ -137,7 +149,7 @@ public class StaffDetail implements Serializable {
 	public String toString() {
 		return "StaffDetail [staffid=" + staffid + ", contactnumber=" + contactnumber + ", email=" + email
 				+ ", joiningdate=" + joiningdate + ", prvExperience=" + prvExperience + ", qualification="
-				+ qualification + ", staffname=" + staffname + ", designation=" + designation
+				+ qualification + ", staffname=" + staffname + ", status=" + status + ", designation=" + designation
 				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
 	}
 
