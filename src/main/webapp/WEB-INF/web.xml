@@ -105,7 +105,7 @@
 		<filter-name>springSecurityFilterChain</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
+	<!--<filter-mapping>
 		<filter-name>DoesNotFilter</filter-name>
 		<url-pattern>/accessdenied</url-pattern>
 	</filter-mapping>
@@ -121,10 +121,10 @@
 		<filter-name>DoesNotFilter</filter-name>
 		<url-pattern>/invaliduser</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
+	 <filter-mapping>
 		<filter-name>DoesNotFilter</filter-name>
 		<url-pattern>/schoolRegister</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	<filter-mapping>
 		<filter-name>DoesNotFilter</filter-name>
 		<url-pattern>/favicon.ico</url-pattern>
@@ -144,7 +144,7 @@
     <filter-mapping>
          <filter-name>OrgFilter</filter-name>
          <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping> 
 	<servlet>
 <servlet-name>test</servlet-name>
 <jsp-file>/jsp/test.jsp</jsp-file>
@@ -160,6 +160,6 @@
 </servlet-mapping>
 
 <welcome-file-list>
-		<welcome-file>/welcome</welcome-file>
+		<welcome-file>/jsp/index.jsp</welcome-file>
 	</welcome-file-list>
 </web-app>

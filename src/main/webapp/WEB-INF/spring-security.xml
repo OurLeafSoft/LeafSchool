@@ -16,6 +16,8 @@
 	<http pattern="/accessdenied" security="none"/>
 	<http create-session="never"
 		auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
+		<intercept-url pattern="/jsp/index.html" access="ROLE_GUEST"/>
+		<access-denied-handler error-page="/403" />
 		<intercept-url pattern="/**" access="ROLE_COMMONUSER"/>
 		<intercept-url pattern="/register" access="ROLE_COMMONUSER"/>
 		<intercept-url pattern="/schoolRegister" access="ROLE_COMMONUSER"/>
