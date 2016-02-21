@@ -235,7 +235,7 @@ public class OrgUtil {
 		try {
 			HttpSession session = request.getSession();
 			OrgUser orgUser = getCurrentUser();
-			if(orgUser == null) {
+			if(orgUser == null || orgUser.getUsername().equalsIgnoreCase("guest")) {
 				Cookie[] cookie_jar = request.getCookies();
 				System.out.print("sessionidprincipal"+request.getUserPrincipal());
 				System.out.print("sessionidname"+session.getAttribute("user"));
@@ -261,34 +261,36 @@ public class OrgUtil {
 									e.printStackTrace();
 								}
 							}
-								
-						if(sessionUser!= null && sessionUser.length() <=0) {
-							return false;
-						} else if(sessionUser!=null){
-							LeafUser leafuser = CommonUtil.getLeafUserFromSessionJson(sessionUser);
-							OrgUtil.init(leafuser, request.getParameter("orgid"), request.getRemoteAddr());
-	//						SecurityContext securityContext = SecurityContextHolder.getContext();
-	//						session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-							OrgUtil.setUser(leafuser);
-							OrgUtil.setUserlid(leafuser.getLid());
-					        // Inject the datasource into the dao
-					    	OrgUsersDao userDAO = DaoSelectorUtil.getOrgUserDao();
-					    	orgUser = userDAO.loadOrgUserByLid(leafuser.getLid());
-					    	if(orgUser == null) {
-					    		orgUser = new OrgUser();
-					    		orgUser.setEmail(leafuser.getEmail());
-					    		orgUser.setLid(leafuser.getLid());
-					    		orgUser.setUsername(leafuser.getUsername());
-					    		orgUser.setDefaultorgid(-1);
-					    		int luid = userDAO.insert(orgUser);
-					    		orgUser.setLuid(luid);
-					    	}
-					    	initOrgDetails(request, orgUser);
-					    	
-							return true;
-						}
+				}
+				else if(Boolean.valueOf(AppResources.getInstance().isDevelopmentMode())) {
+					sessionUser = JSONUtil.getInstance().getDebugJson().getJSONObject("1").getJSONObject("userInfo");
+				}
+				if(sessionUser!= null && sessionUser.length() <=0) {
+					return false;
+				} else if(sessionUser!=null){
+					LeafUser leafuser = CommonUtil.getLeafUserFromSessionJson(sessionUser);
+					OrgUtil.init(leafuser, request.getParameter("orgid"), request.getRemoteAddr());
+//						SecurityContext securityContext = SecurityContextHolder.getContext();
+//						session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+					OrgUtil.setUser(leafuser);
+					OrgUtil.setUserlid(leafuser.getLid());
+			        // Inject the datasource into the dao
+			    	OrgUsersDao userDAO = DaoSelectorUtil.getOrgUserDao();
+			    	orgUser = userDAO.loadOrgUserByLid(leafuser.getLid());
+			    	if(orgUser == null) {
+			    		orgUser = new OrgUser();
+			    		orgUser.setEmail(leafuser.getEmail());
+			    		orgUser.setLid(leafuser.getLid());
+			    		orgUser.setUsername(leafuser.getUsername());
+			    		orgUser.setDefaultorgid(-1);
+			    		int luid = userDAO.insert(orgUser);
+			    		orgUser.setLuid(luid);
+			    	}
+			    	initOrgDetails(request, orgUser);
+			    	
+					return true;
+				}
 						
-					}
 				} else {
 //				Authentication a = SecurityContextHolder.getContext().getAuthentication();
 //				a.setAuthenticated(false);
@@ -361,6 +363,7 @@ public class OrgUtil {
     		}
     		OrgUtil.setValidOrg(isValidOrg);
     	}
+    	OrgUtil.setOrgUser(orgUser);
     	OrgUtil.setOwner(orgUser);
     	OrgUtil.setOwnerid(orgUser.getLuid());
     	OrgUtil.setUserlid(orgUser.getLid());
