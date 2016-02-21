@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Free Element Education Website Template | Home :: w3layouts</title>
+<title>LeafSchool</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -72,7 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 <div class="header_top">
 		 	  <div class="wrap">	 			
 				<div class="logo">
-					<a href="index.html"><img src="images/logo.png"></a>
+					<a href="index.html"><img src="images/leafsoft.png"></a>
 				</div>	
 				<div class="header-top-right">
 					<div class="social-icons">						
@@ -88,10 +88,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 		    </div>
 		 		    <div class="login_button">
 					<div class="call">
-						<p>Help : + 00 - 000 - 00000</p>
+						<p>Help : + 91 - 9715 - 414544</p>
 					</div>
 					    <ul>
-					   		 <li><img src="images/login.png" alt=""><a href="#member">Login</a></li>
+					   		 <li><img src="images/login.png" alt=""><a href="/school/register">Login/Register</a></li>
 					   		 <li><img src="images/chat.png" alt=""><a href="">Live Chat</a></li>
 					    </ul>
 				  </div>
@@ -478,7 +478,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="footer-grides">
 		   <div class="foot-1" style="margin-left:0;text-align:center">
 			<img src="images/footer-logo.png">
-			<h4>Â© All rights Reseverd</h4>
+			<h4>© All rights Reseverd</h4>
         </div>
 		<div class="foot-1">
 			<h3>Latest News</h3>
@@ -502,9 +502,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	</div>
   </div>
 		  <div class="copy_right">
-				<p>Company Name Â© All rights Reseverd | Design by  <a href="http://www.w3layouts.com">W3Layouts</a></p>
+				<p>Company Name © All rights Reseverd | Design by  <a href="http://www.w3layouts.com">W3Layouts</a></p>
 		   </div>
 	</div>
 </body>
 </html>
-

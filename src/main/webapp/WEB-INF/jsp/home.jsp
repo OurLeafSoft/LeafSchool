@@ -76,7 +76,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 <div class="header_top">
 		 	  <div class="wrap">	 			
 				<div class="logo">
-					<a href="index.html"><img src="images/leafsoft.png"></a>
+					<!-- <a href="index.html"><img src="images/leafsoft.png"></a> -->
+					<c:out value="${user.username}"/>
 				</div>	
 				<div class="header-top-right">
 					<div class="social-icons">						

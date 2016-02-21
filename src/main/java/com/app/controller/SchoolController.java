@@ -1,5 +1,7 @@
 package com.app.controller;
 
+import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +34,7 @@ import com.leafsoft.util.AppResources;
 public class SchoolController 
 {
 	private static Logger LOGGER = Logger.getLogger(SchoolController.class.getName());
-	@RequestMapping(value = {"/", "/welcome"})
+	@RequestMapping(value = {"/welcome"})
 	public ModelAndView welcome(HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
@@ -47,6 +49,29 @@ public class SchoolController
 		return model;
 
 	}
+	
+	// for 403 access denied page
+		@RequestMapping(value = "/403", method = RequestMethod.GET)
+		public ModelAndView accesssDenied(Principal user,HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+			ModelAndView model = new ModelAndView();
+
+			if (user != null) {
+				RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+				model.addObject("msg", "Hi " + user.getName() 
+				+ ",You do not have permission to access this page!");
+				if(user.getName().equals("guest")) {
+					redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getAccountsUrl());
+				}
+			} else {
+				model.addObject("msg", 
+				"You do not have permission to access this page!");
+			}
+
+			model.setViewName("403");
+			return model;
+
+		}
 	
 	@RequestMapping(value = {"/invaliduser"})
 	public ModelAndView invalidUser() {

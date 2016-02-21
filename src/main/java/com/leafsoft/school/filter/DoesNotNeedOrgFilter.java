@@ -29,6 +29,7 @@ private static final Logger LOGGER = Logger.getLogger(DoesNotNeedOrgFilter.class
 			throws IOException, ServletException {
 		try {
 			HttpServletRequest request = (HttpServletRequest) req;
+			LOGGER.log(Level.INFO,"URL:::::::"+request.getRequestURI());
 			request.setAttribute(Constants.DOES_NOT_NEED_ORGFILTER, true);
 			fc.doFilter(req, res);
 		} catch (Exception e) {

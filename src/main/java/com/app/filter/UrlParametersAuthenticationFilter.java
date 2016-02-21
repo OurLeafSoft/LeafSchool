@@ -23,6 +23,9 @@ public class UrlParametersAuthenticationFilter  extends AbstractPreAuthenticated
 		//Getting authentication credentials
 		if(OrgUtil.getUser()!=null) {
 			leafuser = OrgUtil.getUser();
+		} else {
+			leafuser = new LeafUser();
+			leafuser.setUsername("guest");
 		}
 	    
 	    return leafuser;

@@ -33,24 +33,25 @@ public class OrgFilter implements Filter {
 			HttpServletRequest request = (HttpServletRequest) req;
 			HttpServletResponse response = (HttpServletResponse) res;
 			LOGGER.log(Level.INFO,"getOrgId:::::ip:"+OrgUtil.getOrgId());
+			LOGGER.log(Level.INFO,"getOrgId:::::ip:"+request.getRequestURI());
 			LOGGER.log(Level.INFO,"Filter:::::ip:"+request.getRemoteAddr());
 			if(request.getAttribute(Constants.DOES_NOT_NEED_ORGFILTER) == null || !Boolean.valueOf(request.getAttribute(Constants.DOES_NOT_NEED_ORGFILTER).toString())) {
 				OrgUtil.setCurrentUser(request);
 				LOGGER.log(Level.INFO,"OrgUtil.getUserlid():::"+OrgUtil.getUserlid());
 				LOGGER.log(Level.INFO,"OrgUtil.getOrgId():::"+OrgUtil.getOrgId());
 				LOGGER.log(Level.INFO,"OrgUtil.isValidOrg():::"+OrgUtil.isValidOrg());
-				if(OrgUtil.getUserlid() == null) {
-					request.getRequestDispatcher("/invaliduser").forward(request, response);
-					return;
-				} else if(OrgUtil.getOrgId() == null) {
-					request.getRequestDispatcher("/register").forward(request, response);
-					return;
-				} else if(!OrgUtil.isValidOrg()) {
-					request.getRequestDispatcher("/accessdenied").forward(request, response);
-					return;
-				}
+//				if(OrgUtil.getUserlid() == null) {
+//					request.getRequestDispatcher("/invaliduser").forward(request, response);
+//					return;
+//				} else if(OrgUtil.getOrgId() == null) {
+//					request.getRequestDispatcher("/register").forward(request, response);
+//					return;
+//				} else if(!OrgUtil.isValidOrg()) {
+//					request.getRequestDispatcher("/accessdenied").forward(request, response);
+//					return;
+//				}
 			} else {
-				OrgUtil.setCurrentUser(request);
+				//OrgUtil.setCurrentUser(request);
 			}
 			fc.doFilter(req, res);
 		} catch (Exception e) {

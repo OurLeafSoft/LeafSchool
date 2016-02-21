@@ -49,6 +49,8 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 	    	} else {
 	    		userDetails = getCommonUser(name);
 	    	}
+		} else {
+			userDetails = getGuestUser("guest");
 		}
 
 		if (userDetails == null) {
@@ -65,6 +67,7 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DBA"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -74,6 +77,7 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DBA"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -82,6 +86,7 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -89,6 +94,14 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 	private UserDetails getCommonUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		return new User(username, "notused", true, true, true, true,
+				grantedAuthorities);
+	}
+	
+	private UserDetails getGuestUser(String username) {
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
