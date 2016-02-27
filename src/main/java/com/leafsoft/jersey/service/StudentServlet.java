@@ -1,4 +1,4 @@
-package com.leafsoft.org.rest;
+package com.leafsoft.jersey.service;
 
 
 import java.util.Date;

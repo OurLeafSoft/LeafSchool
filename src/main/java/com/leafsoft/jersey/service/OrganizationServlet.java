@@ -1,9 +1,11 @@
-package com.leafsoft.org.rest;
+package com.leafsoft.jersey.service;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.security.DenyAll;
+import javax.annotation.security.PermitAll;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,24 +20,23 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.leafsoft.jersey.errorhandling.AppException;
 import com.leafsoft.org.OrgUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.OrgDetail;
-import com.leafsoft.org.rest.errorhandling.AppException;
 
 	@Path("/organization")
 	public class OrganizationServlet {
 		
-		
+		@PermitAll
 		@GET
-		@Path("/")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response getOrganizaiontInJSON() throws AppException{
 			List<OrgDetail> orgArray = new ArrayList<>();
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			orgArray = orgdao.loadOrgDetailByUserId(OrgUtil.getOwnerid());
-			return Response.ok().entity(orgArray).build();
+			return Response.ok().entity(orgArray.toString()).build();
 		}
 		
 		@GET
@@ -48,7 +49,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 			if(orgDetail == null) {
 				throw new AppException(404, 5001, "Resource Not Available", "", "");
 			}
-			return Response.ok().entity(orgDetail).build();
+			return Response.ok().entity(orgDetail.toString()).build();
 		}
 
 		@PUT
@@ -60,7 +61,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			int orgId = orgdao.insert(orgDetail);
 			orgDetail.setOrgid(orgId);
-			return Response.status(201).entity(orgDetail).build();
+			return Response.status(201).entity(orgDetail.toString()).build();
 			
 		}
 		
@@ -74,7 +75,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			boolean success = orgdao.update(OrgUtil.getOwnerid(),orgid, orgDetail);
 			orgDetail.setOrgid(orgid);
-			return Response.status(202).entity(orgDetail).build();
+			return Response.status(202).entity(orgDetail.toString()).build();
 			
 		}
 		
@@ -86,7 +87,7 @@ import com.leafsoft.org.rest.errorhandling.AppException;
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			boolean success = orgdao.updateOrgStatus(orgid,OrgUtil.getOwnerid(),status);
 			resJson.put("message","updated");
-			return Response.status(202).entity(resJson).build();
+			return Response.status(202).entity(resJson.toString()).build();
 			
 		}
 	}

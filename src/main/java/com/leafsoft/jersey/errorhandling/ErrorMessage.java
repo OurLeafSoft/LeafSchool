@@ -1,4 +1,4 @@
-package com.leafsoft.org.rest.errorhandling;
+package com.leafsoft.jersey.errorhandling;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import com.sun.jersey.api.NotFoundException;
+import javax.ws.rs.NotFoundException;
 
 
 @XmlRootElement

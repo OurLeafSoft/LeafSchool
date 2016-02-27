@@ -1,4 +1,4 @@
-package com.leafsoft.org.rest.errorhandling;
+package com.leafsoft.jersey.errorhandling;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;

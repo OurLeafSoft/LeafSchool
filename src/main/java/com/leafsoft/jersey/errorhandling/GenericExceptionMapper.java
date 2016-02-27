@@ -1,4 +1,4 @@
-package com.leafsoft.org.rest.errorhandling;
+package com.leafsoft.jersey.errorhandling;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
