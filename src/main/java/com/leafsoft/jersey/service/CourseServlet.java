@@ -33,7 +33,7 @@ public class CourseServlet {
 		List<Course> orgArray = new ArrayList<>();
 		CoursesDao courseDao = DaoSelectorUtil.getCourseDao();
 		orgArray = courseDao.getAllCourses();
-		return Response.ok().entity(orgArray.toString()).build();
+		return Response.ok().entity(new org.json.JSONArray(orgArray).toString()).build();
 	}
 	
 	@GET
@@ -46,7 +46,7 @@ public class CourseServlet {
 		if(course == null) {
 			throw new AppException(404, 5001, "Resource Not Available", "", "");
 		}
-		return Response.ok().entity(course.toString()).build();
+		return Response.ok().entity(course).build();
 	}
 	
 	@PUT
@@ -59,7 +59,7 @@ public class CourseServlet {
 		if(!courseDao.hasCourseWithSection(course.getCourse(),course.getSection())) {
 			int courseid = courseDao.addCourse(course);
 			course.setCourseid(courseid);
-			return Response.status(201).entity(course.toString()).build();
+			return Response.status(201).entity(course).build();
 		} else {
 			throw new AppException(409, 5002, "Resource Already Available", "", "");
 		}
@@ -76,7 +76,7 @@ public class CourseServlet {
 			if(!courseDao.hasCourseWithSection(course.getCourse(),course.getSection())) {
 				boolean success = courseDao.updateCourseDetails(course,courseid);
 				if(success) {
-					return Response.status(202).entity(course.toString()).build();
+					return Response.status(202).entity(course).build();
 				} else {
 					throw new AppException(500, 5003, "Internal Error", "", "");
 				}

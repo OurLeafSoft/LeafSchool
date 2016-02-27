@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.json.JSONArray;
 
 import com.leafsoft.jersey.errorhandling.AppException;
 import com.leafsoft.org.OrgUtil;
@@ -37,7 +38,7 @@ import com.leafsoft.school.model.OrgDetail;
 			List<OrgDetail> orgArray = new ArrayList<>();
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			orgArray = orgdao.loadOrgDetailByUserId(OrgUtil.getOwnerid());
-			return Response.ok().entity(orgArray.toString()).build();
+			return Response.ok().entity(new JSONArray(orgArray).toString()).build();
 		}
 		
 		@RolesAllowed("ROLE_ADMIN")
@@ -51,7 +52,7 @@ import com.leafsoft.school.model.OrgDetail;
 			if(orgDetail == null) {
 				throw new AppException(404, 5001, "Resource Not Available", "", "");
 			}
-			return Response.ok().entity(orgDetail.toString()).build();
+			return Response.ok().entity(orgDetail).build();
 		}
 
 		@PUT
@@ -63,7 +64,7 @@ import com.leafsoft.school.model.OrgDetail;
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			int orgId = orgdao.insert(orgDetail);
 			orgDetail.setOrgid(orgId);
-			return Response.status(201).entity(orgDetail.toString()).build();
+			return Response.status(201).entity(orgDetail).build();
 			
 		}
 		
@@ -77,7 +78,7 @@ import com.leafsoft.school.model.OrgDetail;
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
 			boolean success = orgdao.update(OrgUtil.getOwnerid(),orgid, orgDetail);
 			orgDetail.setOrgid(orgid);
-			return Response.status(202).entity(orgDetail.toString()).build();
+			return Response.status(202).entity(orgDetail).build();
 			
 		}
 		
