@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.security.DenyAll;
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,7 +30,7 @@ import com.leafsoft.school.model.OrgDetail;
 	@Path("/organization")
 	public class OrganizationServlet {
 		
-		@PermitAll
+		@RolesAllowed("ROLE_ADMIN") 
 		@GET
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response getOrganizaiontInJSON() throws AppException{
@@ -39,6 +40,7 @@ import com.leafsoft.school.model.OrgDetail;
 			return Response.ok().entity(orgArray.toString()).build();
 		}
 		
+		@RolesAllowed("ROLE_ADMIN")
 		@GET
 	    @Path("/{orgid}")
 	    @Produces(MediaType.APPLICATION_JSON)

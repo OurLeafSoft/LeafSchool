@@ -2,7 +2,11 @@ package com.leafsoft.school.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.security.core.GrantedAuthority;
+
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.List;
 
 

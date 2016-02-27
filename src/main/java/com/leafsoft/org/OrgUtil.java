@@ -1,6 +1,7 @@
 package com.leafsoft.org;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +37,7 @@ public class OrgUtil {
 	private static Logger LOGGER = Logger.getLogger(OrgUtil.class.getName());
 	
 	private static ThreadLocal<OrgUser> OWNER = new ThreadLocal<OrgUser>();
-	private static ThreadLocal<List> USER_ROLE = new ThreadLocal<List>();
+	private static ThreadLocal<JSONArray> USER_ROLE = new ThreadLocal<JSONArray>();
 	private static ThreadLocal<Integer> OWNERID = new ThreadLocal<Integer>();
 	private static ThreadLocal<Integer> USERLID = new ThreadLocal<Integer>();
 	private static ThreadLocal<LeafUser> USER = new ThreadLocal<LeafUser>();
@@ -57,7 +58,7 @@ public class OrgUtil {
 	/**
 	 * @return the userRole
 	 */
-	public static List getUserRole() {
+	public static JSONArray getUserRole() {
 		return USER_ROLE.get();
 	}
 	/**
@@ -117,7 +118,7 @@ public class OrgUtil {
 	/**
 	 * @param userRole the userRole to set
 	 */
-	public static void setUserRole(List userRole) {
+	public static void setUserRole(JSONArray userRole) {
 		USER_ROLE.set(userRole);
 	}
 	/**
@@ -314,6 +315,8 @@ public class OrgUtil {
 				System.out.print("user::::"+user);
 				if(user!=null) {
 					OrgUsersDao userDAO = DaoSelectorUtil.getOrgUserDao();
+					JSONArray userRole = new JSONArray(a.getAuthorities().toString());
+					OrgUtil.setUserRole(userRole);
 					orguser = userDAO.loadUserByUsername(user.getUsername());
 					System.out.print("username::::"+user.getUsername());
 				}

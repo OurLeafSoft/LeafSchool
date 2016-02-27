@@ -40,6 +40,7 @@ public class OrgFilter implements Filter {
 				LOGGER.log(Level.INFO,"OrgUtil.getUserlid():::"+OrgUtil.getUserlid());
 				LOGGER.log(Level.INFO,"OrgUtil.getOrgId():::"+OrgUtil.getOrgId());
 				LOGGER.log(Level.INFO,"OrgUtil.isValidOrg():::"+OrgUtil.isValidOrg());
+				LOGGER.log(Level.INFO,"OrgUtil.UserRoles():::"+OrgUtil.getUserRole());
 //				if(OrgUtil.getUserlid() == null) {
 //					request.getRequestDispatcher("/invaliduser").forward(request, response);
 //					return;

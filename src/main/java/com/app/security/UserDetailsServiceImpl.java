@@ -3,6 +3,7 @@ package com.app.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -68,6 +69,8 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -78,6 +81,8 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DBA"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -87,6 +92,8 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -95,6 +102,8 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
@@ -102,6 +111,8 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 	private UserDetails getGuestUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
 		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
