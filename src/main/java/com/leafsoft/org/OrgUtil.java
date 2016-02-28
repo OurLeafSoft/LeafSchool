@@ -12,11 +12,14 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import com.leafsoft.http.HttpUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
@@ -371,6 +374,19 @@ public class OrgUtil {
     	OrgUtil.setOwnerid(orgUser.getLuid());
     	OrgUtil.setUserlid(orgUser.getLid());
     	OrgUtil.setRemoteuseripaddress(request.getRemoteAddr());
+	}
+	
+	public static void resetAuthorities(HttpServletRequest request) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		List<GrantedAuthority> updatedAuthorities = new ArrayList<GrantedAuthority>();
+		updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+		updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
+
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+		request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 	}
 	
 	public static void cleanup() {

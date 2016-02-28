@@ -34,8 +34,8 @@ import com.leafsoft.util.AppResources;
 public class SchoolController 
 {
 	private static Logger LOGGER = Logger.getLogger(SchoolController.class.getName());
-	@RequestMapping(value = {"/welcome"})
-	public ModelAndView welcome(HttpServletRequest request) {
+	@RequestMapping(value = {"/home"})
+	public ModelAndView home(HttpServletRequest request) {
 
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "LeafSoft");
@@ -45,10 +45,87 @@ public class SchoolController
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
-		model.setViewName("home");
+		model.setViewName("school/index");
 		return model;
 
 	}
+	
+	@RequestMapping(value = {"/about"})
+	public ModelAndView about(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "LeafSoft");
+		model.addObject("message", "This is welcome page!");
+		if(OrgUtil.getOwner() == null) {
+			OrgUtil.setCurrentUser(request);
+		}
+		model.addObject("user",OrgUtil.getOwner());
+		model.addObject("org",OrgUtil.getOrgDetails());
+		model.setViewName("school/about");
+		return model;
+	}
+	
+	@RequestMapping(value = {"/blog"})
+	public ModelAndView blog(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "LeafSoft");
+		model.addObject("message", "This is welcome page!");
+		if(OrgUtil.getOwner() == null) {
+			OrgUtil.setCurrentUser(request);
+		}
+		model.addObject("user",OrgUtil.getOwner());
+		model.addObject("org",OrgUtil.getOrgDetails());
+		model.setViewName("school/blog");
+		return model;
+	}
+	
+	@RequestMapping(value = {"/gallery"})
+	public ModelAndView gallery(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "LeafSoft");
+		model.addObject("message", "This is welcome page!");
+		if(OrgUtil.getOwner() == null) {
+			OrgUtil.setCurrentUser(request);
+		}
+		model.addObject("user",OrgUtil.getOwner());
+		model.addObject("org",OrgUtil.getOrgDetails());
+		model.setViewName("school/gallery");
+		return model;
+	}
+	
+	@RequestMapping(value = {"/services"})
+	public ModelAndView services(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "LeafSoft");
+		model.addObject("message", "This is welcome page!");
+		if(OrgUtil.getOwner() == null) {
+			OrgUtil.setCurrentUser(request);
+		}
+		model.addObject("user",OrgUtil.getOwner());
+		model.addObject("org",OrgUtil.getOrgDetails());
+		model.setViewName("school/services");
+		return model;
+	}
+	
+	@RequestMapping(value = {"/contact"})
+	public ModelAndView contact(HttpServletRequest request) {
+
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "LeafSoft");
+		model.addObject("message", "This is welcome page!");
+		if(OrgUtil.getOwner() == null) {
+			OrgUtil.setCurrentUser(request);
+		}
+		model.addObject("user",OrgUtil.getOwner());
+		model.addObject("org",OrgUtil.getOrgDetails());
+		model.setViewName("school/contact");
+		return model;
+	}
+	
+	
 	
 	// for 403 access denied page
 		@RequestMapping(value = "/403", method = RequestMethod.GET)
