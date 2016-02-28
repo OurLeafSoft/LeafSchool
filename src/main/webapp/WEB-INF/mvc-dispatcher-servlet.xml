@@ -23,6 +23,10 @@
 	</bean>
 		<mvc:resources mapping="/resources/**" location="/resources/theme1/"  
 	cache-period="31556926"/>
+	<mvc:resources mapping="/home_resources/**" location="/resources/assets/"  
+	cache-period="31556926"/>
+	<mvc:resources mapping="/dashboard_resources/**" location="/resources/assets1/"  
+	cache-period="31556926"/>
 
     <mvc:annotation-driven />
 </beans>

@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Free Strictly Website Template | About :: w3layouts</title>
+<title>LeafSoft</title>
 <link href="/school/resources/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,7 +18,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	<div class="header-top">
 		<div class="wrap">
 				<div class="logo">
-					<a href="home"><img src="/school/resources/images/logo.png" alt=""></a>
+					<a href="home"><img src="images/leafsoft.png" alt=""></a>
 				</div>
 				<div class="search_box">
 				<form>
