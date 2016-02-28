@@ -3,9 +3,7 @@
 	import java.lang.reflect.Method;
 	import java.util.Arrays;
 	import java.util.HashSet;
-	import java.util.List;
 	import java.util.Set;
-	import java.util.StringTokenizer;
 	
 	import javax.annotation.security.DenyAll;
 	import javax.annotation.security.PermitAll;
@@ -17,8 +15,8 @@
 	import javax.ws.rs.core.Response;
 	import javax.ws.rs.ext.Provider;
 	
-	import org.glassfish.jersey.internal.util.Base64;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.leafsoft.org.OrgUtil;
 	
@@ -33,10 +31,11 @@ import com.leafsoft.org.OrgUtil;
 		@Context
 	    private ResourceInfo resourceInfo;
 		
+		private JSONObject resJson = new JSONObject();
 	    private static final Response ACCESS_DENIED = Response.status(Response.Status.UNAUTHORIZED)
-	    													.entity("You cannot access this resource").build();
+	    													.entity("{\"message\" : \"You cannot access this resource\"}").build();
 	    private static final Response ACCESS_FORBIDDEN = Response.status(Response.Status.FORBIDDEN)
-	    													.entity("Access blocked for all users !!").build();
+	    													.entity("{\"message\" : \"Access blocked for all users\"}").build();
 	     
 	    @Override
 	    public void filter(ContainerRequestContext requestContext)
