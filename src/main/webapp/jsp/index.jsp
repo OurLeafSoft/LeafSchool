@@ -49,7 +49,7 @@
                     <li><a href="#services-sec">SERVICES</a></li>
                      <li><a href="#price-sec">PRICING</a></li>
                     <li><a href="#contact-sec">CONTACT</a></li>
-                    <li><a href="home">ACCESSAPP</a></li>
+                    <li><a href="app/index.html">ACCESSAPP</a></li>
                 </ul>
             </div>
            
@@ -297,9 +297,9 @@ Lorem ipsum dolor sit amet, accumsan.  posuere lectus et, fringilla augue.
     <!--CONTACT SECTION-->
     
     <section  id="contact-sec">
-       <iframe class="cnt" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2999841.293321206!2d-75.80920404999999!3d42.75594204999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew+York!5e0!3m2!1sen!2s!4v1395313088825" ></iframe>
+       <iframe class="cnt" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31426.738244874283!2d78.76572833269766!3d10.071014839352342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b005d8b08de4f3b%3A0x1f24fc0ab84584f8!2sKaraikudi%2C+Tamil+Nadu!5e0!3m2!1sen!2sin!4v1457852138939" ></iframe>
    <div class="add">
- <i>Address: </i> 230/45 , Newyork City, USA-305670
+ <i>Address: </i>Karaikudi City, India
    </div>
        
          </section>

@@ -24,7 +24,7 @@ public class AuthenticationEntryPointDenied implements AuthenticationEntryPoint 
 		LOGGER.log(Level.INFO,"OrgUtil.getUserlid():::"+OrgUtil.getUserlid());
 		LOGGER.log(Level.INFO,"OrgUtil.getOrgId():::"+OrgUtil.getOrgId());
 		LOGGER.log(Level.INFO,"OrgUtil.isValidOrg():::"+OrgUtil.isValidOrg());
-		// Redirecting service to access denied page for invalid users
+		// Redirecting service to access denied page for invalid users 
 		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 //		if(OrgUtil.getUserlid() == null) {
 //			redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getAccountsUrl());

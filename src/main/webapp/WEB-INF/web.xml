@@ -165,7 +165,11 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>DoesNotFilter</filter-name>
-		<url-pattern>/dashboard_resources/*</url-pattern>
+		<url-pattern>/app/assets/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/app/work/*</url-pattern>
 	</filter-mapping>
     <filter-mapping>
          <filter-name>OrgFilter</filter-name>

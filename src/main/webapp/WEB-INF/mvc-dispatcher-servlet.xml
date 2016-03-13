@@ -25,8 +25,13 @@
 	cache-period="31556926"/>
 	<mvc:resources mapping="/home_resources/**" location="/resources/assets/"  
 	cache-period="31556926"/>
-	<mvc:resources mapping="/dashboard_resources/**" location="/resources/assets1/"  
+	<mvc:resources mapping="/app/assets/**" location="/resources/assets1/"  
 	cache-period="31556926"/>
+	
+	<mvc:resources mapping="/app/work/**" location="/resources/work/"  
+	cache-period="31556926"/>
+	
+	<mvc:resources mapping="/app/**" location="/resources/html/" cache-period="0"/>
 
     <mvc:annotation-driven />
 </beans>

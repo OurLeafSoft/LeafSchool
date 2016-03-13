@@ -139,6 +139,13 @@ public class SchoolController
 				+ ",You do not have permission to access this page!");
 				if(user.getName().equals("guest")) {
 					redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getAccountsUrl());
+				} else if(OrgUtil.getOrgId() == null || OrgUtil.getOrgId() == -1) {
+					try {
+					//request.getRequestDispatcher("/register").forward(request, response);
+					redirectStrategy.sendRedirect(request, response, "/register");
+					} catch(Exception e) {
+						LOGGER.log(Level.SEVERE,e.getMessage(),e);
+					}
 				}
 			} else {
 				model.addObject("msg", 

@@ -15,16 +15,17 @@
 	<http pattern="/logoutsession" security="none"/>
 	<http pattern="/resources/**" security="none"/>
 	<http pattern="/home_resources/**" security="none"/>
-	<http pattern="/dashboard_resources/**" security="none"/>
+	<http pattern="/app/assets/**" security="none"/>
+	<http pattern="/app/work/**" security="none"/>
 	
 	<http pattern="/accessdenied" security="none"/>
-	<http create-session="stateless"
+	<http create-session="stateless" use-expressions="true"
 		auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
-		<intercept-url pattern="/jsp/index.jsp" access="ROLE_GUEST"/>
+		<intercept-url pattern="/jsp/index.jsp" access="hasRole('ROLE_GUEST')"/>
 		<access-denied-handler error-page="/403" />
-		<intercept-url pattern="/**" access="ROLE_COMMONUSER"/>
-		<intercept-url pattern="/register" access="ROLE_COMMONUSER"/>
-		<intercept-url pattern="/schoolRegister" access="ROLE_COMMONUSER"/>
+		<intercept-url pattern="/app/*" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/register" access="hasRole('ROLE_COMMONUSER')"/>
+		<intercept-url pattern="/schoolRegister" access="hasRole('ROLE_COMMONUSER')"/>
 		<custom-filter position="PRE_AUTH_FILTER"
 			ref="preAuthFilter" />
 		<!-- <session-management

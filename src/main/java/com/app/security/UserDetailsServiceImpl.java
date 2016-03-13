@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 	    	OrgUserRolesDao orgroleDAO = DaoSelectorUtil.getOrgUserRolesDao();
 	    	if(OrgUtil.getOrgId() !=null && orguser.getLuid() == OrgUtil.getOwnerid()) {
 	    		OrgUserRole orgUserRole = orgroleDAO.loadOrgUserByLuid(orguser.getLuid(), OrgUtil.getOrgId());
-		    	if(orguser != null) {
+		    	if(orguser != null && orgUserRole != null) {
 					if (orgUserRole.getRolename().equals("ROLE_ADMIN")) {
 						userDetails = getAdminUser(name);
 					} else if (orgUserRole.getRolename().equals("ROLE_DBA")) {
