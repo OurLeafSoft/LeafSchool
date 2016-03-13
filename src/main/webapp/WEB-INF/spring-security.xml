@@ -13,9 +13,12 @@
 	<http pattern="/favicon.ico" security="none"/>
 	<http pattern="/invaliduser" security="none"/>
 	<http pattern="/logoutsession" security="none"/>
+	<http pattern="/resources/**" security="none"/>
+	<http pattern="/home_resources/**" security="none"/>
+	<http pattern="/dashboard_resources/**" security="none"/>
 	
 	<http pattern="/accessdenied" security="none"/>
-	<http create-session="never"
+	<http create-session="stateless"
 		auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
 		<intercept-url pattern="/jsp/index.jsp" access="ROLE_GUEST"/>
 		<access-denied-handler error-page="/403" />
@@ -26,7 +29,7 @@
 			ref="preAuthFilter" />
 		<!-- <session-management
 			session-fixation-protection="none" /> -->
-		<session-management session-fixation-protection="newSession" />
+		<!-- <session-management session-fixation-protection="newSession" /> -->
     	<logout logout-url="/logout" logout-success-url="/logoutsession" delete-cookies="JSESSIONID" />
 	</http>
 

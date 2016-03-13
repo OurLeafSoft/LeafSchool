@@ -252,7 +252,7 @@ public class OrgUtil {
 						Cookie aCookie = cookie_jar[i];
 						System.out.println ("Name : " + aCookie.getName());
 						System.out.println ("Value: " + aCookie.getValue());
-						if(!aCookie.getValue().equals(request.getRequestedSessionId()) || Boolean.valueOf(AppResources.getInstance().isDevelopmentMode()))
+						if(!aCookie.getValue().equals(request.getRequestedSessionId()) || Boolean.valueOf(AppResources.getInstance().isDevelopmentMode())) {
 							try {
 								if(Boolean.valueOf(AppResources.getInstance().isDevelopmentMode())) {
 									sessionUser = JSONUtil.getInstance().getDebugJson().getJSONObject("1").getJSONObject("userInfo");
@@ -265,6 +265,7 @@ public class OrgUtil {
 									e.printStackTrace();
 								}
 							}
+					}
 				}
 				else if(Boolean.valueOf(AppResources.getInstance().isDevelopmentMode())) {
 					sessionUser = JSONUtil.getInstance().getDebugJson().getJSONObject("1").getJSONObject("userInfo");

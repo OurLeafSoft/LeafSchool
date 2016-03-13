@@ -155,6 +155,18 @@
 		<filter-name>DoesNotFilter</filter-name>
 		<url-pattern>/images/*</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/resources/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/home_resources/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/dashboard_resources/*</url-pattern>
+	</filter-mapping>
     <filter-mapping>
          <filter-name>OrgFilter</filter-name>
          <url-pattern>/*</url-pattern>
