@@ -49,7 +49,7 @@
                     <li><a href="#services-sec">SERVICES</a></li>
                      <li><a href="#price-sec">PRICING</a></li>
                     <li><a href="#contact-sec">CONTACT</a></li>
-                    <li><a href="app/index.html">ACCESSAPP</a></li>
+                    <li><a href="lte/index.html">ACCESSAPP</a></li>
                 </ul>
             </div>
            
