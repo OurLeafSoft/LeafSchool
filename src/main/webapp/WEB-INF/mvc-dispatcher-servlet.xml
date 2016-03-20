@@ -31,7 +31,18 @@
 	<mvc:resources mapping="/app/work/**" location="/resources/work/"  
 	cache-period="31556926"/>
 	
+	<mvc:resources mapping="/lte/dist/**" location="/resources/assets2/dist/"  
+	cache-period="31556926"/>
+	<mvc:resources mapping="/lte/bootstrap/**" location="/resources/assets2/bootstrap/"  
+	cache-period="31556926"/>
+	<mvc:resources mapping="/lte/plugins/**" location="/resources/assets2/plugins/"  
+	cache-period="31556926"/>
+	
 	<mvc:resources mapping="/app/**" location="/resources/html/" cache-period="0"/>
+	
+	<mvc:resources mapping="/html/**" location="/resources/" cache-period="0"/>
+	
+	<mvc:resources mapping="/lte/**" location="/resources/AdminLTE2/" cache-period="0"/>
 
     <mvc:annotation-driven />
 </beans>

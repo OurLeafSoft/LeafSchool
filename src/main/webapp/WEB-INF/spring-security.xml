@@ -17,6 +17,9 @@
 	<http pattern="/home_resources/**" security="none"/>
 	<http pattern="/app/assets/**" security="none"/>
 	<http pattern="/app/work/**" security="none"/>
+	<http pattern="/lte/dist/**" security="none"/>
+	<http pattern="/lte/bootstrap/**" security="none"/>
+	<http pattern="/lte/plugins/**" security="none"/>
 	
 	<http pattern="/accessdenied" security="none"/>
 	<http create-session="stateless" use-expressions="true"
@@ -24,6 +27,8 @@
 		<intercept-url pattern="/jsp/index.jsp" access="hasRole('ROLE_GUEST')"/>
 		<access-denied-handler error-page="/403" />
 		<intercept-url pattern="/app/*" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/lte/*" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/html/*" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_COMMONUSER')"/>
 		<intercept-url pattern="/schoolRegister" access="hasRole('ROLE_COMMONUSER')"/>
 		<custom-filter position="PRE_AUTH_FILTER"

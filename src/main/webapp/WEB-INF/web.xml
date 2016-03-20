@@ -171,6 +171,22 @@
 		<filter-name>DoesNotFilter</filter-name>
 		<url-pattern>/app/work/*</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/lte/static/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/lte/dist/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/lte/bootstrap/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>DoesNotFilter</filter-name>
+		<url-pattern>/lte/plugins/*</url-pattern>
+	</filter-mapping>
     <filter-mapping>
          <filter-name>OrgFilter</filter-name>
          <url-pattern>/*</url-pattern>
