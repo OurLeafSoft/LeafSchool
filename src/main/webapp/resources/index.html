@@ -68,9 +68,9 @@
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.3.2
+      <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2016-2017 <a href="http://jguard-dineshkumarbose.rhcloud.com/">LeafSoft</a>.</strong> All rights
     reserved.
   </footer>
 
@@ -95,29 +95,18 @@
 var SchoolProperties = {};
 
 $(document).ready(function() {
-    $.ajax({
+	$.ajax({
     	dataType : "json",
-    	url : "../api/v1/organization",
-		type : "GET",
-		success : function(response) {
-			SchoolProperties = response[0];
-			$.ajax({
-		    	dataType : "json",
-		    	url : "../dashboard/sidebar",
-		    	type : "GET",
-		    	success : function(response) {
-		    		SchoolProperties.sidebar = response.sidbar_array;
-		    		initializeJsCss();
-		    	},
-		    	error : function() {
-		    		alert("ajax error");
-		    	}
-		    });
-		},
-		error : function() {
-			alert("ajax error");
-		}
-	});
+    	url : "../dashboard",
+    	type : "GET",
+    	success : function(response) {
+    		SchoolProperties = response;
+    		initializeJsCss();
+    	},
+    	error : function() {
+    		alert("ajax error");
+    	}
+    });
 });
 function initializeJsCss(){
 	var header_content = Handlebars.templates['header_template'](SchoolProperties);
