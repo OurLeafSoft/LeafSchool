@@ -149,17 +149,17 @@
 			"icon" : "fa-pencil",
 			"child" : [
 				{
-					"name" : "Teachers & Staff",
+					"name" : "Create",
 					"icon" : "fa-circle-o",
 					"child" : []
 				},
 				{
-					"name" : "Teachers & Staff",
+					"name" : "Grade Grid",
 					"icon" : "fa-circle-o",
 					"child" : []
 				},
 				{
-					"name" : "Teachers & Staff",
+					"name" : "View Assignments",
 					"icon" : "fa-circle-o",
 					"child" : []
 				}
