@@ -31,7 +31,7 @@
 		<intercept-url pattern="/html/*" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_COMMONUSER')"/>
 		<intercept-url pattern="/schoolRegister" access="hasRole('ROLE_COMMONUSER')"/>
-		<intercept-url pattern="/dashboard/sidebar" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/dashboard" access="hasRole('ROLE_USER')"/>
 		<custom-filter position="PRE_AUTH_FILTER"
 			ref="preAuthFilter" />
 		<!-- <session-management
