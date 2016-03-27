@@ -13,8 +13,10 @@ public class JSONUtil {
 	
 	private static final String RESTAPICONFIG_JSON = "restapiconfig.json";//NO I18N
 	private static final String DEBUG_JSON = "debug.json";//NO I18N
+	private static final String SIDEBAR_JSON = "sidebar.json";//NO I18N
 
 	private JSONObject debug;
+	private JSONObject sidebar;
 	private JSONObject restapiConfigJSON;
 
 	private static final JSONUtil JSON_UTIL = new JSONUtil(); 
@@ -65,5 +67,12 @@ public class JSONUtil {
 			restapiConfigJSON = getJSONObject(RESTAPICONFIG_JSON,null);
 		}
 		return restapiConfigJSON;
+	}
+	
+	public JSONObject getSidebarJSON() throws Exception {
+		if (sidebar == null) {
+			sidebar = getJSONObject(SIDEBAR_JSON,null);
+		}
+		return sidebar;
 	}
 }

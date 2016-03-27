@@ -1,0 +1,429 @@
+{
+	"admin" : [ 
+		{
+			"name" : "DashBoard",
+			"icon" : "fa-dashboard",
+			"child" : []
+		},
+		{
+			"name" : "My Courses",
+			"icon" : "fa-book",
+			"child" : []
+		},
+		{
+			"name" : "My Files",
+			"icon" : "fa-folder",
+			"child" : []
+		},
+		{
+			"name" : "Administer",
+			"icon" : " fa-user",
+			"child" : [ 
+				{
+					"name" : "Announcements",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Classes & Students",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Courses",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "SMS",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Teachers & Staff",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Advanced Options",
+					"icon" : "fa-circle-o",
+					"child" : [
+						{
+							"name" : "Advanced search",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "aSc Import / export",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Attendance Configuration",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Bus route management",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Course time distribution",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Label management",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Organisations",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Promotion - Reports",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Promotion - Rollover",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Questionnaire",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Student course wizard",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Subject management",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "User Group",
+							"icon" : "fa-circle-o",
+							"child" : []
+						}	
+					]
+				}
+			]
+		},
+		{
+			"name" : "Admissions",
+			"icon" : "fa-user-plus",
+			"child" : [
+				{
+					"name" : "Online Registration",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Prospective Students",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Advanced Options",
+					"icon" : "fa-circle-o",
+					"child" : [
+						{
+							"name" : "Online registration config",
+							"icon" : "fa-circle-o",
+							"child" : []
+						}	
+					]
+				}
+			]
+		},
+		{
+			"name" : "Assignments",
+			"icon" : "fa-pencil",
+			"child" : [
+				{
+					"name" : "Teachers & Staff",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Teachers & Staff",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Teachers & Staff",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}
+			]
+		},
+		{
+			"name" : "Attendance",
+			"icon" : "fa-check-square-o",
+			"child" : [
+				{
+					"name" : "Administrative Updates",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Take",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Permissions",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Report : Audit",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Discipline",
+			"icon" : "fa-male",
+			"child" : [
+				{
+					"name" : "Report Event",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "View History",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Donation Management",
+			"icon" : "fa-money",
+			"child" : [
+				{
+					"name" : "Campaign",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Donations",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Donors",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Advanced Options",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}
+			]
+		},
+		{
+			"name" : "Finance",
+			"icon" : "fa-bank",
+			"child" : [
+				{
+					"name" : "Balances",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Transactions",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Advanced Options",
+					"icon" : "fa-circle-o",
+					"child" : [
+						{
+							"name" : "Accounts",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Adjustments",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "fees",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Payment Report",
+							"icon" : "fa-circle-o",
+							"child" : []
+						},
+						{
+							"name" : "Revenue Report",
+							"icon" : "fa-circle-o",
+							"child" : []
+						}						
+					]
+				}
+			]
+		},
+		{
+			"name" : "Grade Report",
+			"icon" : "fa-dashboard",
+			"child" : [
+				{
+					"name" : "Contribute",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Review",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Transcript",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Publish",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Comment Templates",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Data Reports",
+			"icon" : "fa-bar-chart-o",
+			"child" : [
+				{
+					"name" : "Address Lables",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Behaviour Reports",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Data Completion",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Data Questionnaire",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Emergency Information",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Find A Free Room",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Find A Free Students",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Find A Free Teacher",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Gender Report",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Nationality Breakdown",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Print ID Card",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Print Multiple Timetables",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Quick Report",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Student List",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Student Medical Conditions",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Student Portraits",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Students & Courses",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "System Access",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Parents Day Report",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Help",
+			"icon" : "fa-dashboard",
+			"child" : [
+				{
+					"name" : "FAQ",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}
+					
+			]
+		},
+		
+	]
+}
