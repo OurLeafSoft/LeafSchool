@@ -8,9 +8,7 @@ import org.json.JSONArray;
 
 import com.leafsoft.school.model.OrgDetail;
 
-public interface OrgDetailsDao {
-	
-	public void setDataSource(DataSource datasource);
+public interface OrgDetailsDao extends DaoBean {
 	
 	public int insert(OrgDetail org);
 	

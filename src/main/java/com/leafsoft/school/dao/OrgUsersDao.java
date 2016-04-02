@@ -6,10 +6,8 @@ import javax.sql.DataSource;
 import com.leafsoft.school.model.OrgUser;
 
 
-public interface OrgUsersDao {
+public interface OrgUsersDao extends DaoBean {
 	
-	public void setDataSource(DataSource datasource);
-
 	public int insert(OrgUser user);
 	
 	public OrgUser loadOrgUserByLid(int lid);

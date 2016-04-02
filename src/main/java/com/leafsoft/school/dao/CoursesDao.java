@@ -7,9 +7,7 @@ import javax.sql.DataSource;
 
 import com.leafsoft.school.model.Course;
 
-public interface CoursesDao {
-	
-	public void setDataSource(DataSource datasource);
+public interface CoursesDao extends DaoBean{
 	
 	public Course getCourseByCourseName(String coursename);
 	

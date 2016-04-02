@@ -9,10 +9,8 @@ import org.json.JSONArray;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 
-public interface OrgUserRolesDao {
+public interface OrgUserRolesDao extends DaoBean {
 	
-	public void setDataSource(DataSource datasource);
-
 	public int insert(OrgUser orgUser,String role);
 	
 	public OrgUserRole loadOrgUserByLuid(int luid,int orgId);
