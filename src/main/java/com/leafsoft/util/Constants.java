@@ -15,4 +15,12 @@ public class Constants {
 	public static final String USER_TYPE = "user_type";
 	public static final String ADMIN_USER = "admin";
 	public static final String NONADMIN_USER = "non_admin";
+	
+	public static final String ROLE_STAFF = "ROLE_STAFF";
+	public static final String ROLE_STUDENT = "ROLE_STUDENT";
+	public static final String ROLE_PARENT = "ROLE_PARENT";
+	public static final String ROLE_ADMIN = "ROLE_ADMIN";
+	public static final String ROLE_DBA = "ROLE_DBA";
+	public static final String ROLE_COMMONUSER = "ROLE_COMMONUSER";
+	public static final String ROLE_GUEST = "ROLE_GUEST";
 }

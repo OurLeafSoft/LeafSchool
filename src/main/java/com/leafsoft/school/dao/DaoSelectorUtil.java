@@ -1,6 +1,7 @@
 package com.leafsoft.school.dao;
 
 import com.leafsoft.school.dao.impl.CoursesDaoImpl;
+import com.leafsoft.school.dao.impl.LoginDetailDaoImpl;
 import com.leafsoft.school.dao.impl.OrgUserRolesDaoImpl;
 import com.leafsoft.school.dao.impl.OrgUsersDaoImpl;
 import com.leafsoft.school.dao.impl.OrgDetailsDaoImpl;
@@ -12,6 +13,12 @@ public class DaoSelectorUtil {
 		CoursesDaoImpl coursesdao = new CoursesDaoImpl();
 		coursesdao.setDataSource(JdbcUtil.getUserDataSource());
 		return coursesdao;
+	}
+	
+	public static LoginDetailDaoImpl getLoginDao() {
+		LoginDetailDaoImpl logindao = new LoginDetailDaoImpl();
+		logindao.setDataSource(JdbcUtil.getUserDataSource());
+		return logindao;
 	}
 	
 	public static OrgDetailsDao getOrganizationDao() {

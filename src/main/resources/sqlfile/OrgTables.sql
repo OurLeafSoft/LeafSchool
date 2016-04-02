@@ -146,3 +146,12 @@ CREATE TABLE `StudentAcadamicHistory` (
   CONSTRAINT `StudentAcadamicHistory_fk_studentid` FOREIGN KEY (`studentid`) REFERENCES `StudentDetails` (`studentid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `LoginDetails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `role` varchar(20) NOT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
