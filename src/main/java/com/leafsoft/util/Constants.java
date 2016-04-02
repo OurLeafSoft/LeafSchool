@@ -11,4 +11,8 @@ public class Constants {
 	
 	public static final int GENERIC_APP_ERROR_CODE = 5001;		
 	public static final String BLOG_POST_URL = "http://www.codingpedia.org/ama/tutorial-rest-api-design-and-implementation-in-java-with-jersey-and-spring/";
+	
+	public static final String USER_TYPE = "user_type";
+	public static final String ADMIN_USER = "admin";
+	public static final String NONADMIN_USER = "non_admin";
 }
