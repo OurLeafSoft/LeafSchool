@@ -35,7 +35,12 @@ public class OrgFilter implements Filter {
 			HttpServletRequest request = (HttpServletRequest) req;
 			HttpServletResponse response = (HttpServletResponse) res;
 			if(request.getAttribute(Constants.DOES_NOT_NEED_ORGFILTER) == null || !Boolean.valueOf(request.getAttribute(Constants.DOES_NOT_NEED_ORGFILTER).toString())) {
-				OrgUtil.setCurrentUser(request);
+				String login_type = request.getParameter("user_type");
+				if(login_type==null || login_type.equals(Constants.ADMIN_USER)) {
+					OrgUtil.setAdmin(request);
+				} else{
+					new OrgUtil().setNonAdmin(request);
+				}
 				//OrgUtil.resetAuthorities(request);
 				LOGGER.log(Level.INFO,"getOrgId::::::"+OrgUtil.getOrgId());
 				LOGGER.log(Level.INFO,"getRequestURI::::::"+request.getRequestURI());

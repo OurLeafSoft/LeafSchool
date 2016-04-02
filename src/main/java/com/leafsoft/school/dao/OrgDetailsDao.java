@@ -14,7 +14,9 @@ public interface OrgDetailsDao extends DaoBean {
 	
 	public boolean update(long luid, long orgId, OrgDetail orgdetails);
 	
-	public OrgDetail loadOrgDetailByOrgId(long orgId,long userId);
+	public OrgDetail loadOrgDetailByOrgIdAndUserId(long orgId,long userId);
+	
+	public OrgDetail loadOrgDetailByOrgId(long orgId);
 	
 	public boolean hasOrg(String orgName);
 	

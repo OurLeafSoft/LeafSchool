@@ -6,13 +6,19 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 
 import com.leafsoft.org.OrgUtil;
 import com.leafsoft.user.LeafUser;
+import com.leafsoft.util.Constants;
 
 public class UrlParametersAuthenticationFilter  extends AbstractPreAuthenticatedProcessingFilter {
 	
 	@Override
 	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
 		// Check for cookies
-		return OrgUtil.setCurrentUser(request);
+		String login_type = request.getParameter("user_type");
+		if(login_type==null || login_type.equals(Constants.ADMIN_USER)) {
+			return OrgUtil.setAdmin(request);
+		} else{
+			return new OrgUtil().setNonAdmin(request);
+		}
 	}
 
 	@Override

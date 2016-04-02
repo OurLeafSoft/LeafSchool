@@ -6,36 +6,49 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import com.leafsoft.http.HttpUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
+import com.leafsoft.school.dao.LoginDetailsDao;
 import com.leafsoft.school.dao.OrgUserRolesDao;
 import com.leafsoft.school.dao.OrgUsersDao;
 import com.leafsoft.school.dao.OrgDetailsDao;
+import com.leafsoft.school.model.LoginDetail;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.school.util.CommonUtil;
 import com.leafsoft.user.LeafUser;
 import com.leafsoft.util.AppResources;
+import com.leafsoft.util.Constants;
 import com.leafsoft.util.JSONUtil;
+import com.leafsoft.util.JdbcUtil;
 
 
 public class OrgUtil {
+	
+	
+	@Resource(name="sessionRegistry")
+	private SessionRegistryImpl sessionRegistry;
 	
 	private static Logger LOGGER = Logger.getLogger(OrgUtil.class.getName());
 	
@@ -52,6 +65,10 @@ public class OrgUtil {
 	private static ThreadLocal<OrgDetail> ORGDETAILS = new ThreadLocal<OrgDetail>();
 	private static ThreadLocal<Integer> ORGID = new ThreadLocal<Integer>();
 	private static ThreadLocal<Boolean> VALIDORG = new ThreadLocal<Boolean>();
+	private static ThreadLocal<HttpServletRequest> REQUEST = new ThreadLocal<HttpServletRequest>();
+	private static ThreadLocal<String> USER_TYPE = new ThreadLocal<String>();
+	private static ThreadLocal<Object> NONADMINUSER = new ThreadLocal<Object>();
+	private static ThreadLocal<String> ROLE = new ThreadLocal<String>(); 
 	/**
 	 * @return the owner
 	 */
@@ -113,6 +130,18 @@ public class OrgUtil {
 		return ORGDB.get();
 	}
 	/**
+	 * @return the rEQUEST
+	 */
+	public static HttpServletRequest getRequest() {
+		return REQUEST.get();
+	}
+	/**
+	 * @return the uSER_TYPE
+	 */
+	public static String getUserType() {
+		return USER_TYPE.get();
+	}
+	/**
 	 * @param owner the owner to set
 	 */
 	public static void setOwner(OrgUser owner) {
@@ -171,6 +200,30 @@ public class OrgUtil {
 	 */
 	public static void setValidOrg(Boolean isValidOrg) {
 		VALIDORG.set(isValidOrg);
+	}
+	/**
+	 * @param rEQUEST the rEQUEST to set
+	 */
+	public static void setRequest(HttpServletRequest rEQUEST) {
+		REQUEST.set(rEQUEST);
+	}
+	/**
+	 * @param uSER_TYPE the uSER_TYPE to set
+	 */
+	public static void setUserType(String uSER_TYPE) {
+		USER_TYPE.set(uSER_TYPE);
+	}
+	/**
+	 * @return the nONADMINUSER
+	 */
+	public static Object getNonAdminUser() {
+		return NONADMINUSER.get();
+	}
+	/**
+	 * @param nONADMINUSER the nONADMINUSER to set
+	 */
+	public static void setNonAdminUser(Object nONADMINUSER) {
+		NONADMINUSER.set(nONADMINUSER);
 	}
 	
 	public static void init(LeafUser currentUser,String orgId,String remoteIp) {
@@ -235,7 +288,20 @@ public class OrgUtil {
 		ORGDETAILS.set(oRGDETAILS);
 	}
 	
-	public static boolean setCurrentUser(HttpServletRequest request) {
+	/**
+	 * @return the rOLE
+	 */
+	public static String getRole() {
+		return ROLE.get();
+	}
+	/**
+	 * @param rOLE the rOLE to set
+	 */
+	public static void setRole(String rOLE) {
+		ROLE.set(rOLE);
+	}
+	
+	public static boolean setAdmin(HttpServletRequest request) {
 		try {
 			HttpSession session = request.getSession();
 			OrgUser orgUser = getCurrentUser();
@@ -291,7 +357,7 @@ public class OrgUtil {
 			    		int luid = userDAO.insert(orgUser);
 			    		orgUser.setLuid(luid);
 			    	}
-			    	initOrgDetails(request, orgUser);
+			    	initAdminOrgDetails(request, orgUser);
 			    	
 					return true;
 				}
@@ -299,7 +365,7 @@ public class OrgUtil {
 				} else {
 //				Authentication a = SecurityContextHolder.getContext().getAuthentication();
 //				a.setAuthenticated(false);
-				initOrgDetails(request, orgUser);
+					initAdminOrgDetails(request, orgUser);
 				return true;
 			}
 				
@@ -333,21 +399,21 @@ public class OrgUtil {
 		return orguser;
 	}
 	
-	public static void initOrgDetails(HttpServletRequest request, OrgUser orgUser) throws Exception{
+	public static void initAdminOrgDetails(HttpServletRequest request, OrgUser orgUser) throws Exception{
 		OrgUserRolesDao userRoleDao = DaoSelectorUtil.getOrgUserRolesDao();
 		OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
     	int totalOrg = userRoleDao.getTotalNumberOfOrgForUser(orgUser.getLuid());//Check number orgs assoicated with the current user
     	
     	if(totalOrg == 1) {//if customer has only one org than allow him to access that org details 
     		//OrgUserRole orgUserRole  = userRoleDao.getSingleOrg(orgUser.getLuid());
-    		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(orgUser.getDefaultorgid(),orgUser.getLuid());
+    		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgIdAndUserId(orgUser.getDefaultorgid(),orgUser.getLuid());
 			OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgDetails.getOrgid()));
 			OrgUtil.setOrgDetails(orgDetails);
 			OrgUtil.setOrgId(orgDetails.getOrgid());
 			OrgUtil.setValidOrg(true);
     	} else if(totalOrg > 1) { //If the customer has multiple orgs than get orgid from the browser if the org id is null than load the default org of the user
     		boolean isValidOrg = false;
-    		String orgid = request.getParameter("orgid");
+    		String orgid = request.getParameter("org_id");
     		JSONArray orgUserRoles = userRoleDao.findAllUserOrg(orgUser.getLuid());
     		if(orgid != null) {
     			int org = Integer.valueOf(orgid);
@@ -358,11 +424,12 @@ public class OrgUtil {
     					OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgUserRole.getOrgDetail().getOrgid()));
     					OrgUtil.setOrgDetails(orgUserRole.getOrgDetail());
     					OrgUtil.setOrgId(orgUserRole.getOrgDetail().getOrgid());
+    					OrgUtil.setRole(orgUserRole.getRolename());
     					break;
     				}
     			}
     		} else {
-    			OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(orgUser.getDefaultorgid(),orgUser.getLuid());
+    			OrgDetail orgDetails = orgDao.loadOrgDetailByOrgIdAndUserId(orgUser.getDefaultorgid(),orgUser.getLuid());
     			OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgDetails.getOrgid()));
 				OrgUtil.setOrgDetails(orgDetails);
 				OrgUtil.setOrgId(orgDetails.getOrgid());
@@ -375,19 +442,87 @@ public class OrgUtil {
     	OrgUtil.setOwnerid(orgUser.getLuid());
     	OrgUtil.setUserlid(orgUser.getLid());
     	OrgUtil.setRemoteuseripaddress(request.getRemoteAddr());
+    	OrgUtil.setRequest(request);
+    	OrgUtil.setUserType(Constants.ADMIN_USER);
 	}
 	
 	public static void resetAuthorities(HttpServletRequest request) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		List<GrantedAuthority> updatedAuthorities = new ArrayList<GrantedAuthority>();
-		updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
+		updatedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
+		updatedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_COMMONUSER));
 
 		Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
 
 		SecurityContextHolder.getContext().setAuthentication(newAuth);
 		request.getSession().setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
+	}
+	
+	public boolean setNonAdmin(HttpServletRequest request) {
+		try {
+		String login_type = request.getParameter("user_type");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String org_id = request.getParameter("org_id");
+		LoginDetail logindetail = null;
+		if(login_type!=null && username!=null && password!=null && org_id!=null) {
+			LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
+			logindetail = logindao.validateUser(username, password);
+		} else if(org_id!=null){
+			OrgUtil.setOrgdb(org_id);
+			logindetail = getloginUsers(request);
+		}
+		if(logindetail!=null) {
+			initNonAdminOrgDetails(request, logindetail, org_id);
+			return true;
+		}
+		} catch(Exception e) {
+			LOGGER.log(Level.INFO, e.getMessage(), e);
+		}
+		return false;
+	}
+	
+	public LoginDetail getloginUsers(HttpServletRequest req) {
+		String sessionId = req.getRequestedSessionId();
+		LoginDetail logindetail = null;
+		System.out.print("sessionId;:"+sessionId);
+		if(sessionId!=null) {
+		//List<Object> principals = sessionRegistry.getAllPrincipals();
+		SessionInformation sessioninfo = sessionRegistry.getSessionInformation(sessionId);
+			if(sessioninfo!= null) {
+				String userName =((User) sessioninfo.getPrincipal()).getUsername();
+				LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
+				logindetail = logindao.getLoginDetailByUserName(userName);
+			}
+		}
+    	return logindetail;
+	}
+	
+	public static void initNonAdminOrgDetails(HttpServletRequest request, LoginDetail loginDetail,String org_id) throws Exception{
+		OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
+		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(Long.valueOf(org_id));
+		Object non_admin = null;
+		if(loginDetail.getRole().equalsIgnoreCase(Constants.ROLE_STAFF)) {
+			
+		} else if(loginDetail.getRole().equalsIgnoreCase(Constants.ROLE_PARENT)) {
+			
+		} else if(loginDetail.getRole().equalsIgnoreCase(Constants.ROLE_STUDENT)) {
+			
+		}
+		OrgUtil.setOrgdb(org_id);
+		OrgUtil.setOrgDetails(orgDetails);
+		OrgUtil.setOrgId(orgDetails.getOrgid());
+		OrgUtil.setValidOrg(true);
+    	OrgUtil.setOrgUser(null);
+    	OrgUtil.setOwner(null);
+    	OrgUtil.setNonAdminUser(non_admin);
+    	OrgUtil.setOwnerid(loginDetail.getUserid());
+    	OrgUtil.setUserlid(loginDetail.getId());
+    	OrgUtil.setRemoteuseripaddress(request.getRemoteAddr());
+    	OrgUtil.setRequest(request);
+    	OrgUtil.setUserType(Constants.NONADMIN_USER);
+    	OrgUtil.setRole(loginDetail.getRole());
 	}
 	
 	public static void cleanup() {
@@ -403,5 +538,8 @@ public class OrgUtil {
 		OrgUtil.setOrgId(null);
 		OrgUtil.setOrgDetails(null);
 		OrgUtil.setValidOrg(false);
+		OrgUtil.setRequest(null);
+		OrgUtil.setUserType(null);
+		OrgUtil.setRole(null);
 	}
 }

@@ -22,21 +22,25 @@
 	<http pattern="/lte/plugins/**" security="none"/>
 	
 	<http pattern="/accessdenied" security="none"/>
-	<http create-session="stateless" use-expressions="true"
+	<http create-session="never" use-expressions="true"
 		auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
 		<intercept-url pattern="/jsp/index.jsp" access="hasRole('ROLE_GUEST')"/>
 		<access-denied-handler error-page="/403" />
-		<intercept-url pattern="/app/*" access="hasRole('ROLE_USER')"/>
-		<intercept-url pattern="/lte/*" access="hasRole('ROLE_USER')"/>
-		<intercept-url pattern="/html/*" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/app/*" access="hasRole('ROLE_STAFF','ROLE_PARENT','ROLE_STUDENT')"/>
+		<intercept-url pattern="/lte/*" access="hasRole('ROLE_STAFF')"/>
+		<intercept-url pattern="/html/*" access="hasRole('ROLE_STAFF')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_COMMONUSER')"/>
 		<intercept-url pattern="/schoolRegister" access="hasRole('ROLE_COMMONUSER')"/>
-		<intercept-url pattern="/dashboard" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/dashboard" access="hasRole('ROLE_STAFF')"/>
 		<custom-filter position="PRE_AUTH_FILTER"
 			ref="preAuthFilter" />
-		<!-- <session-management
-			session-fixation-protection="none" /> -->
-		<!-- <session-management session-fixation-protection="newSession" /> -->
+		<session-management
+			session-fixation-protection="none" />
+		<session-management session-fixation-protection="newSession"  />
+		
+		<session-management invalid-session-url="/invalidSession.html" >
+		</session-management>
+		
     	<logout logout-url="/logout" logout-success-url="/logoutsession" delete-cookies="JSESSIONID" />
 	</http>
 

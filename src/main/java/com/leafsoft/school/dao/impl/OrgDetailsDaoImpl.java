@@ -90,11 +90,22 @@ public class OrgDetailsDaoImpl implements OrgDetailsDao{
 			
 	}
 	
-	public OrgDetail loadOrgDetailByOrgId(long orgId,long userId) {
+	public OrgDetail loadOrgDetailByOrgIdAndUserId(long orgId,long userId) {
 		OrgDetail org = null;
 		try {
 		String sql = "SELECT * FROM OrgDetails od inner join OrgUserRoles our on od.orgid = our.orgid inner join OrgUsers ou on ou.luid = our.luid WHERE our.luid = ? and our.orgId = ?";
 		org = jdbcTemplate.queryForObject(sql,new Object[]{userId,orgId},  new BeanPropertyRowMapper<OrgDetail>(OrgDetail.class));
+		}catch(Exception e) {
+			LOGGER.log(Level.INFO,"findByCustomerId():::"+orgId+e.getMessage(),e);
+		}
+		return org;
+	}
+	
+	public OrgDetail loadOrgDetailByOrgId(long orgId) {
+		OrgDetail org = null;
+		try {
+			String sql = "select *from OrgDetails where orgid = ?"; 
+			org = jdbcTemplate.queryForObject(sql,new Object[]{orgId},  new BeanPropertyRowMapper<OrgDetail>(OrgDetail.class));
 		}catch(Exception e) {
 			LOGGER.log(Level.INFO,"findByCustomerId():::"+orgId+e.getMessage(),e);
 		}

@@ -48,7 +48,7 @@ import com.leafsoft.school.model.OrgDetail;
 		public Response getOrganizaiontInJSON(@PathParam("orgid") int orgid) throws AppException{
 			OrgDetail orgDetail = new OrgDetail();
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
-			orgDetail = orgdao.loadOrgDetailByOrgId(orgid,OrgUtil.getOwnerid());
+			orgDetail = orgdao.loadOrgDetailByOrgIdAndUserId(orgid,OrgUtil.getOwnerid());
 			if(orgDetail == null) {
 				throw new AppException(404, 5001, "Resource Not Available", "", "");
 			}

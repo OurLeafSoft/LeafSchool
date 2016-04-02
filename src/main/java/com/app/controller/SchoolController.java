@@ -29,6 +29,7 @@ import com.app.model.Employees;
 import com.leafsoft.http.HttpUtil;
 import com.leafsoft.org.OrgUtil;
 import com.leafsoft.util.AppResources;
+import com.leafsoft.util.SecurityUtil;
 
 @Controller
 public class SchoolController 
@@ -41,7 +42,7 @@ public class SchoolController
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
 		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setCurrentUser(request);
+			OrgUtil.setAdmin(request);
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
@@ -57,7 +58,7 @@ public class SchoolController
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
 		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setCurrentUser(request);
+			OrgUtil.setAdmin(request);
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
@@ -72,7 +73,7 @@ public class SchoolController
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
 		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setCurrentUser(request);
+			OrgUtil.setAdmin(request);
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
@@ -87,7 +88,7 @@ public class SchoolController
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
 		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setCurrentUser(request);
+			OrgUtil.setAdmin(request);
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
@@ -102,7 +103,7 @@ public class SchoolController
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
 		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setCurrentUser(request);
+			OrgUtil.setAdmin(request);
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
@@ -117,7 +118,7 @@ public class SchoolController
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
 		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setCurrentUser(request);
+			OrgUtil.setAdmin(request);
 		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
@@ -138,6 +139,7 @@ public class SchoolController
 				model.addObject("msg", "Hi " + user.getName() 
 				+ ",You do not have permission to access this page!");
 				if(user.getName().equals("guest")) {
+					SecurityContextHolder.clearContext();
 					redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getAccountsUrl());
 				} else if(OrgUtil.getOrgId() == null || OrgUtil.getOrgId() == -1) {
 					try {
@@ -151,7 +153,6 @@ public class SchoolController
 				model.addObject("msg", 
 				"You do not have permission to access this page!");
 			}
-
 			model.setViewName("403");
 			return model;
 

@@ -19,7 +19,9 @@ import com.leafsoft.school.dao.OrgUsersDao;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.user.LeafUser;
+import com.leafsoft.util.Constants;
 
+@SuppressWarnings("rawtypes")
 public class UserDetailsServiceImpl implements AuthenticationUserDetailsService {
 
 	public UserDetails loadUserDetails(Authentication token)
@@ -28,30 +30,41 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 
 		LeafUser credentials = (LeafUser) token.getCredentials();
 		boolean principal = Boolean.valueOf(token.getPrincipal().toString());
-
-		if (credentials != null && principal == true) {
-			int lid = credentials.getLid();
-			String name = credentials.getUsername();
-			OrgUsersDao orgUserDao = DaoSelectorUtil.getOrgUserDao();
-	    	
-	    	OrgUser orguser = orgUserDao.loadOrgUserByLid(lid);
-	    	OrgUserRolesDao orgroleDAO = DaoSelectorUtil.getOrgUserRolesDao();
-	    	if(OrgUtil.getOrgId() !=null && orguser.getLuid() == OrgUtil.getOwnerid()) {
-	    		OrgUserRole orgUserRole = orgroleDAO.loadOrgUserByLuid(orguser.getLuid(), OrgUtil.getOrgId());
-		    	if(orguser != null && orgUserRole != null) {
-					if (orgUserRole.getRolename().equals("ROLE_ADMIN")) {
-						userDetails = getAdminUser(name);
-					} else if (orgUserRole.getRolename().equals("ROLE_DBA")) {
-						userDetails = getDBAUser(name);
-					} else if (orgUserRole.getRolename().equals("ROLE_USER")) {
-						userDetails = getUserUser(name);
-					}
+		String usertype = OrgUtil.getUserType();
+		if(usertype==null || usertype.equalsIgnoreCase(Constants.ADMIN_USER)) {
+			if (credentials != null && principal == true) {
+				int lid = credentials.getLid();
+				String name = credentials.getUsername();
+				OrgUsersDao orgUserDao = DaoSelectorUtil.getOrgUserDao();
+		    	
+		    	OrgUser orguser = orgUserDao.loadOrgUserByLid(lid);
+		    	OrgUserRolesDao orgroleDAO = DaoSelectorUtil.getOrgUserRolesDao();
+		    	if(OrgUtil.getOrgId() !=null && orguser.getLuid() == OrgUtil.getOwnerid()) {
+		    		OrgUserRole orgUserRole = orgroleDAO.loadOrgUserByLuid(orguser.getLuid(), OrgUtil.getOrgId());
+			    	if(orguser != null && orgUserRole != null) {
+			    		OrgUtil.setRole(orgUserRole.getRolename());
+						if (orgUserRole.getRolename().equals(Constants.ROLE_ADMIN)) {
+							userDetails = getAdminUser(name);
+						} else if (orgUserRole.getRolename().equals(Constants.ROLE_DBA)) {
+							userDetails = getDBAUser(name);
+						}
+			    	}
+		    	} else {
+		    		userDetails = getCommonUser(name);
 		    	}
-	    	} else {
-	    		userDetails = getCommonUser(name);
-	    	}
-		} else {
-			userDetails = getGuestUser("guest");
+			} else {
+				userDetails = getGuestUser("guest");
+			}
+		} else if(usertype!=null && usertype.equalsIgnoreCase(Constants.NONADMIN_USER)) {
+			String role = OrgUtil.getRole();
+			String name = credentials.getUsername();
+			if(role.equalsIgnoreCase(Constants.ROLE_STAFF)) {
+				userDetails = getStaffUser(name);
+			} else if(role.equalsIgnoreCase(Constants.ROLE_STUDENT)) {
+				userDetails = getStudentUser(name);
+			} else if(role.equalsIgnoreCase(Constants.ROLE_PARENT)) {
+				userDetails = getParentUser(name);
+			}
 		}
 
 		if (userDetails == null) {
@@ -64,11 +77,11 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 
 	private UserDetails getAdminUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DBA"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_STAFF));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_DBA));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_ADMIN));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_COMMONUSER));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
 		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
 		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
@@ -77,21 +90,21 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 
 	private UserDetails getDBAUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_DBA"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_STAFF));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_DBA));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_COMMONUSER));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
 		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
 		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
 
-	private UserDetails getUserUser(String username) {
+	private UserDetails getStaffUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_STAFF));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_COMMONUSER));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
 		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
 		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
@@ -100,8 +113,28 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 	
 	private UserDetails getCommonUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_COMMONUSER));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
+		return new User(username, "notused", true, true, true, true,
+				grantedAuthorities);
+	}
+	
+	private UserDetails getParentUser(String username) {
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_PARENT));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
+		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
+		OrgUtil.setUserRole(userRole);
+		return new User(username, "notused", true, true, true, true,
+				grantedAuthorities);
+	}
+	
+	private UserDetails getStudentUser(String username) {
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_STUDENT));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
 		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
 		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
@@ -110,10 +143,11 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 	
 	private UserDetails getGuestUser(String username) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
+		grantedAuthorities.add(new SimpleGrantedAuthority(Constants.ROLE_GUEST));
 		JSONArray userRole = new JSONArray(grantedAuthorities.toString());
 		OrgUtil.setUserRole(userRole);
 		return new User(username, "notused", true, true, true, true,
 				grantedAuthorities);
 	}
+	
 }
