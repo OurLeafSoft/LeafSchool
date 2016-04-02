@@ -1,6 +1,7 @@
 package com.leafsoft.school.dao;
 
 import com.leafsoft.school.dao.impl.CoursesDaoImpl;
+import com.leafsoft.school.dao.impl.DesignationDaoImpl;
 import com.leafsoft.school.dao.impl.LoginDetailDaoImpl;
 import com.leafsoft.school.dao.impl.OrgUserRolesDaoImpl;
 import com.leafsoft.school.dao.impl.OrgUsersDaoImpl;
@@ -38,4 +39,11 @@ public class DaoSelectorUtil {
 		orguserdaoimpl.setDataSource(JdbcUtil.getOrgDBDataSource());
 		return orguserdaoimpl;
 	}
+	
+	public static DesignationDao getDesignationDao(){
+		DesignationDaoImpl designationdaoimpl = new DesignationDaoImpl();
+		designationdaoimpl.setDataSource(JdbcUtil.getUserDataSource());
+		return designationdaoimpl;
+	}
+	
 }
