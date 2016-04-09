@@ -75,4 +75,8 @@ public class AppResources {
 	public String sendMail() {
 		return APP_PROPERTIES.getProperty("sendmail").trim();
 	}
+	
+	public String getSchoolUrl() {
+		return APP_PROPERTIES.getProperty("school.url").trim();
+	}
 }
