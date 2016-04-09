@@ -16,6 +16,7 @@ import com.leafsoft.org.OrgUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.OrgUserRolesDao;
 import com.leafsoft.school.dao.OrgUsersDao;
+import com.leafsoft.school.model.LoginDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.user.LeafUser;
@@ -28,10 +29,10 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 			throws UsernameNotFoundException {
 		UserDetails userDetails = null;
 
-		LeafUser credentials = (LeafUser) token.getCredentials();
 		boolean principal = Boolean.valueOf(token.getPrincipal().toString());
 		String usertype = OrgUtil.getUserType();
 		if(usertype==null || usertype.equalsIgnoreCase(Constants.ADMIN_USER)) {
+			LeafUser credentials = (LeafUser) token.getCredentials();
 			if (credentials != null && principal == true) {
 				int lid = credentials.getLid();
 				String name = credentials.getUsername();
@@ -55,7 +56,12 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 			} else {
 				userDetails = getGuestUser("guest");
 			}
+			if (userDetails == null) {
+				throw new UsernameNotFoundException("Invalid user - "
+						+ credentials.getLid());
+			}
 		} else if(usertype!=null && usertype.equalsIgnoreCase(Constants.NONADMIN_USER)) {
+			LoginDetail credentials = (LoginDetail) token.getCredentials();
 			String role = OrgUtil.getRole();
 			String name = credentials.getUsername();
 			if(role.equalsIgnoreCase(Constants.ROLE_STAFF)) {
@@ -65,12 +71,12 @@ public class UserDetailsServiceImpl implements AuthenticationUserDetailsService 
 			} else if(role.equalsIgnoreCase(Constants.ROLE_PARENT)) {
 				userDetails = getParentUser(name);
 			}
+			if (userDetails == null) {
+				throw new UsernameNotFoundException("Invalid user - "
+						+ credentials.getUserid());
+			}
 		}
 
-		if (userDetails == null) {
-			throw new UsernameNotFoundException("Invalid user - "
-					+ credentials.getLid());
-		}
 
 		return userDetails;
 	}

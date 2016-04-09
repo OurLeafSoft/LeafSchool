@@ -51,9 +51,8 @@ public class HttpUtil {
 	}
 	
 	// HTTP POST request
-	private static void sendPost() throws Exception {
+	private static void sendPost(String url,String urlParameters) throws Exception {
 
-		String url = "https://selfsolve.apple.com/wcResults.do";
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -62,8 +61,6 @@ public class HttpUtil {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-		String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
-		
 		// Send post request
 		con.setDoOutput(true);
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());

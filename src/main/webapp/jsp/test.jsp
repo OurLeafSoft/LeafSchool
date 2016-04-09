@@ -1,3 +1,4 @@
+<%@page import="com.leafsoft.util.JSONUtil"%>
 <%@page import="org.springframework.security.core.context.SecurityContextHolder"%>
 <%@page import="org.springframework.security.core.Authentication"%>
 <%@page import="com.leafsoft.org.OrgUtil"%>
@@ -25,12 +26,5 @@
 
 %>
 <% 
-List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_COMMONUSER"));
-grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_GUEST"));
-Authentication a = SecurityContextHolder.getContext().getAuthentication();
-JSONArray userRole = new JSONArray(a.getAuthorities());
-List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>(a.getAuthorities());
-out.print(new JSONArray(a.getAuthorities().toString()));
+out.print(JSONUtil.getInstance().getSidebarJSON());
 %>

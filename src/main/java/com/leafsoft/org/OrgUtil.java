@@ -26,11 +26,13 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
+import com.app.controller.SchoolController;
 import com.leafsoft.http.HttpUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.LoginDetailsDao;
 import com.leafsoft.school.dao.OrgUserRolesDao;
 import com.leafsoft.school.dao.OrgUsersDao;
+import com.leafsoft.school.dao.StaffDetailsDao;
 import com.leafsoft.school.dao.OrgDetailsDao;
 import com.leafsoft.school.model.LoginDetail;
 import com.leafsoft.school.model.OrgDetail;
@@ -45,10 +47,6 @@ import com.leafsoft.util.JdbcUtil;
 
 
 public class OrgUtil {
-	
-	
-	@Resource(name="sessionRegistry")
-	private SessionRegistryImpl sessionRegistry;
 	
 	private static Logger LOGGER = Logger.getLogger(OrgUtil.class.getName());
 	
@@ -399,6 +397,30 @@ public class OrgUtil {
 		return orguser;
 	}
 	
+	public static LoginDetail getloginNon_AdminUser() {
+		LoginDetail logindetail = null;
+		User user = null;
+		Authentication a = SecurityContextHolder.getContext().getAuthentication();
+		try{
+			if(a!=null && a.isAuthenticated()) {
+				user = (User) a.getPrincipal();
+				System.out.print("user::::"+user);
+				if(user!=null) {
+					LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
+					logindetail = logindao.getLoginDetailByUserName(user.getUsername());
+					JSONArray userRole = new JSONArray(a.getAuthorities().toString());
+					OrgUtil.setUserRole(userRole);
+					System.out.print("username::::"+user.getUsername());
+				}
+			} else {
+				return null;
+			}
+		}catch(Exception e) {
+			return null;
+		}
+		return logindetail;
+	}
+	
 	public static void initAdminOrgDetails(HttpServletRequest request, OrgUser orgUser) throws Exception{
 		OrgUserRolesDao userRoleDao = DaoSelectorUtil.getOrgUserRolesDao();
 		OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
@@ -466,13 +488,17 @@ public class OrgUtil {
 		String password = request.getParameter("password");
 		String org_id = request.getParameter("org_id");
 		LoginDetail logindetail = null;
-		if(login_type!=null && username!=null && password!=null && org_id!=null) {
+		OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
+		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(Long.valueOf(org_id));
+		OrgUtil.setOrgdb(CommonUtil.getOrgDb(Integer.parseInt(org_id)));
+		logindetail = getloginNon_AdminUser();
+		if(logindetail!=null){
+			OrgUtil.setOrgdb(CommonUtil.getOrgDb(Integer.parseInt(org_id)));
+		} else if(login_type!=null && username!=null && password!=null && org_id!=null && login_type.equalsIgnoreCase(Constants.NONADMIN_USER) && orgDetails!=null) {
+			OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgDetails.getOrgid()));
 			LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
 			logindetail = logindao.validateUser(username, password);
-		} else if(org_id!=null){
-			OrgUtil.setOrgdb(org_id);
-			logindetail = getloginUsers(request);
-		}
+		} 
 		if(logindetail!=null) {
 			initNonAdminOrgDetails(request, logindetail, org_id);
 			return true;
@@ -483,40 +509,25 @@ public class OrgUtil {
 		return false;
 	}
 	
-	public LoginDetail getloginUsers(HttpServletRequest req) {
-		String sessionId = req.getRequestedSessionId();
-		LoginDetail logindetail = null;
-		System.out.print("sessionId;:"+sessionId);
-		if(sessionId!=null) {
-		//List<Object> principals = sessionRegistry.getAllPrincipals();
-		SessionInformation sessioninfo = sessionRegistry.getSessionInformation(sessionId);
-			if(sessioninfo!= null) {
-				String userName =((User) sessioninfo.getPrincipal()).getUsername();
-				LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
-				logindetail = logindao.getLoginDetailByUserName(userName);
-			}
-		}
-    	return logindetail;
-	}
-	
 	public static void initNonAdminOrgDetails(HttpServletRequest request, LoginDetail loginDetail,String org_id) throws Exception{
 		OrgDetailsDao orgDao = DaoSelectorUtil.getOrganizationDao();
 		OrgDetail orgDetails = orgDao.loadOrgDetailByOrgId(Long.valueOf(org_id));
 		Object non_admin = null;
 		if(loginDetail.getRole().equalsIgnoreCase(Constants.ROLE_STAFF)) {
-			
+			StaffDetailsDao staffdao = DaoSelectorUtil.getStaffDetailsDao();
+			non_admin = staffdao.getStaffDetailsById(loginDetail.getUserid());
 		} else if(loginDetail.getRole().equalsIgnoreCase(Constants.ROLE_PARENT)) {
 			
 		} else if(loginDetail.getRole().equalsIgnoreCase(Constants.ROLE_STUDENT)) {
 			
 		}
-		OrgUtil.setOrgdb(org_id);
+		OrgUtil.setOrgdb(CommonUtil.getOrgDb(orgDetails.getOrgid()));
 		OrgUtil.setOrgDetails(orgDetails);
 		OrgUtil.setOrgId(orgDetails.getOrgid());
 		OrgUtil.setValidOrg(true);
     	OrgUtil.setOrgUser(null);
     	OrgUtil.setOwner(null);
-    	OrgUtil.setNonAdminUser(non_admin);
+    	OrgUtil.setNonAdminUser(loginDetail);
     	OrgUtil.setOwnerid(loginDetail.getUserid());
     	OrgUtil.setUserlid(loginDetail.getId());
     	OrgUtil.setRemoteuseripaddress(request.getRemoteAddr());
@@ -542,4 +553,18 @@ public class OrgUtil {
 		OrgUtil.setUserType(null);
 		OrgUtil.setRole(null);
 	}
+	
+//	public static void initOrgDetails(HttpServletRequest request) {
+//		OrgUser orgUser = getCurrentUser();
+//		if(orgUser != null && orgUser.getUsername().equalsIgnoreCase("guest") && OrgUtil.getUserRole() != null && OrgUtil.getUserRole().length() > 0) {
+//			if(OrgUtil.getUserRole().toString().contains(Constants.ROLE_ADMIN)) {
+//				initAdminOrgDetails(request, orgUser);
+//			} else {
+//				LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
+//				LoginDetail loginDetail = logindao.getLoginDetailByUserName(orgUser.getUsername());
+//				String org_id = request.getParameter("org_id");
+//				initNonAdminOrgDetails(request, loginDetail, org_id);
+//			}
+//		}
+//	}
 }

@@ -38,9 +38,9 @@
 	<mvc:resources mapping="/lte/plugins/**" location="/resources/assets2/plugins/"  
 	cache-period="31556926"/>
 	
-	<mvc:resources mapping="/app/**" location="/resources/html/" cache-period="0"/>
+	<mvc:resources mapping="/app/**" location="/resources/theme/" cache-period="0"/>
 	
-	<mvc:resources mapping="/html/**" location="/resources/" cache-period="0"/>
+	<mvc:resources mapping="/html/**" location="/resources/html/" cache-period="0"/>
 	
 	<mvc:resources mapping="/lte/**" location="/resources/AdminLTE2/" cache-period="0"/>
 

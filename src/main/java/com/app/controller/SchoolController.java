@@ -140,7 +140,7 @@ public class SchoolController
 				+ ",You do not have permission to access this page!");
 				if(user.getName().equals("guest")) {
 					SecurityContextHolder.clearContext();
-					redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getAccountsUrl());
+					redirectStrategy.sendRedirect(request, response, "/html/login.html");
 				} else if(OrgUtil.getOrgId() == null || OrgUtil.getOrgId() == -1) {
 					try {
 					//request.getRequestDispatcher("/register").forward(request, response);
@@ -195,6 +195,7 @@ public class SchoolController
 						}
 					}
 		}
+		SecurityUtil.logout(request);
 		SecurityContextHolder.clearContext();
 		try {
 		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -293,4 +294,49 @@ public class SchoolController
         
         return userRole;
 	}
+	
+	@RequestMapping(value = "/loginuser", method = RequestMethod.POST)
+	public void userLogin(Principal user,HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+		if (user != null) {
+			if(user.getName().equals("guest")) {
+				SecurityContextHolder.clearContext();
+				redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getSchoolUrl()+"/html/login.html?message=error");
+			} else if(OrgUtil.getOrgId() != null && OrgUtil.getOrgId() != -1) {
+				try {
+				//request.getRequestDispatcher("/register").forward(request, response);
+					redirectStrategy.sendRedirect(request, response, "/html/index.html");
+				} catch(Exception e) {
+					LOGGER.log(Level.SEVERE,e.getMessage(),e);
+				}
+			} else {
+				redirectStrategy.sendRedirect(request, response, "/403");
+			}
+		} else {
+			SecurityContextHolder.clearContext();
+			redirectStrategy.sendRedirect(request, response, AppResources.getInstance().getSchoolUrl()+"/html/login.html?message=error");
+		}
+
+	}
+	
+//	public LoginDetail getloginUsers(HttpServletRequest req) {
+//		String sessionId = req.getRequestedSessionId();
+//		LoginDetail logindetail = null;
+//		try {
+//		System.out.print("sessionId;:"+sessionId);
+//		if(sessionId!=null) {
+//		//List<Object> principals = sessionRegistry.getAllPrincipals();
+//		SessionInformation sessioninfo = sessionRegistry.getSessionInformation(sessionId);
+//			if(sessioninfo!= null) {
+//				String userName =((User) sessioninfo.getPrincipal()).getUsername();
+//				LoginDetailsDao logindao = DaoSelectorUtil.getLoginDao();
+//				logindetail = logindao.getLoginDetailByUserName(userName);
+//			}
+//		}
+//		} catch(Exception e) {
+//			LOGGER.severe(e.getMessage());
+//		}
+//    	return logindetail;
+//	}
 }

@@ -5,6 +5,7 @@ import com.leafsoft.school.dao.impl.DesignationDaoImpl;
 import com.leafsoft.school.dao.impl.LoginDetailDaoImpl;
 import com.leafsoft.school.dao.impl.OrgUserRolesDaoImpl;
 import com.leafsoft.school.dao.impl.OrgUsersDaoImpl;
+import com.leafsoft.school.dao.impl.StaffDetailsDaoImpl;
 import com.leafsoft.school.dao.impl.OrgDetailsDaoImpl;
 import com.leafsoft.util.JdbcUtil;
 
@@ -44,6 +45,12 @@ public class DaoSelectorUtil {
 		DesignationDaoImpl designationdaoimpl = new DesignationDaoImpl();
 		designationdaoimpl.setDataSource(JdbcUtil.getUserDataSource());
 		return designationdaoimpl;
+	}
+	
+	public static StaffDetailsDao getStaffDetailsDao(){
+		StaffDetailsDaoImpl staffdetaildao = new StaffDetailsDaoImpl();
+		staffdetaildao.setDataSource(JdbcUtil.getUserDataSource());
+		return staffdetaildao;
 	}
 	
 }
