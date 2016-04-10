@@ -41,9 +41,6 @@ public class SchoolController
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "LeafSoft");
 		model.addObject("message", "This is welcome page!");
-		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setAdmin(request);
-		}
 		model.addObject("user",OrgUtil.getOwner());
 		model.addObject("org",OrgUtil.getOrgDetails());
 		model.setViewName("school/index");
@@ -51,109 +48,35 @@ public class SchoolController
 
 	}
 	
-	@RequestMapping(value = {"/about"})
-	public ModelAndView about(HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "LeafSoft");
-		model.addObject("message", "This is welcome page!");
-		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setAdmin(request);
-		}
-		model.addObject("user",OrgUtil.getOwner());
-		model.addObject("org",OrgUtil.getOrgDetails());
-		model.setViewName("school/about");
-		return model;
-	}
-	
-	@RequestMapping(value = {"/blog"})
-	public ModelAndView blog(HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "LeafSoft");
-		model.addObject("message", "This is welcome page!");
-		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setAdmin(request);
-		}
-		model.addObject("user",OrgUtil.getOwner());
-		model.addObject("org",OrgUtil.getOrgDetails());
-		model.setViewName("school/blog");
-		return model;
-	}
-	
-	@RequestMapping(value = {"/gallery"})
-	public ModelAndView gallery(HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "LeafSoft");
-		model.addObject("message", "This is welcome page!");
-		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setAdmin(request);
-		}
-		model.addObject("user",OrgUtil.getOwner());
-		model.addObject("org",OrgUtil.getOrgDetails());
-		model.setViewName("school/gallery");
-		return model;
-	}
-	
-	@RequestMapping(value = {"/services"})
-	public ModelAndView services(HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "LeafSoft");
-		model.addObject("message", "This is welcome page!");
-		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setAdmin(request);
-		}
-		model.addObject("user",OrgUtil.getOwner());
-		model.addObject("org",OrgUtil.getOrgDetails());
-		model.setViewName("school/services");
-		return model;
-	}
-	
-	@RequestMapping(value = {"/contact"})
-	public ModelAndView contact(HttpServletRequest request) {
-
-		ModelAndView model = new ModelAndView();
-		model.addObject("title", "LeafSoft");
-		model.addObject("message", "This is welcome page!");
-		if(OrgUtil.getOwner() == null) {
-			OrgUtil.setAdmin(request);
-		}
-		model.addObject("user",OrgUtil.getOwner());
-		model.addObject("org",OrgUtil.getOrgDetails());
-		model.setViewName("school/contact");
-		return model;
-	}
-	
-	
 	
 	// for 403 access denied page
 		@RequestMapping(value = "/403", method = RequestMethod.GET)
 		public ModelAndView accesssDenied(Principal user,HttpServletRequest request,HttpServletResponse response) throws IOException {
 
 			ModelAndView model = new ModelAndView();
-
+			RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 			if (user != null) {
-				RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 				model.addObject("msg", "Hi " + user.getName() 
 				+ ",You do not have permission to access this page!");
 				if(user.getName().equals("guest")) {
 					SecurityContextHolder.clearContext();
 					redirectStrategy.sendRedirect(request, response, "/html/login.html");
-				} else if(OrgUtil.getOrgId() == null || OrgUtil.getOrgId() == -1) {
+				} else if(SecurityUtil.isCommonUser()) {
 					try {
 					//request.getRequestDispatcher("/register").forward(request, response);
 					redirectStrategy.sendRedirect(request, response, "/register");
 					} catch(Exception e) {
 						LOGGER.log(Level.SEVERE,e.getMessage(),e);
 					}
+				} else {
+					model.setViewName("403");
+					model.addObject("msg", 
+							"You do not have permission to access this page!");
 				}
 			} else {
-				model.addObject("msg", 
-				"You do not have permission to access this page!");
+				SecurityContextHolder.clearContext();
+				redirectStrategy.sendRedirect(request, response, "/html/login.html");
 			}
-			model.setViewName("403");
 			return model;
 
 		}

@@ -22,4 +22,5 @@ public class CommonUtil {
 		}
 		return properties;
 	}
+	
 }

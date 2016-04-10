@@ -31,8 +31,8 @@ public class DashBoardController {
 		try {
 			JSONObject sidbar_json = JSONUtil.getInstance().getSidebarJSON();
 			OrgDetailsDao orgdao = DaoSelectorUtil.getOrganizationDao();
-			OrgDetail ordetails = orgdao.loadOrgDetailByOrgIdAndUserId(OrgUtil.getOrgId(), OrgUtil.getOwnerid());
-			JSONArray rolebased_array = sidbar_json.getJSONArray("admin");
+			OrgDetail ordetails = orgdao.loadOrgDetailByOrgId(OrgUtil.getOrgId());
+			JSONArray rolebased_array = sidbar_json.getJSONArray(OrgUtil.getRole());
 			response.put("code", 0);
 			response.put("sidbar_array", rolebased_array);
 			response.put("user", new JSONObject(OrgUtil.getCurrentUser()));

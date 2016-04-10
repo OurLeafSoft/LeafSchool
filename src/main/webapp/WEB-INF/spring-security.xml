@@ -9,7 +9,6 @@
 	<http pattern="/images/**" security="none"/>
 	<http pattern="/css/**" security="none"/>
 	<http pattern="/js/**" security="none"/>
-	<http pattern="/html/**" security="none"/>
 	<http pattern="/favicon.ico" security="none"/>
 	<http pattern="/invaliduser" security="none"/>
 	<http pattern="/logoutsession" security="none"/>
@@ -20,30 +19,36 @@
 	<http pattern="/lte/dist/**" security="none"/>
 	<http pattern="/lte/bootstrap/**" security="none"/>
 	<http pattern="/lte/plugins/**" security="none"/>
+	<http pattern="/html/login.html" security="none" />
 	
 	<http pattern="/accessdenied" security="none"/>
 	<http create-session="never" use-expressions="true"
 		auto-config="false" entry-point-ref="preAuthenticatedProcessingFilterEntryPoint">
-		<intercept-url pattern="/login*" access="permitAll" />
 		<intercept-url pattern="/logoutsession" access="permitAll" />
-		<intercept-url pattern="/jsp/index.jsp" access="hasRole('ROLE_GUEST')"/>
-		<access-denied-handler error-page="/403" />
+		<intercept-url pattern="/jsp/index.jsp" access="permitAll"/>
 		<intercept-url pattern="/app/*" access="hasRole('ROLE_STAFF,ROLE_PARENT,ROLE_STUDENT')"/>
 		<intercept-url pattern="/lte/*" access="hasRole('ROLE_STAFF')"/>
-		<intercept-url pattern="/html/*" access="hasRole('ROLE_STAFF, ROLE_PARENT, ROLE_STUDENT')"/>
+		<intercept-url pattern="/html/index.html" access="hasRole('ROLE_STAFF')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_COMMONUSER')"/>
 		<intercept-url pattern="/schoolRegister" access="hasRole('ROLE_COMMONUSER')"/>
 		<intercept-url pattern="/dashboard" access="hasRole('ROLE_STAFF')"/>
-		<intercept-url pattern="/loginuser" access="hasRole('ROLE_STAFF,ROLE_PARENT,ROLE_STUDENT')"/>
+		<intercept-url pattern="/loginuser" access="hasRole('ROLE_STAFF')"/>
+		<access-denied-handler error-page="/403" />
 		<custom-filter position="PRE_AUTH_FILTER"
 			ref="preAuthFilter" />
 		<session-management>
     	<concurrency-control session-registry-ref="sessionRegistry"/>
 		</session-management>
-		
-    	<logout logout-url="/logout" logout-success-url="/logoutsession" delete-cookies="JSESSIONID" />
+		<form-login 
+		    login-page="/html/login.html" 
+		    default-target-url="/html/index.html" 
+			authentication-failure-url="/html/login.html?test" 
+			username-parameter="username"
+			password-parameter="password" />
+    	<logout logout-success-url="/html/login.html?logout" delete-cookies="JSESSIONID"/>
 	</http>
-	
+	<beans:bean id="sessionRegistry"
+    class="org.springframework.security.core.session.SessionRegistryImpl" />
 	<beans:bean id="preAuthFilter" class="com.app.filter.UrlParametersAuthenticationFilter">
 		<beans:property name="authenticationManager" ref="appControlAuthenticationManager" />
 	</beans:bean>

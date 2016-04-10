@@ -14,10 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.leafsoft.org.OrgUtil;
+import com.leafsoft.school.dao.LoginDetailsDao;
+import com.leafsoft.school.model.LoginDetail;
+import com.leafsoft.school.model.OrgUser;
+import com.leafsoft.school.util.CommonUtil;
 import com.leafsoft.util.Constants;
 
 public class OrgFilter implements Filter {
@@ -33,20 +39,26 @@ public class OrgFilter implements Filter {
 			throws IOException, ServletException {
 		try {
 			HttpServletRequest request = (HttpServletRequest) req;
-			HttpServletResponse response = (HttpServletResponse) res;
 			if(request.getAttribute(Constants.DOES_NOT_NEED_ORGFILTER) == null || !Boolean.valueOf(request.getAttribute(Constants.DOES_NOT_NEED_ORGFILTER).toString())) {
-				String login_type = request.getParameter("user_type");
-				if(login_type==null || login_type.equals(Constants.ADMIN_USER)) {
-					OrgUtil.setAdmin(request);
-				} else{
-					new OrgUtil().setNonAdmin(request);
-				}
-				//OrgUtil.resetAuthorities(request);
+				Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 				LOGGER.log(Level.INFO,"getOrgId::::::"+OrgUtil.getOrgId());
 				LOGGER.log(Level.INFO,"getRequestURI::::::"+request.getRequestURI());
 				LOGGER.log(Level.INFO,"Filter:::::ip:"+request.getRemoteAddr());
 				LOGGER.log(Level.INFO,"OrgUtil.isValidOrg():::"+OrgUtil.isValidOrg());
-				
+				JSONObject authDetails = !(authentication instanceof AnonymousAuthenticationToken) && authentication!=null && authentication.getCredentials()!=null ? new JSONObject(authentication.getCredentials().toString()) : null;
+				if(authDetails!=null){
+					String user_type = authDetails.has(Constants.USER_TYPE) ? authDetails.getString(Constants.USER_TYPE) : null;
+					int org_id = authDetails.has(Constants.ORG_ID) ? authDetails.getInt(Constants.ORG_ID) : -1;
+					if(user_type!=null && user_type.equalsIgnoreCase(Constants.NONADMIN_USER)) {
+						OrgUtil.setOrgdb(CommonUtil.getOrgDb(org_id));
+						LoginDetail loginDetail = OrgUtil.getloginNon_AdminUser();
+						OrgUtil.initNonAdminOrgDetails(request, loginDetail, org_id);
+					} else {
+						OrgUser orgUser = OrgUtil.getCurrentUser();
+						OrgUtil.initAdminOrgDetails(org_id, orgUser, request);
+					}
+				}
+				//OrgUtil.resetAuthorities(request);
 //				if(OrgUtil.getUserlid() == null) {
 //					request.getRequestDispatcher("/invaliduser").forward(request, response);
 //					return;

@@ -153,5 +153,5 @@ CREATE TABLE `LoginDetails` (
   `password` varchar(100) DEFAULT NULL,
   `role` varchar(20) NOT NULL,
   `status` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),UNIQUE (username)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

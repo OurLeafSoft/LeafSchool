@@ -1,5 +1,5 @@
 {
-	"admin" : [ 
+	"ROLE_ADMIN" : [ 
 		{
 			"name" : "DashBoard",
 			"icon" : "fa-dashboard",
@@ -423,7 +423,161 @@
 				}
 					
 			]
+		}
+	],
+	"ROLE_STAFF" : [ 
+		{
+			"name" : "DashBoard",
+			"icon" : "fa-dashboard",
+			"child" : []
 		},
-		
+		{
+			"name" : "My Courses",
+			"icon" : "fa-book",
+			"child" : []
+		},
+		{
+			"name" : "My Files",
+			"icon" : "fa-folder",
+			"child" : []
+		},
+		{
+			"name" : "Administer",
+			"icon" : " fa-user",
+			"child" : [ 
+				{
+					"name" : "Announcements",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}
+			]
+		},
+		{
+			"name" : "Assignments",
+			"icon" : "fa-pencil",
+			"child" : [
+				{
+					"name" : "Create",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Grade Grid",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "View Assignments",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}
+			]
+		},
+		{
+			"name" : "Attendance",
+			"icon" : "fa-check-square-o",
+			"child" : [
+				{
+					"name" : "Take",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Permissions",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Discipline",
+			"icon" : "fa-male",
+			"child" : [
+				{
+					"name" : "Report Event",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "View History",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Grade Report",
+			"icon" : "fa-dashboard",
+			"child" : [
+				{
+					"name" : "Contribute",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Comment Templates",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Data Reports",
+			"icon" : "fa-bar-chart-o",
+			"child" : [
+				{
+					"name" : "Address Lables",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Find A Free Room",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Find A Free Students",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Find A Free Teacher",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Print Multiple Timetables",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Student List",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Student Portraits",
+					"icon" : "fa-circle-o",
+					"child" : []
+				},
+				{
+					"name" : "Parents Day Report",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}	
+			]
+		},
+		{
+			"name" : "Help",
+			"icon" : "fa-dashboard",
+			"child" : [
+				{
+					"name" : "FAQ",
+					"icon" : "fa-circle-o",
+					"child" : []
+				}
+					
+			]
+		}
 	]
 }

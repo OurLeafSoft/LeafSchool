@@ -5,8 +5,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +39,7 @@ public class SchoolRegisterController {
      
 	@RequestMapping(value = "/schoolRegister", method = RequestMethod.POST)
     public ModelAndView processRegistration(@ModelAttribute("orgForm") OrgDetail org,
-            Map<String, Object> model,HttpServletRequest request) {
+            Map<String, Object> model,HttpServletRequest request,HttpServletResponse response) {
          
         // for testing purpose:
     	LOGGER.log(Level.INFO,"username: " + org.getOrgname());
@@ -77,6 +80,12 @@ public class SchoolRegisterController {
 	        msg = msg + "<br><br>Thanks<br>The LeafSoft Team";
 	        if(OrgUtil.getOwner()!=null) {
 	        	SendMail.send(OrgUtil.getOwner().getEmail(), "Welcome to LeafSoft SchoolManagement", msg);
+	        }
+	        try {
+	        RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+	        redirectStrategy.sendRedirect(request, response, "/html/login.html");
+	        } catch(Exception e) {
+	        	LOGGER.log(Level.SEVERE,e.getMessage(),e);
 	        }
     	}
     	else {
