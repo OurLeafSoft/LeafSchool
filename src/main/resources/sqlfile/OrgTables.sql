@@ -45,26 +45,58 @@ CREATE TABLE `Designations` (
   CONSTRAINT `Designations_fk_designationgroupid` FOREIGN KEY (`designationgroupid`) REFERENCES `DesignationGroup` (`designationgroupid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `StaffDetails` (
-  `staffid` int(11) NOT NULL AUTO_INCREMENT,
-  `staffname` varchar(100) NOT NULL,
-  `contactnumber` bigint(20) DEFAULT '-1',
-  `email` varchar(100) NOT NULL,
-  `joiningdate` date DEFAULT NULL,
-  `qualification` varchar(100) DEFAULT NULL,
-  `prv_experience` varchar(200) DEFAULT NULL,
-  `designationid` int(11) NOT NULL,
-  `status` BOOLEAN DEFAULT 0,
-  PRIMARY KEY (`staffid`),
-  CONSTRAINT `StaffDetails_fk_designationid` FOREIGN KEY (`designationid`) REFERENCES `Designations` (`designationid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
-
 CREATE TABLE `Subjects` (
   `subjectid` int(11) NOT NULL AUTO_INCREMENT,
   `subjectname` varchar(100) NOT NULL,
   `subjecttype` tinyint(4) NOT NULL DEFAULT '-1',
   `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`subjectid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `StaffDetails` (
+  `staffid` int(11) NOT NULL AUTO_INCREMENT,
+  `staffname` varchar(100) NOT NULL,
+  `contactnumber` bigint(20) DEFAULT '-1',
+  `email` varchar(100) NOT NULL,
+  `joiningdate` date DEFAULT NULL,
+  `prv_experience` varchar(200) DEFAULT NULL,
+  `gender` tinyint(4) NOT NULL DEFAULT '-1',
+  `dob` date DEFAULT NULL,
+  `designationid` int(11) NOT NULL,
+  `status` BOOLEAN DEFAULT 0,
+  `address` varchar(255) DEFAULT NULL,
+  `state` varchar(75) DEFAULT NULL,
+  `city` varchar(75) DEFAULT NULL,
+  `zipcode` varchar(50) DEFAULT NULL,
+  `accountno` bigint(19) NOT NULL,
+  `nationality` varchar(50) DEFAULT NULL,
+  `primarylanguage` varchar(30) NOT NULL,
+  `secondarylanguage` varchar(30) NOT NULL,
+  PRIMARY KEY (`staffid`),
+  CONSTRAINT `StaffDetails_fk_designationid` FOREIGN KEY (`designationid`) REFERENCES `Designations` (`designationid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `StaffQualification` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `qdate` TIMESTAMP DEFAULT 0,
+  `institution` varchar(255) DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `grade` double NOT NULL DEFAULT '0',
+  `percentage` double NOT NULL DEFAULT '0',
+  `staffid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `StaffQualification_fk_staffid` FOREIGN KEY (`staffid`) REFERENCES `StaffDetails` (`staffid`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+
+CREATE TABLE `StaffSubjectDetails` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `primarysubjectid` int(11) DEFAULT NULL,
+  `secondarysubjectid` int(11) DEFAULT NULL,
+  `othersubjectid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `StaffSubjectDetails_fk_primarysubjectid` FOREIGN KEY (`primarysubjectid`) REFERENCES `Subjects` (`subjectid`),
+  CONSTRAINT `StaffSubjectDetails_fk_secondarysubjectid` FOREIGN KEY (`secondarysubjectid`) REFERENCES `Subjects` (`subjectid`),
+  CONSTRAINT `StaffSubjectDetails_fk_othersubjectid` FOREIGN KEY (`othersubjectid`) REFERENCES `Subjects` (`subjectid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Courses` (

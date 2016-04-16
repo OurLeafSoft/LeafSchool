@@ -16,6 +16,7 @@ public class Designation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int designationid;
 
 	private String designationname;

@@ -16,6 +16,7 @@ public class StaffSubjectCourseHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int staffsubjectcourseid;
 
 	@Temporal(TemporalType.DATE)
@@ -35,7 +36,7 @@ public class StaffSubjectCourseHistory implements Serializable {
 	@JoinColumn(name="subjectid")
 	private Subject subject;
 
-	//bi-directional many-to-one association to Cours
+	//bi-directional many-to-one association to Course
 	@ManyToOne
 	@JoinColumn(name="courseid")
 	private Course cours;

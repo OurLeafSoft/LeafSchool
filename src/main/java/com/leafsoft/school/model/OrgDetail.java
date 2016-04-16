@@ -17,6 +17,7 @@ public class OrgDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int orgid;
 
 	private String address;
@@ -165,7 +166,6 @@ public class OrgDetail implements Serializable {
 
 		return orgUserRole;
 	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -176,5 +176,4 @@ public class OrgDetail implements Serializable {
 				+ ", orgname=" + orgname + ", state=" + state + ", status=" + status + ", timetype=" + timetype
 				+ ", zipcode=" + zipcode + ", orgUserRoles=" + orgUserRoles + "]";
 	}
-
 }

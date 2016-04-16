@@ -15,20 +15,21 @@ public class OrgUserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	@Column(name="user_role_id")
 	private int userRoleId;
 
 	private String rolename;
 
-	//bi-directional many-to-one association to OrgDetail
-	@ManyToOne
-	@JoinColumn(name="orgid")
-	private OrgDetail orgDetail;
-
 	//bi-directional many-to-one association to OrgUser
 	@ManyToOne
 	@JoinColumn(name="luid")
 	private OrgUser orgUser;
+
+	//bi-directional many-to-one association to OrgDetail
+	@ManyToOne
+	@JoinColumn(name="orgid")
+	private OrgDetail orgDetail;
 
 	public OrgUserRole() {
 	}
@@ -49,14 +50,6 @@ public class OrgUserRole implements Serializable {
 		this.rolename = rolename;
 	}
 
-	public OrgDetail getOrgDetail() {
-		return this.orgDetail;
-	}
-
-	public void setOrgDetail(OrgDetail orgDetail) {
-		this.orgDetail = orgDetail;
-	}
-
 	public OrgUser getOrgUser() {
 		return this.orgUser;
 	}
@@ -65,6 +58,13 @@ public class OrgUserRole implements Serializable {
 		this.orgUser = orgUser;
 	}
 
+	public OrgDetail getOrgDetail() {
+		return this.orgDetail;
+	}
+
+	public void setOrgDetail(OrgDetail orgDetail) {
+		this.orgDetail = orgDetail;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

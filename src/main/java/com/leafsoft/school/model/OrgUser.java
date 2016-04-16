@@ -2,11 +2,7 @@ package com.leafsoft.school.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import org.springframework.security.core.GrantedAuthority;
-
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -21,6 +17,7 @@ public class OrgUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int luid;
 
 	private BigInteger createtime;

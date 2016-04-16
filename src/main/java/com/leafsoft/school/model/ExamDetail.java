@@ -16,6 +16,7 @@ public class ExamDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int examid;
 
 	private String examname;

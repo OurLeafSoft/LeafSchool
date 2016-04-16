@@ -16,6 +16,7 @@ public class StudentCourseHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int studentcoursehistoryid;
 
 	@Temporal(TemporalType.DATE)
@@ -25,7 +26,7 @@ public class StudentCourseHistory implements Serializable {
 	@OneToMany(mappedBy="studentCourseHistory")
 	private List<StudentAcadamicHistory> studentAcadamicHistories;
 
-	//bi-directional many-to-one association to Cours
+	//bi-directional many-to-one association to Course
 	@ManyToOne
 	@JoinColumn(name="courseid")
 	private Course cours;

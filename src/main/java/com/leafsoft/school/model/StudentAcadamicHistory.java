@@ -14,6 +14,7 @@ public class StudentAcadamicHistory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int studenthistoryid;
 
 	private byte historytype;

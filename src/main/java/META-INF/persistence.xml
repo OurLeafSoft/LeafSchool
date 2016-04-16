@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="test">
+		<class>com.leafsoft.school.model.Course</class>
+		<class>com.leafsoft.school.model.DesignationGroup</class>
+		<class>com.leafsoft.school.model.Designation</class>
+		<class>com.leafsoft.school.model.ExamDetail</class>
+		<class>com.leafsoft.school.model.ExamSubjectMapping</class>
+		<class>com.leafsoft.school.model.ExamType</class>
+		<class>com.leafsoft.school.model.LoginDetail</class>
 		<class>com.leafsoft.school.model.OrgDetail</class>
 		<class>com.leafsoft.school.model.OrgUserRole</class>
 		<class>com.leafsoft.school.model.OrgUser</class>
+		<class>com.leafsoft.school.model.StaffDetail</class>
+		<class>com.leafsoft.school.model.StaffQualification</class>
+		<class>com.leafsoft.school.model.StaffSubjectCourseHistory</class>
+		<class>com.leafsoft.school.model.StaffSubjectDetail</class>
+		<class>com.leafsoft.school.model.StudentAcadamicHistory</class>
+		<class>com.leafsoft.school.model.StudentContactDetail</class>
+		<class>com.leafsoft.school.model.StudentCourseHistory</class>
+		<class>com.leafsoft.school.model.StudentDetail</class>
+		<class>com.leafsoft.school.model.Subject</class>
 	</persistence-unit>
 </persistence>

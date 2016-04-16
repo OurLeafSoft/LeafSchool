@@ -17,6 +17,7 @@ public class StudentContactDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int familyid;
 
 	private String address;
