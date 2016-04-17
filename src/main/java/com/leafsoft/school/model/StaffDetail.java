@@ -16,62 +16,34 @@ import java.util.List;
 @NamedQuery(name="StaffDetail.findAll", query="SELECT s FROM StaffDetail s")
 public class StaffDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int staffid;
-
 	private BigInteger accountno;
-
 	private String address;
-
 	private String city;
-
 	private BigInteger contactnumber;
-
-	@Temporal(TemporalType.DATE)
 	private Date dob;
-
 	private String email;
-
 	private byte gender;
-
-	@Temporal(TemporalType.DATE)
 	private Date joiningdate;
-
 	private String nationality;
-
 	private String primarylanguage;
-
-	@Column(name="prv_experience")
 	private String prvExperience;
-
 	private String secondarylanguage;
-
 	private String staffname;
-
 	private String state;
-
 	private byte status;
-
 	private String zipcode;
-
-	//bi-directional many-to-one association to Designation
-	@ManyToOne
-	@JoinColumn(name="designationid")
 	private Designation designation;
-
-	//bi-directional many-to-one association to StaffQualification
-	@OneToMany(mappedBy="staffDetail")
 	private List<StaffQualification> staffQualifications;
-
-	//bi-directional many-to-one association to StaffSubjectCourseHistory
-	@OneToMany(mappedBy="staffDetail")
 	private List<StaffSubjectCourseHistory> staffSubjectCourseHistories;
+	private List<StaffSubjectDetail> staffSubjectDetails;
 
 	public StaffDetail() {
 	}
 
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public int getStaffid() {
 		return this.staffid;
 	}
@@ -79,6 +51,7 @@ public class StaffDetail implements Serializable {
 	public void setStaffid(int staffid) {
 		this.staffid = staffid;
 	}
+
 
 	public BigInteger getAccountno() {
 		return this.accountno;
@@ -88,6 +61,7 @@ public class StaffDetail implements Serializable {
 		this.accountno = accountno;
 	}
 
+
 	public String getAddress() {
 		return this.address;
 	}
@@ -95,6 +69,7 @@ public class StaffDetail implements Serializable {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 
 	public String getCity() {
 		return this.city;
@@ -104,6 +79,7 @@ public class StaffDetail implements Serializable {
 		this.city = city;
 	}
 
+
 	public BigInteger getContactnumber() {
 		return this.contactnumber;
 	}
@@ -112,6 +88,8 @@ public class StaffDetail implements Serializable {
 		this.contactnumber = contactnumber;
 	}
 
+
+	@Temporal(TemporalType.DATE)
 	public Date getDob() {
 		return this.dob;
 	}
@@ -119,6 +97,7 @@ public class StaffDetail implements Serializable {
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+
 
 	public String getEmail() {
 		return this.email;
@@ -128,6 +107,7 @@ public class StaffDetail implements Serializable {
 		this.email = email;
 	}
 
+
 	public byte getGender() {
 		return this.gender;
 	}
@@ -136,6 +116,8 @@ public class StaffDetail implements Serializable {
 		this.gender = gender;
 	}
 
+
+	@Temporal(TemporalType.DATE)
 	public Date getJoiningdate() {
 		return this.joiningdate;
 	}
@@ -143,6 +125,7 @@ public class StaffDetail implements Serializable {
 	public void setJoiningdate(Date joiningdate) {
 		this.joiningdate = joiningdate;
 	}
+
 
 	public String getNationality() {
 		return this.nationality;
@@ -152,6 +135,7 @@ public class StaffDetail implements Serializable {
 		this.nationality = nationality;
 	}
 
+
 	public String getPrimarylanguage() {
 		return this.primarylanguage;
 	}
@@ -160,6 +144,8 @@ public class StaffDetail implements Serializable {
 		this.primarylanguage = primarylanguage;
 	}
 
+
+	@Column(name="prv_experience")
 	public String getPrvExperience() {
 		return this.prvExperience;
 	}
@@ -167,6 +153,7 @@ public class StaffDetail implements Serializable {
 	public void setPrvExperience(String prvExperience) {
 		this.prvExperience = prvExperience;
 	}
+
 
 	public String getSecondarylanguage() {
 		return this.secondarylanguage;
@@ -176,6 +163,7 @@ public class StaffDetail implements Serializable {
 		this.secondarylanguage = secondarylanguage;
 	}
 
+
 	public String getStaffname() {
 		return this.staffname;
 	}
@@ -183,6 +171,7 @@ public class StaffDetail implements Serializable {
 	public void setStaffname(String staffname) {
 		this.staffname = staffname;
 	}
+
 
 	public String getState() {
 		return this.state;
@@ -192,6 +181,7 @@ public class StaffDetail implements Serializable {
 		this.state = state;
 	}
 
+
 	public byte getStatus() {
 		return this.status;
 	}
@@ -199,6 +189,7 @@ public class StaffDetail implements Serializable {
 	public void setStatus(byte status) {
 		this.status = status;
 	}
+
 
 	public String getZipcode() {
 		return this.zipcode;
@@ -208,6 +199,10 @@ public class StaffDetail implements Serializable {
 		this.zipcode = zipcode;
 	}
 
+
+	//bi-directional many-to-one association to Designation
+	@ManyToOne
+	@JoinColumn(name="designationid")
 	public Designation getDesignation() {
 		return this.designation;
 	}
@@ -216,6 +211,9 @@ public class StaffDetail implements Serializable {
 		this.designation = designation;
 	}
 
+
+	//bi-directional many-to-one association to StaffQualification
+	@OneToMany(mappedBy="staffDetail")
 	public List<StaffQualification> getStaffQualifications() {
 		return this.staffQualifications;
 	}
@@ -238,6 +236,9 @@ public class StaffDetail implements Serializable {
 		return staffQualification;
 	}
 
+
+	//bi-directional many-to-one association to StaffSubjectCourseHistory
+	@OneToMany(mappedBy="staffDetail")
 	public List<StaffSubjectCourseHistory> getStaffSubjectCourseHistories() {
 		return this.staffSubjectCourseHistories;
 	}
@@ -260,6 +261,32 @@ public class StaffDetail implements Serializable {
 		return staffSubjectCourseHistory;
 	}
 
+
+	//bi-directional many-to-one association to StaffSubjectDetail
+	@OneToMany(mappedBy="staffDetail")
+	public List<StaffSubjectDetail> getStaffSubjectDetails() {
+		return this.staffSubjectDetails;
+	}
+
+	public void setStaffSubjectDetails(List<StaffSubjectDetail> staffSubjectDetails) {
+		this.staffSubjectDetails = staffSubjectDetails;
+	}
+
+	public StaffSubjectDetail addStaffSubjectDetail(StaffSubjectDetail staffSubjectDetail) {
+		getStaffSubjectDetails().add(staffSubjectDetail);
+		staffSubjectDetail.setStaffDetail(this);
+
+		return staffSubjectDetail;
+	}
+
+	public StaffSubjectDetail removeStaffSubjectDetail(StaffSubjectDetail staffSubjectDetail) {
+		getStaffSubjectDetails().remove(staffSubjectDetail);
+		staffSubjectDetail.setStaffDetail(null);
+
+		return staffSubjectDetail;
+	}
+
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -271,7 +298,8 @@ public class StaffDetail implements Serializable {
 				+ primarylanguage + ", prvExperience=" + prvExperience + ", secondarylanguage=" + secondarylanguage
 				+ ", staffname=" + staffname + ", state=" + state + ", status=" + status + ", zipcode=" + zipcode
 				+ ", designation=" + designation + ", staffQualifications=" + staffQualifications
-				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
+				+ ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + ", staffSubjectDetails="
+				+ staffSubjectDetails + "]";
 	}
 
 }

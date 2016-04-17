@@ -15,8 +15,13 @@ public class StaffSubjectDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+
+	//bi-directional many-to-one association to StaffDetail
+	@ManyToOne
+	@JoinColumn(name="staffid")
+	private StaffDetail staffDetail;
 
 	//bi-directional many-to-one association to Subject
 	@ManyToOne
@@ -42,6 +47,14 @@ public class StaffSubjectDetail implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public StaffDetail getStaffDetail() {
+		return this.staffDetail;
+	}
+
+	public void setStaffDetail(StaffDetail staffDetail) {
+		this.staffDetail = staffDetail;
 	}
 
 	public Subject getSubject1() {
@@ -73,8 +86,8 @@ public class StaffSubjectDetail implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "StaffSubjectDetail [id=" + id + ", subject1=" + subject1 + ", subject2=" + subject2 + ", subject3="
-				+ subject3 + "]";
+		return "StaffSubjectDetail [id=" + id + ", staffDetail=" + staffDetail + ", subject1=" + subject1
+				+ ", subject2=" + subject2 + ", subject3=" + subject3 + "]";
 	}
 
 }

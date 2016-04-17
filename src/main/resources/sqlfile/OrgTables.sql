@@ -90,10 +90,12 @@ CREATE TABLE `StaffQualification` (
 
 CREATE TABLE `StaffSubjectDetails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `staffid` int(11) NOT NULL,
   `primarysubjectid` int(11) DEFAULT NULL,
   `secondarysubjectid` int(11) DEFAULT NULL,
   `othersubjectid` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  CONSTRAINT `StaffSubjectDetails_fk_staffid` FOREIGN KEY (`staffid`) REFERENCES `StaffDetails` (`staffid`),
   CONSTRAINT `StaffSubjectDetails_fk_primarysubjectid` FOREIGN KEY (`primarysubjectid`) REFERENCES `Subjects` (`subjectid`),
   CONSTRAINT `StaffSubjectDetails_fk_secondarysubjectid` FOREIGN KEY (`secondarysubjectid`) REFERENCES `Subjects` (`subjectid`),
   CONSTRAINT `StaffSubjectDetails_fk_othersubjectid` FOREIGN KEY (`othersubjectid`) REFERENCES `Subjects` (`subjectid`)

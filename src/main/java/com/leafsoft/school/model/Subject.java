@@ -14,21 +14,36 @@ import java.util.List;
 @NamedQuery(name="Subject.findAll", query="SELECT s FROM Subject s")
 public class Subject implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int subjectid;
+
 	private byte status;
+
 	private String subjectname;
+
 	private byte subjecttype;
+
+	//bi-directional many-to-one association to StaffSubjectCourseHistory
+	@OneToMany(mappedBy="subject")
 	private List<StaffSubjectCourseHistory> staffSubjectCourseHistories;
+
+	//bi-directional many-to-one association to StaffSubjectDetail
+	@OneToMany(mappedBy="subject1")
 	private List<StaffSubjectDetail> staffSubjectDetails1;
+
+	//bi-directional many-to-one association to StaffSubjectDetail
+	@OneToMany(mappedBy="subject2")
 	private List<StaffSubjectDetail> staffSubjectDetails2;
+
+	//bi-directional many-to-one association to StaffSubjectDetail
+	@OneToMany(mappedBy="subject3")
 	private List<StaffSubjectDetail> staffSubjectDetails3;
 
 	public Subject() {
 	}
 
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
 	public int getSubjectid() {
 		return this.subjectid;
 	}
@@ -36,7 +51,6 @@ public class Subject implements Serializable {
 	public void setSubjectid(int subjectid) {
 		this.subjectid = subjectid;
 	}
-
 
 	public byte getStatus() {
 		return this.status;
@@ -46,7 +60,6 @@ public class Subject implements Serializable {
 		this.status = status;
 	}
 
-
 	public String getSubjectname() {
 		return this.subjectname;
 	}
@@ -54,7 +67,6 @@ public class Subject implements Serializable {
 	public void setSubjectname(String subjectname) {
 		this.subjectname = subjectname;
 	}
-
 
 	public byte getSubjecttype() {
 		return this.subjecttype;
@@ -64,9 +76,6 @@ public class Subject implements Serializable {
 		this.subjecttype = subjecttype;
 	}
 
-
-	//bi-directional many-to-one association to StaffSubjectCourseHistory
-	@OneToMany(mappedBy="subject")
 	public List<StaffSubjectCourseHistory> getStaffSubjectCourseHistories() {
 		return this.staffSubjectCourseHistories;
 	}
@@ -89,9 +98,6 @@ public class Subject implements Serializable {
 		return staffSubjectCourseHistory;
 	}
 
-
-	//bi-directional many-to-one association to StaffSubjectDetail
-	@OneToMany(mappedBy="subject1")
 	public List<StaffSubjectDetail> getStaffSubjectDetails1() {
 		return this.staffSubjectDetails1;
 	}
@@ -114,9 +120,6 @@ public class Subject implements Serializable {
 		return staffSubjectDetails1;
 	}
 
-
-	//bi-directional many-to-one association to StaffSubjectDetail
-	@OneToMany(mappedBy="subject2")
 	public List<StaffSubjectDetail> getStaffSubjectDetails2() {
 		return this.staffSubjectDetails2;
 	}
@@ -139,9 +142,6 @@ public class Subject implements Serializable {
 		return staffSubjectDetails2;
 	}
 
-
-	//bi-directional many-to-one association to StaffSubjectDetail
-	@OneToMany(mappedBy="subject3")
 	public List<StaffSubjectDetail> getStaffSubjectDetails3() {
 		return this.staffSubjectDetails3;
 	}
@@ -170,7 +170,9 @@ public class Subject implements Serializable {
 	@Override
 	public String toString() {
 		return "Subject [subjectid=" + subjectid + ", status=" + status + ", subjectname=" + subjectname
-				+ ", subjecttype=" + subjecttype + ", staffSubjectCourseHistories=" + staffSubjectCourseHistories + "]";
+				+ ", subjecttype=" + subjecttype + ", staffSubjectCourseHistories=" + staffSubjectCourseHistories
+				+ ", staffSubjectDetails1=" + staffSubjectDetails1 + ", staffSubjectDetails2=" + staffSubjectDetails2
+				+ ", staffSubjectDetails3=" + staffSubjectDetails3 + "]";
 	}
 
 }
