@@ -47,10 +47,10 @@ public class StaffDetailsDaoImpl implements StaffDetailsDao {
 	@Override
 	public int addNewStaff(StaffDetail staffDetail) {
 		final StaffDetail finalStaffDetail = staffDetail;
-		
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		try {
 		final String sql = "INSERT INTO StaffDetails " +
 				"(staffname, contactnumber, email, joiningdate, prv_experience,gender,dob, designationid, status,address,state,city,zipcode,accountno,nationality,primarylanguage, secondarylanguage) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?,?)";
-		KeyHolder keyHolder = new GeneratedKeyHolder();
 			
 		jdbcTemplate.update(
 				    new PreparedStatementCreator() {
@@ -79,6 +79,9 @@ public class StaffDetailsDaoImpl implements StaffDetailsDao {
 				    },
 				    keyHolder);
 			LOGGER.log(Level.INFO, "OrgUserRoles:Id::" + keyHolder.getKey().intValue());
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE,e.getMessage(),e);
+		}
 		    return  keyHolder.getKey().intValue();
 	}
 
