@@ -30,6 +30,7 @@
 		<intercept-url pattern="/lte/*" access="hasRole('ROLE_STAFF')"/>
 		<intercept-url pattern="/html/index.html" access="hasRole('ROLE_STAFF')"/>
 		<intercept-url pattern="/register" access="hasRole('ROLE_COMMONUSER')"/>
+		<intercept-url pattern="/api/v1/**" access="hasRole('ROLE_STAFF')"/>
 		<intercept-url pattern="/schoolRegister" access="hasRole('ROLE_COMMONUSER')"/>
 		<intercept-url pattern="/dashboard" access="hasRole('ROLE_STAFF')"/>
 		<intercept-url pattern="/loginuser" access="hasRole('ROLE_STAFF')"/>
