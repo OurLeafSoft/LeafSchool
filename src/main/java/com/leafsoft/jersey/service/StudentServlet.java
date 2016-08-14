@@ -2,6 +2,7 @@ package com.leafsoft.jersey.service;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.leafsoft.jersey.errorhandling.AppException;
@@ -21,7 +23,6 @@ import com.leafsoft.org.OrgUtil;
 import com.leafsoft.school.dao.DaoSelectorUtil;
 import com.leafsoft.school.dao.StaffDetailsDao;
 import com.leafsoft.school.dao.StudentDetailsDao;
-import com.leafsoft.school.model.StaffDetail;
 import com.leafsoft.school.model.StudentDetail;
 
 	@Path("/student")
@@ -51,6 +52,15 @@ import com.leafsoft.school.model.StudentDetail;
 
 		}
 		
+		@GET
+		@Produces(MediaType.APPLICATION_JSON)
+		public Response getStudent() {
+			StudentDetailsDao studentDao = DaoSelectorUtil.getStudentDatailsDao();
+			List<StudentDetail> studentdetails = studentDao.getAllStudents();
+			return Response.ok().entity(new JSONArray(studentdetails).toString()).build();
+
+		}
+		
 		@POST
 		@Consumes(MediaType.APPLICATION_JSON)
 		@Produces(MediaType.APPLICATION_JSON)
@@ -66,3 +76,4 @@ import com.leafsoft.school.model.StudentDetail;
 		}
 		
 	}
+//{"studentname":"3843948","dob":"2016-04-17","gender":0,"status":"0","regdate":"1460884906452","StudentContactDetails":{"familyid":"10000"}}

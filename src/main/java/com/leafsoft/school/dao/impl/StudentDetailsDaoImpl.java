@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +24,8 @@ import com.leafsoft.school.dao.StudentDetailsDao;
 import com.leafsoft.school.model.StaffDetail;
 import com.leafsoft.school.model.StudentContactDetail;
 import com.leafsoft.school.model.StudentDetail;
+import com.leafsoft.school.model.Subject;
+import com.leafsoft.school.rowmapper.RowMapper;
 
 public class StudentDetailsDaoImpl implements StudentDetailsDao {
 
@@ -80,14 +85,31 @@ private static final Logger LOGGER = Logger.getLogger(StaffDetailsDaoImpl.class.
 	}
 
 	@Override
-	public int getTotalNumberOfStudent(int luid) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalNumberOfStudent() {
+		int total = 0;
+		try {
+		String sql = "SELECT COUNT(*) FROM StudentDetails";
+		total = jdbcTemplate.queryForObject(
+                sql, Integer.class);
+		} catch(Exception e) {
+			LOGGER.log(Level.SEVERE,e.getMessage(),e);
+		}
+		return total;
 	}
 
 	@Override
-	public JSONArray getAllStudents() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<StudentDetail> getAllStudents() {
+		List<StudentDetail> studentArray = new ArrayList<>();
+		try {
+		String sql = "SELECT * FROM StudentDetails";
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+		for (Map<String, Object> row : rows) {
+			StudentDetail studentDetail = RowMapper.getStudentDetailRow(row);
+			studentArray.add(studentDetail);
+		}
+		}catch(Exception e) {
+			LOGGER.log(Level.INFO,"getAllSubject():::"+e.getMessage(),e);
+		}
+		return studentArray;
 	}
 }

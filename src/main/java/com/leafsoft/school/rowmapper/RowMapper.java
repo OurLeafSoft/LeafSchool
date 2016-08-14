@@ -1,12 +1,14 @@
 package com.leafsoft.school.rowmapper;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.Map;
 
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
 import com.leafsoft.school.model.StudentDetail;
+import com.leafsoft.school.model.Subject;
 
 public class RowMapper {
 
@@ -32,7 +34,7 @@ public class RowMapper {
 		orgdetail.setOrgid(row.get("orgid") !=null ? (Integer)row.get("orgid") : -1);
 		orgdetail.setOrgname(row.get("orgname") != null ? (String)row.get("orgname") : "");
 		orgdetail.setState(row.get("state") !=null ? (String)row.get("state") : "");
-		orgdetail.setStatus(row.get("state") != null ? Byte.valueOf(row.get("status").toString()) : 0);
+		orgdetail.setStatus(row.get("status") != null ? Byte.valueOf(row.get("status").toString()) : 0);
 		orgdetail.setTimetype(row.get("timetype")!=null ? (String)row.get("timetype") : "GMT");
 		orgdetail.setZipcode(row.get("zipcode") !=null ? (String)row.get("zipcode") : "");
 		return orgdetail;
@@ -43,6 +45,26 @@ public class RowMapper {
 		orguserrole.setRolename(row.get("rolename")!=null ? (String)row.get("rolename") : "");
 		orguserrole.setUserRoleId(row.get("user_role_id") != null ? (Integer)row.get("user_role_id") : -1);
 		return orguserrole;
+	}
+	
+	public static Subject getSubjectRow(Map<String, Object> row) {
+		Subject subject = new Subject();
+		subject.setSubjectid(row.get("subjectid")!=null ? (Integer)row.get("subjectid") : -1);
+		subject.setSubjectname(row.get("subjectname") != null ? (String)row.get("subjectname") : "");
+		subject.setSubjecttype(row.get("subjecttype")!=null ? Byte.valueOf(row.get("subjecttype").toString()) : -1);
+		subject.setStatus((byte) (row.get("status") != null ? ((Boolean) row.get("status") ? 1 : 0) : -1));
+		return subject;
+	}
+	
+	public static StudentDetail getStudentDetailRow(Map<String, Object> row) {
+		StudentDetail studentDetail = new StudentDetail();
+		studentDetail.setStudentid(row.get("studentid")!=null ? (Integer)row.get("studentid") : -1);
+		studentDetail.setStudentname(row.get("studentname") != null ? (String)row.get("studentname") : "");
+		studentDetail.setDob(row.get("dob")!=null ? (Date) (row.get("dob")) : null);
+		studentDetail.setGender(row.get("gender")!=null ? Byte.valueOf(row.get("gender").toString()) : -1);
+		studentDetail.setRegdate(row.get("regdate")!=null ? BigInteger.valueOf((long) row.get("regdate")) : new BigInteger("0"));
+		studentDetail.setStatus((byte) (row.get("status") != null ? ((Boolean) row.get("status") ? 1 : 0) : -1));
+		return studentDetail;
 	}
 	
 }

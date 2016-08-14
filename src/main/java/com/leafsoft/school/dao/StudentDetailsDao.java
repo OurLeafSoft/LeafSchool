@@ -1,8 +1,11 @@
 package com.leafsoft.school.dao;
 
+import java.util.List;
+
 import org.json.JSONArray;
 
 import com.leafsoft.school.model.StudentDetail;
+import com.leafsoft.school.model.Subject;
 
 public interface StudentDetailsDao extends DaoBean {
 
@@ -10,7 +13,7 @@ public interface StudentDetailsDao extends DaoBean {
 	
 	public int addNewStudent(StudentDetail studentDetail);
 	
-	public int getTotalNumberOfStudent(int luid);
+	public int getTotalNumberOfStudent();
 	
-	public JSONArray getAllStudents();
+	public List<StudentDetail> getAllStudents();
 }
