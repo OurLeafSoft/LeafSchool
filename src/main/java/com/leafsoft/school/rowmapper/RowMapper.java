@@ -6,6 +6,7 @@ import java.util.Map;
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
+import com.leafsoft.school.model.StudentDetail;
 
 public class RowMapper {
 

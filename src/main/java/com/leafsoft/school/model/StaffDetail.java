@@ -2,6 +2,11 @@ package com.leafsoft.school.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.leafsoft.school.util.JsonDateSerializer;
+
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -90,6 +95,7 @@ public class StaffDetail implements Serializable {
 
 
 	@Temporal(TemporalType.DATE)
+	@JsonSerialize(using=JsonDateSerializer.class)
 	public Date getDob() {
 		return this.dob;
 	}
