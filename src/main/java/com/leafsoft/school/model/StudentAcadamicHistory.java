@@ -18,6 +18,10 @@ public class StudentAcadamicHistory implements Serializable {
 	private int studenthistoryid;
 
 	private byte historytype;
+	
+	private double grade;
+	
+	private double mark;
 
 	//bi-directional many-to-one association to StudentCourseHistory
 	@ManyToOne
@@ -53,6 +57,22 @@ public class StudentAcadamicHistory implements Serializable {
 		this.historytype = historytype;
 	}
 
+	public double getGrade() {
+		return this.grade;
+	}
+	
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
+	
+	public double getMark() {
+		return this.mark;
+	}
+	
+	public void setMark(double mark) {
+		this.mark = mark;
+	}
+	
 	public StudentCourseHistory getStudentCourseHistory() {
 		return this.studentCourseHistory;
 	}

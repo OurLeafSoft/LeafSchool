@@ -13,7 +13,7 @@ CREATE TABLE `StudentContactDetails` (
   `contactnumber` bigint(20) DEFAULT '-1',
   `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`familyid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StudentDetails` (
   `studentid` int(11) NOT NULL AUTO_INCREMENT,
@@ -26,14 +26,14 @@ CREATE TABLE `StudentDetails` (
   PRIMARY KEY (`studentid`),
   KEY `StudentDetails_fid` (`familyid`),
   CONSTRAINT `StudentDetails_fk_familyid` FOREIGN KEY (`familyid`) REFERENCES `StudentContactDetails` (`familyid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `DesignationGroup` (
   `designationgroupid` int(11) NOT NULL AUTO_INCREMENT,
   `designationgroupname` varchar(100) NOT NULL,
   `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`designationgroupid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Designations` (
   `designationid` int(11) NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,7 @@ CREATE TABLE `Designations` (
   PRIMARY KEY (`designationid`),
   KEY `fk_did` (`designationgroupid`),
   CONSTRAINT `Designations_fk_designationgroupid` FOREIGN KEY (`designationgroupid`) REFERENCES `DesignationGroup` (`designationgroupid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Subjects` (
   `subjectid` int(11) NOT NULL AUTO_INCREMENT,
@@ -51,7 +51,7 @@ CREATE TABLE `Subjects` (
   `subjecttype` tinyint(4) NOT NULL DEFAULT '-1',
   `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`subjectid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StaffDetails` (
   `staffid` int(11) NOT NULL AUTO_INCREMENT,
@@ -74,7 +74,7 @@ CREATE TABLE `StaffDetails` (
   `secondarylanguage` varchar(30) NOT NULL,
   PRIMARY KEY (`staffid`),
   CONSTRAINT `StaffDetails_fk_designationid` FOREIGN KEY (`designationid`) REFERENCES `Designations` (`designationid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StaffQualification` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -86,7 +86,7 @@ CREATE TABLE `StaffQualification` (
   `staffid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `StaffQualification_fk_staffid` FOREIGN KEY (`staffid`) REFERENCES `StaffDetails` (`staffid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StaffSubjectDetails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -99,7 +99,7 @@ CREATE TABLE `StaffSubjectDetails` (
   CONSTRAINT `StaffSubjectDetails_fk_primarysubjectid` FOREIGN KEY (`primarysubjectid`) REFERENCES `Subjects` (`subjectid`),
   CONSTRAINT `StaffSubjectDetails_fk_secondarysubjectid` FOREIGN KEY (`secondarysubjectid`) REFERENCES `Subjects` (`subjectid`),
   CONSTRAINT `StaffSubjectDetails_fk_othersubjectid` FOREIGN KEY (`othersubjectid`) REFERENCES `Subjects` (`subjectid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `Courses` (
   `courseid` int(11) NOT NULL AUTO_INCREMENT,
@@ -107,7 +107,7 @@ CREATE TABLE `Courses` (
   `section` varchar(20) NOT NULL,
   `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`courseid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StaffSubjectCourseHistory` (
   `staffsubjectcourseid` int(11) NOT NULL AUTO_INCREMENT,
@@ -122,7 +122,7 @@ CREATE TABLE `StaffSubjectCourseHistory` (
   CONSTRAINT `StaffSubjectCourseHistory_fk_staffid` FOREIGN KEY (`staffid`) REFERENCES `StaffDetails` (`staffid`),
   CONSTRAINT `StaffSubjectCourseHistory_fk_subjectid` FOREIGN KEY (`subjectid`) REFERENCES `Subjects` (`subjectid`),
   CONSTRAINT `StaffSubjectCourseHistory_fk_courseid` FOREIGN KEY (`courseid`) REFERENCES `Courses` (`courseid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StudentCourseHistory` (
   `studentcoursehistoryid` int(11) NOT NULL AUTO_INCREMENT,
@@ -134,14 +134,14 @@ CREATE TABLE `StudentCourseHistory` (
   KEY `StudentCourseHistory_sid` (`studentid`),
   CONSTRAINT `StudentCourseHistory_fk_courseid` FOREIGN KEY (`courseid`) REFERENCES `Courses` (`courseid`),
   CONSTRAINT `StudentCourseHistory_fk_studentid` FOREIGN KEY (`studentid`) REFERENCES `StudentDetails` (`studentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `ExamType` (
   `examtypeid` int(11) NOT NULL AUTO_INCREMENT,
   `examtypename` varchar(100) NOT NULL,
   `status` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`examtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `ExamDetails` (
   `examid` int(11) NOT NULL AUTO_INCREMENT,
@@ -151,20 +151,21 @@ CREATE TABLE `ExamDetails` (
   PRIMARY KEY (`examid`),
   KEY `ExamDetails_examtypeid` (`examtypeid`),
   CONSTRAINT `ExamDetails_fk_examtypeid` FOREIGN KEY (`examtypeid`) REFERENCES `ExamType` (`examtypeid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
  CREATE TABLE `ExamSubjectMapping` (
   `examsubjectid` int(11) NOT NULL AUTO_INCREMENT,
   `staffsubjectcourseid` int(11) NOT NULL,
   `examid` int(11) NOT NULL,
   `acadamicyear` year(4) DEFAULT NULL,
-  `status` BOOLEAN DEFAULT 0,
+  `status` tinyint(1) DEFAULT '0',
+  `total_mark` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`examsubjectid`),
   KEY `ExamSubjectMapping_courseid` (`staffsubjectcourseid`),
   KEY `ExamSubjectMapping_examid` (`examid`),
-  CONSTRAINT `ExamSubjectMapping_fk_staffsubjectcourseid` FOREIGN KEY (`staffsubjectcourseid`) REFERENCES `StaffSubjectCourseHistory` (`staffsubjectcourseid`),
-  CONSTRAINT `ExamSubjectMapping_fk_examid` FOREIGN KEY (`examid`) REFERENCES `ExamDetails` (`examid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+  CONSTRAINT `ExamSubjectMapping_fk_examid` FOREIGN KEY (`examid`) REFERENCES `ExamDetails` (`examid`),
+  CONSTRAINT `ExamSubjectMapping_fk_staffsubjectcourseid` FOREIGN KEY (`staffsubjectcourseid`) REFERENCES `StaffSubjectCourseHistory` (`staffsubjectcourseid`)
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `StudentAcadamicHistory` (
   `studenthistoryid` int(11) NOT NULL AUTO_INCREMENT,
@@ -172,13 +173,16 @@ CREATE TABLE `StudentAcadamicHistory` (
   `examsubjectid` int(11) NOT NULL,
   `studentid` int(11) NOT NULL,
   `studentcoursehistoryid` int(11) NOT NULL,
+  `mark` double NOT NULL DEFAULT '0',
+  `grade` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`studenthistoryid`),
   KEY `ExamSubjectMapping_examsubjectid` (`examsubjectid`),
   KEY `StudentAcadamicHistory_sid` (`studentid`),
-  CONSTRAINT `ExamSubjectMapping_fk_studentcoursehistoryid` FOREIGN KEY (`studentcoursehistoryid`) REFERENCES `StudentCourseHistory` (`studentcoursehistoryid`),
+  KEY `ExamSubjectMapping_fk_studentcoursehistoryid` (`studentcoursehistoryid`),
   CONSTRAINT `ExamSubjectMapping_fk_examsubjectid` FOREIGN KEY (`examsubjectid`) REFERENCES `ExamSubjectMapping` (`examsubjectid`),
+  CONSTRAINT `ExamSubjectMapping_fk_studentcoursehistoryid` FOREIGN KEY (`studentcoursehistoryid`) REFERENCES `StudentCourseHistory` (`studentcoursehistoryid`),
   CONSTRAINT `StudentAcadamicHistory_fk_studentid` FOREIGN KEY (`studentid`) REFERENCES `StudentDetails` (`studentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `LoginDetails` (
   `id` int(11) NOT NULL AUTO_INCREMENT,

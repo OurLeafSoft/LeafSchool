@@ -23,6 +23,8 @@ public class ExamSubjectMapping implements Serializable {
 	private Date acadamicyear;
 
 	private byte status;
+	
+	private double mark;
 
 	//bi-directional many-to-one association to StaffSubjectCourseHistory
 	@ManyToOne
@@ -63,6 +65,14 @@ public class ExamSubjectMapping implements Serializable {
 
 	public void setStatus(byte status) {
 		this.status = status;
+	}
+	
+	public double getMark() {
+		return this.mark;
+	}
+	
+	public void setMark(double mark) {
+		this.mark = mark;
 	}
 
 	public StaffSubjectCourseHistory getStaffSubjectCourseHistory() {
