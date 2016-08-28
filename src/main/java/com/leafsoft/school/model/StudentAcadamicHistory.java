@@ -103,8 +103,8 @@ public class StudentAcadamicHistory implements Serializable {
 	@Override
 	public String toString() {
 		return "StudentAcadamicHistory [studenthistoryid=" + studenthistoryid + ", historytype=" + historytype
-				+ ", studentCourseHistory=" + studentCourseHistory + ", examSubjectMapping=" + examSubjectMapping
-				+ ", studentDetail=" + studentDetail + "]";
+				+ ", grade=" + grade + ", mark=" + mark + ", studentCourseHistory=" + studentCourseHistory
+				+ ", examSubjectMapping=" + examSubjectMapping + ", studentDetail=" + studentDetail + "]";
 	}
 
 }

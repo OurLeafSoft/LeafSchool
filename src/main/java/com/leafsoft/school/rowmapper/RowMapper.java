@@ -1,12 +1,15 @@
 package com.leafsoft.school.rowmapper;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
 import com.leafsoft.school.model.OrgDetail;
 import com.leafsoft.school.model.OrgUser;
 import com.leafsoft.school.model.OrgUserRole;
+import com.leafsoft.school.model.StaffDetail;
+import com.leafsoft.school.model.StaffQualification;
 import com.leafsoft.school.model.StudentDetail;
 import com.leafsoft.school.model.Subject;
 
@@ -65,6 +68,17 @@ public class RowMapper {
 		studentDetail.setRegdate(row.get("regdate")!=null ? BigInteger.valueOf((long) row.get("regdate")) : new BigInteger("0"));
 		studentDetail.setStatus((byte) (row.get("status") != null ? ((Boolean) row.get("status") ? 1 : 0) : -1));
 		return studentDetail;
+	}
+	
+	public static StaffQualification getStaffQualificationRow(Map<String, Object> row) {
+		StaffQualification staffQualification = new StaffQualification();
+		staffQualification.setId(row.get("id")!=null ? (Integer)row.get("id") : -1);
+		staffQualification.setInstitution(row.get("institution") != null ? (String)row.get("institution") : "");
+		staffQualification.setQdate(row.get("qdate")!=null ? (Timestamp) (row.get("qdate")) : null);
+		staffQualification.setType(row.get("type")!=null ? row.get("type").toString() : "");
+		staffQualification.setGrade(row.get("grade")!=null ? Double.valueOf(row.get("grade").toString()) : 0);
+		staffQualification.setPercentage(row.get("percentage") != null ? Double.valueOf(row.get("percentage").toString()) : 0);
+		return staffQualification;
 	}
 	
 }
